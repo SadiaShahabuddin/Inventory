@@ -19,12 +19,15 @@ namespace Inventory.Models
         [Required]
         [Display(Name = "Brand")]
         public int BrandId { get; set; }
-
-
         [ForeignKey("SubCategoryId")]
         public virtual SubCategory SubCategory { get; set; }
 
+
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
+
+        [NotMapped]
+        public string CategoryName { get; set; }
+
     }
 }

@@ -22,6 +22,7 @@ namespace Inventory.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            ViewBag.CategoryId = _context.Category.ToList();
             var applicationDbContext = _context.Product.Include(s => s.SubCategory).Include(s => s.Brand);
             return View(await applicationDbContext.ToListAsync());
 
@@ -189,5 +190,13 @@ namespace Inventory.Controllers
         {
             return (_context.Product?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetSubcategories(int? categoryId)
+        {
+            var subCategory = await _context.SubCategory.Where(x => x.CategoryId == categoryId).ToListAsync();
+            var json= Json(subCategory);
+            return json;
+        }
+
     }
 }

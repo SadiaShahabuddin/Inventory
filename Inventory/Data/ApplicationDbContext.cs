@@ -15,7 +15,7 @@ namespace Inventory.Data
         public DbSet<Inventory.Models.Category>? Category { get; set; }
         public DbSet<Inventory.Models.SubCategory>? SubCategory { get; set; }
         public DbSet<Inventory.Models.Brand>? Brand { get; set; }
-
+        public DbSet<Inventory.Models.Supplier>? Supplier { get; set; }
 
 
     }

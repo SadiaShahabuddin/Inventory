@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Index";
+    List<Category> category = (List<Category>)ViewBag.CategoryId;
+
 }
 
 <h1>Index</h1>
@@ -9,7 +11,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover table-dark">
     <thead>
         <tr>
             <th>
@@ -24,6 +26,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SubCategory)
@@ -56,21 +61,25 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
+                    @{
+                        Category selectedCategory = category.FirstOrDefault(x => x.Id == item.SubCategory.CategoryId);
+                        <span>@selectedCategory.Name</span>
+                    }
+                </td>
+
+                <td>
                     @Html.DisplayFor(modelItem => item.SubCategory.Name)
                 </td>
-               
-
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.Brand.BrandName)
                 </td>
                 
-              
-                
-                
+                   
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" class="btn btn-success" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
