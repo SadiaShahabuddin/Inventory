@@ -9,7 +9,7 @@ namespace Inventory.Models
         public int Id { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
-        public string ImageUrl { get; set; }
+        public Byte[] Image { get; set; }
         public int Price { get; set; }
 
         [Required]
@@ -19,9 +19,10 @@ namespace Inventory.Models
         [Required]
         [Display(Name = "Brand")]
         public int BrandId { get; set; }
+
+
         [ForeignKey("SubCategoryId")]
         public virtual SubCategory SubCategory { get; set; }
-
 
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }

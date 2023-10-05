@@ -22,9 +22,9 @@ namespace Inventory.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-              return _context.Product != null ? 
-                          View(await _context.Product.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Product'  is null.");
+            var applicationDbContext = _context.Product.Include(s => s.SubCategory).Include(s => s.Brand);
+            return View(await applicationDbContext.ToListAsync());
+
         }
 
         // GET: Products/Details/5
@@ -59,24 +59,35 @@ namespace Inventory.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName,ProductType,Description,Image")] Product product)
+        public async Task<IActionResult> Create(Product product)
         {
-            
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            var files = HttpContext.Request.Form.Files;
+            if (files.Count > 0)
+            {
+                byte[] p1 = null;
+                using (var fs1 = files[0].OpenReadStream())
+                {
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                }
+                product.Image = p1;
+            }
+            _context.Add(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
-                return View(product);
         }
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Product == null)
-            {
-                return NotFound();
-            }
 
+            ViewBag.CategoryId = _context.Category.ToList();
+            ViewBag.SubCategoryId = _context.SubCategory.ToList();
+            ViewBag.BrandId = _context.Brand.ToList();
             var product = await _context.Product.FindAsync(id);
             if (product == null)
             {
@@ -90,34 +101,51 @@ namespace Inventory.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductName,ProductType,Description,Image")] Product product)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
+           
+
             if (id != product.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    byte[] p1 = null;
+                    using (var fs1 = files[0].OpenReadStream())
+                    {
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                    }
+                    product.Image = p1;
                 }
-                catch (DbUpdateConcurrencyException)
+                if(product.Image==null)
                 {
-                    if (!ProductExists(product.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    product.Image = _context.Product.AsNoTracking().FirstOrDefault(e => e.Id == id).Image;
+
                 }
-                return RedirectToAction(nameof(Index));
+                _context.Update(product);
+                await _context.SaveChangesAsync();
             }
-            return View(product);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductExists(product.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Products/Delete/5
@@ -152,14 +180,14 @@ namespace Inventory.Controllers
             {
                 _context.Product.Remove(product);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProductExists(int id)
         {
-          return (_context.Product?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Product?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
