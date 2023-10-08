@@ -87,13 +87,15 @@
                 url: "/Products/GetSubcategories",
                 data: { categoryId: categoryId },
                 success: function (data) {
+                    console.log(data);
                     var subcategoryDropdown = $("#SubCategoryId");
                     subcategoryDropdown.empty(); // Clear existing options
-                    $.each(data, function (index, subcategory) {
-                        subcategoryDropdown.append(
-                            $('<option></option>').val(subcategory.id).text(subcategory.name)
-                        );
-                    });
+                    // $.each(data, function (index, subcategory) {
+                    //     subcategoryDropdown.append(
+                    //         $('<option></option>').val(subcategory.id).text(subcategory.name)
+                    //     );
+                    // });
+                   
                 },
                 error: function (error) {
                     console.error("Error loading subcategories: " + error);
