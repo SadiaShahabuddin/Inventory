@@ -173,8 +173,8 @@ namespace Inventory
         {
             public const string PageName = "Product Type";
             public const string RoleName = "Product Type";
-            public const string Path = "/ProductType/Index";
-            public const string ControllerName = "ProductType";
+            public const string Path = "/ProductTypes/Index";
+            public const string ControllerName = "ProductTypes";
             public const string ActionName = "Index";
         }
 
