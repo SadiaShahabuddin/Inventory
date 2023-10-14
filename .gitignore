@@ -396,3 +396,13 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ignore Visual Studio Code files
+.vs/
+
+# Ignore Visual Studio ProjectEvaluation files
+.vs/ProjectEvaluation/
+
+# Ignore compiled files and directories in the "Inventory" project
+Inventory/bin/
+Inventory/obj/
