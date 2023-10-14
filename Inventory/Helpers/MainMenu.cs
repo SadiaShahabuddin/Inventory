@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Inventory
+namespace Inventory.MainMenu
 {
     public static class MainMenu
     {
