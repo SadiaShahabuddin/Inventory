@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Inventory.Models.Vendor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-primary">Vendor List</h2>
+            </div>
+            <div class="col-6 text-right">
+                <a asp-action="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;  Create New Vendor</a>
+            </div>
+        </div>
+        <br />
+        <br />
+        <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Vendor Name</th>
+                    <th>Vendor Type Id</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip Code</th>
+                    <th>Phone No.</th>
+                    <th>Email</th>
+                    <th>Contact Person</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/vendors.js"></script>
+}
