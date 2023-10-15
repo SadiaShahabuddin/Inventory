@@ -91,10 +91,17 @@
                     var subcategoryDropdown = $("#SubCategoryId");
                     subcategoryDropdown.empty(); // Clear existing options
                     // $.each(data, function (index, subcategory) {
-                    //     subcategoryDropdown.append(
-                    //         $('<option></option>').val(subcategory.id).text(subcategory.name)
-                    //     );
+                    //  subcategoryDropdown.append(
+                    //        $('<option></option>').val(subcategory.id).text(subcategory.name)
+                    //      );
                     // });
+                    for (let index = 0; index < data.length; index++) {
+                        const subcategory = data[index];
+                        subcategoryDropdown.append(
+                            $('<option></option>').val(subcategory.id).text(subcategory.name)
+                        );
+                    }
+                    
                    
                 },
                 error: function (error) {
