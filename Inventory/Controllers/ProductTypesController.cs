@@ -18,146 +18,71 @@ namespace Inventory.Controllers
         {
             _context = context;
         }
-
-        // GET: ProductTypes
-        public async Task<IActionResult> Index()
-        {
-              return _context.ProductType != null ? 
-                          View(await _context.ProductType.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.ProductType'  is null.");
-        }
-
-        // GET: ProductTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.ProductType == null)
-            {
-                return NotFound();
-            }
-
-            var productType = await _context.ProductType
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (productType == null)
-            {
-                return NotFound();
-            }
-
-            return View(productType);
-        }
-
-        // GET: ProductTypes/Create
-        public IActionResult Create()
+        public IActionResult Index()
         {
             return View();
         }
 
-        // POST: ProductTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TypeName,Description")] ProductType productType)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(productType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(productType);
-        }
 
-        // GET: ProductTypes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Upsert(int? id)
         {
-            if (id == null || _context.ProductType == null)
+            ProductType  productType = new ProductType();
+            if (id == null)
             {
-                return NotFound();
+                return View(productType);
             }
-
-            var productType = await _context.ProductType.FindAsync(id);
+            productType = _context.ProductType.Find(id.GetValueOrDefault());
             if (productType == null)
             {
                 return NotFound();
             }
             return View(productType);
+
         }
 
-        // POST: ProductTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TypeName,Description")] ProductType productType)
+        public IActionResult Upsert(ProductType productType)
         {
-            if (id != productType.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                if (productType.Id == 0)
                 {
-                    _context.Update(productType);
-                    await _context.SaveChangesAsync();
+                    _context.ProductType.Add(productType);
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!ProductTypeExists(productType.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    _context.ProductType.Update(productType);
                 }
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(productType);
         }
 
-        // GET: ProductTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            if (id == null || _context.ProductType == null)
-            {
-                return NotFound();
-            }
-
-            var productType = await _context.ProductType
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (productType == null)
-            {
-                return NotFound();
-            }
-
-            return View(productType);
+            return Json(new { data = _context.ProductType });
         }
 
-        // POST: ProductTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
-            if (_context.ProductType == null)
+            var objFromDb = _context.ProductType.Find(id);
+            if (objFromDb == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.ProductType'  is null.");
+                return Json(new { success = false, message = "Error while deleting." });
             }
-            var productType = await _context.ProductType.FindAsync(id);
-            if (productType != null)
-            {
-                _context.ProductType.Remove(productType);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            _context.ProductType.Remove(objFromDb);
+            _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Delete successful." });
         }
 
-        private bool ProductTypeExists(int id)
-        {
-          return (_context.ProductType?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+
+        #endregion
     }
 }

@@ -18,10 +18,8 @@ namespace Inventory
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddRazorPages()
-            .AddRazorRuntimeCompilation(); // Enable Razor Runtime Compilation
-
+            builder.Services.AddRazorPages();
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             var app = builder.Build();
 
