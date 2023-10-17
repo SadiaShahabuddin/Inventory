@@ -1,0 +1,56 @@
+﻿@model Inventory.Models.VendorType
+@{
+    var title = "Create Vendor Type";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.VendorTypeId != 0)
+            {
+                <input type="hidden" asp-for="VendorTypeId" />
+                title = "Edit Vendor Type";
+            }
+            <div class="col-12">
+                <h2 class="text-primary">@title</h2>
+                <br />
+            </div>
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="VendorTypeName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="VendorTypeName" class="form-control" />
+                        <span asp-validation-for="VendorTypeName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        @if (Model.VendorTypeId != 0)
+                        {
+                            <partial name="_EditAndBackToListButton" model="Model.VendorTypeId" />
+                        }
+                        else
+                        {
+                            <partial name="_CreateAndBackToListButton" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

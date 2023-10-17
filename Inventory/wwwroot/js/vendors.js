@@ -81,16 +81,17 @@ function loadDataTable() {
             { "data": "zipCode", "width": "5%" },
             { "data": "phone", "width": "5%" },
             { "data": "email", "width": "5%" },
+            { "data": "contactPerson", "width": "5%" },
             {
                 "data": "id",
                 "render": function (data) {
 
                     return `<div class="text-center"> 
-                            <a href="/ProductTypes/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
+                            <a href="/Vendors/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
                                 <i class='far fa-edit'></i> Edit
                             </a>
                             &nbsp;
-                            <a class='btn btn-danger text-white' style='cursor:pointer; width:100px;' onclick=Delete('/ProductTypes/Delete/'+${data})>
+                            <a class='btn btn-danger text-white' style='cursor:pointer; width:100px;' onclick=Delete('/Vendors/Delete/'+${data})>
                                <i class='far fa-trash-alt'></i> Delete
                             </a></div>
                         `;

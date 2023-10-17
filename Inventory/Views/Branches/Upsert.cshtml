@@ -1,0 +1,118 @@
+﻿@model Inventory.Models.Branch
+@{
+    var title = "Create Branch";
+}
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.Id != 0)
+            {
+                <input type="hidden" asp-for="Id" />
+                title = "Edit Branch";
+            }
+            <div class="col-12">
+                <h2 class="text-primary">@title</h2>
+                <br />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="BranchName" class="control-label"></label>
+                        <input asp-for="BranchName" class="form-control" />
+                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                    </div>
+                </div>
+               
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CurrencyId" class="control-label"></label>
+                        <input asp-for="CurrencyId" class="form-control" />
+                        <span asp-validation-for="CurrencyId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="State" class="control-label"></label>
+                        <input asp-for="State" class="form-control" />
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ZipCode" class="control-label"></label>
+                        <input asp-for="ZipCode" class="form-control" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ContactPerson" class="control-label"></label>
+                    <input asp-for="ContactPerson" class="form-control" />
+                    <span asp-validation-for="ContactPerson" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    @if (Model.Id != 0)
+                    {
+                        <partial name="_EditAndBackToListButton" model="Model.Id" />
+                    }
+                    else
+                    {
+                        <partial name="_CreateAndBackToListButton" />
+                    }
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

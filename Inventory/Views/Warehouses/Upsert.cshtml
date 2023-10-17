@@ -1,0 +1,66 @@
+﻿@model Inventory.Models.Warehouse
+@{
+    var title = "Create Warehouse";
+
+}
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.WarehouseId != 0)
+            {
+                <input type="hidden" asp-for="WarehouseId" />
+                title = "Edit Warehouse";
+            }
+            <div class="col-12">
+                <h2 class="text-primary">@title</h2>
+                <br />
+            </div>
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="WarehouseName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="WarehouseName" class="form-control" />
+                        <span asp-validation-for="WarehouseName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="BranchId"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="BranchId" class="form-control" />
+                        <span asp-validation-for="BranchId" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        @if (Model.WarehouseId != 0)
+                        {
+                            <partial name="_EditAndBackToListButton" model="Model.WarehouseId" />
+                        }
+                        else
+                        {
+                            <partial name="_CreateAndBackToListButton" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

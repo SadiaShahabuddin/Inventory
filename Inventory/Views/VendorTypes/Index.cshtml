@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Inventory.Models.VendorType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-primary">Vendor Types List</h2>
+            </div>
+            <div class="col-6 text-right">
+                <a asp-action="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp;  Create New Vendor Type</a>
+            </div>
+        </div>
+        <br />
+        <br />
+        <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Vendor Type Name</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/paymentTypes.js"></script>
+}

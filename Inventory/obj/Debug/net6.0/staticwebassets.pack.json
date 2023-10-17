@@ -1441,12 +1441,56 @@
       "PackagePath": "staticwebassets\\index3.html"
     },
     {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\branches.js",
+      "PackagePath": "staticwebassets\\js\\branches.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\cashBanks.js",
+      "PackagePath": "staticwebassets\\js\\cashBanks.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\currencies.js",
+      "PackagePath": "staticwebassets\\js\\currencies.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\customerTypes.js",
+      "PackagePath": "staticwebassets\\js\\customerTypes.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\customers.js",
+      "PackagePath": "staticwebassets\\js\\customers.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\invoiceTypes.js",
+      "PackagePath": "staticwebassets\\js\\invoiceTypes.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\paymentTypes.js",
+      "PackagePath": "staticwebassets\\js\\paymentTypes.js"
+    },
+    {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\productTypes.js",
       "PackagePath": "staticwebassets\\js\\productTypes.js"
     },
     {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\salesTypes.js",
+      "PackagePath": "staticwebassets\\js\\salesTypes.js"
+    },
+    {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\unitOfMeasures.js",
+      "PackagePath": "staticwebassets\\js\\unitOfMeasures.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\vendorTypes.js",
+      "PackagePath": "staticwebassets\\js\\vendorTypes.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\warehouses.js",
+      "PackagePath": "staticwebassets\\js\\warehouses.js"
     },
     {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\lib\\bootstrap\\LICENSE",

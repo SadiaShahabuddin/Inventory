@@ -1,0 +1,66 @@
+﻿@model Inventory.Models.Currency
+@{
+    var title = "Create Currency";
+
+}
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.CurrencyId != 0)
+            {
+                <input type="hidden" asp-for="CurrencyId" />
+                title = "Edit Currency";
+            }
+            <div class="col-12">
+                <h2 class="text-primary">@title</h2>
+                <br />
+            </div>
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="CurrencyName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="CurrencyName" class="form-control" />
+                        <span asp-validation-for="CurrencyName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="CurrencyCode"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="CurrencyCode" class="form-control" />
+                        <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        @if (Model.CurrencyId != 0)
+                        {
+                            <partial name="_EditAndBackToListButton" model="Model.CurrencyId" />
+                        }
+                        else
+                        {
+                            <partial name="_CreateAndBackToListButton" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

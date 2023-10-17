@@ -38,7 +38,7 @@ namespace Inventory.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Vendor vendor)
-        {
+        { 
             if (ModelState.IsValid)
             {
                 if (vendor.Id == 0)
