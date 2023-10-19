@@ -19,14 +19,16 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CustomerName" class="control-label"></label>
-                        <input asp-for="CustomerName" class="form-control" />
+                        <input asp-for="CustomerName" class="form-control"/>
                         <span asp-validation-for="CustomerName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CustomerTypeId" class="control-label"></label>
-                        <input asp-for="CustomerTypeId" class="form-control" />
+                        <select name="CustomerTypeId" id="CustomerTypeId" class="form-control">
+                            <option value="">Select Customer Type</option>
+                        </select>
                         <span asp-validation-for="CustomerTypeId" class="text-danger"></span>
                     </div>
                 </div>
@@ -108,3 +110,40 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            loadCustomerType();
+        });
+
+        function loadCustomerType() {
+            $.ajax({
+                url: "/CustomerTypes/GetAll",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Log the response data to the console
+                    console.log(data.data);
+
+                    // Get a reference to the select element
+                    var selectElement = $("#CustomerTypeId");
+
+                    // Clear existing options
+                    selectElement.empty();
+
+                    // Add a default "Select Customer Type" option
+                    selectElement.append('<option value="">Select Customer Type</option>');
+
+                    // Loop through the data and append options
+                    $.each(data.data, function (index, item) {
+                        selectElement.append('<option value="' + item.customerTypeId + '">' + item.customerTypeName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors here
+                    console.error("Error: " + error);
+                }
+            });
+        }
+    </script>
+}
