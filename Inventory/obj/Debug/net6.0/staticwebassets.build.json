@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "sH4Ds9QslBZzyZdeSDxkqdzOJM7E33jXW9oo4bhU9+M=",
+  "Hash": "Nh/r0BiPMPAjWqvScc0tzaXkmtf9OWRqapbTB7lsLMQ=",
   "Source": "Inventory",
   "BasePath": "_content/Inventory",
   "Mode": "Default",
@@ -7174,6 +7174,23 @@
       "OriginalItemSpec": "wwwroot\\index3.html"
     },
     {
+      "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\billTypes.js",
+      "SourceId": "Inventory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\",
+      "BasePath": "_content/Inventory",
+      "RelativePath": "js/billTypes.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\billTypes.js"
+    },
+    {
       "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\branches.js",
       "SourceId": "Inventory",
       "SourceType": "Discovered",
@@ -7310,6 +7327,23 @@
       "OriginalItemSpec": "wwwroot\\js\\productTypes.js"
     },
     {
+      "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\purchaseTypes.js",
+      "SourceId": "Inventory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\",
+      "BasePath": "_content/Inventory",
+      "RelativePath": "js/purchaseTypes.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\purchaseTypes.js"
+    },
+    {
       "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\salesTypes.js",
       "SourceId": "Inventory",
       "SourceType": "Discovered",
@@ -7325,6 +7359,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\salesTypes.js"
+    },
+    {
+      "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\shipmentTypes.js",
+      "SourceId": "Inventory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\",
+      "BasePath": "_content/Inventory",
+      "RelativePath": "js/shipmentTypes.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\shipmentTypes.js"
     },
     {
       "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\site.js",

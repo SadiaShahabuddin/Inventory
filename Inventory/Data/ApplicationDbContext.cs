@@ -29,6 +29,9 @@ namespace Inventory.Data
         public DbSet<Inventory.Models.SalesType>? SalesType { get; set; }
         public DbSet<Inventory.Models.UnitOfMeasure>? UnitOfMeasure { get; set; }
         public DbSet<Inventory.Models.Warehouse>? Warehouse { get; set; }
+        public DbSet<Inventory.Models.BillType>? BillType { get; set; }
+        public DbSet<Inventory.Models.PurchaseType>? PurchaseType { get; set; }
+        public DbSet<Inventory.Models.ShipmentType>? ShipmentType { get; set; }
 
     }
 }

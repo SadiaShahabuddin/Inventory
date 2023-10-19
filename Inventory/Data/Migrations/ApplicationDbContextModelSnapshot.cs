@@ -22,6 +22,27 @@ namespace Inventory.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Inventory.Models.BillType", b =>
+                {
+                    b.Property<int>("BillTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BillTypeId"), 1L, 1);
+
+                    b.Property<string>("BillTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BillTypeId");
+
+                    b.ToTable("BillType");
+                });
+
             modelBuilder.Entity("Inventory.Models.Branch", b =>
                 {
                     b.Property<int>("Id")
@@ -324,6 +345,27 @@ namespace Inventory.Data.Migrations
                     b.ToTable("ProductType");
                 });
 
+            modelBuilder.Entity("Inventory.Models.PurchaseType", b =>
+                {
+                    b.Property<int>("PurchaseTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseTypeId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PurchaseTypeId");
+
+                    b.ToTable("PurchaseType");
+                });
+
             modelBuilder.Entity("Inventory.Models.SalesType", b =>
                 {
                     b.Property<int>("SalesTypeId")
@@ -343,6 +385,27 @@ namespace Inventory.Data.Migrations
                     b.HasKey("SalesTypeId");
 
                     b.ToTable("SalesType");
+                });
+
+            modelBuilder.Entity("Inventory.Models.ShipmentType", b =>
+                {
+                    b.Property<int>("ShipmentTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShipmentTypeId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipmentTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ShipmentTypeId");
+
+                    b.ToTable("ShipmentType");
                 });
 
             modelBuilder.Entity("Inventory.Models.SubCategory", b =>

@@ -1441,6 +1441,10 @@
       "PackagePath": "staticwebassets\\index3.html"
     },
     {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\billTypes.js",
+      "PackagePath": "staticwebassets\\js\\billTypes.js"
+    },
+    {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\branches.js",
       "PackagePath": "staticwebassets\\js\\branches.js"
     },
@@ -1473,8 +1477,16 @@
       "PackagePath": "staticwebassets\\js\\productTypes.js"
     },
     {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\purchaseTypes.js",
+      "PackagePath": "staticwebassets\\js\\purchaseTypes.js"
+    },
+    {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\salesTypes.js",
       "PackagePath": "staticwebassets\\js\\salesTypes.js"
+    },
+    {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\shipmentTypes.js",
+      "PackagePath": "staticwebassets\\js\\shipmentTypes.js"
     },
     {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\site.js",

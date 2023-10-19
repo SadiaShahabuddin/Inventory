@@ -47,31 +47,64 @@
                     </a>
                 </li>
 
+             
+
                 <li class="nav-header">INVENTORY</li>
+               
                 <li class="nav-item">
-                    <a asp-controller="Branches" asp-action="Index" class="nav-link">
+                    <a href="@MainMenu.Product.Path" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
-                            @MainMenu.Branch.PageName
+                            @MainMenu.Product.PageName
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@MainMenu.CashBank.Path" class="nav-link">
+                    <a href="@MainMenu.ProductType.Path" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
-                            @MainMenu.CashBank.PageName
+                            @MainMenu.ProductType.PageName
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@MainMenu.Currency.Path" class="nav-link">
+                    <a href="@MainMenu.UnitOfMeasure.Path" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
-                            @MainMenu.Currency.PageName
+                            @MainMenu.UnitOfMeasure.PageName
                         </p>
                     </a>
                 </li>
+                
+               
+                <li class="nav-header">PURCHASE</li>
+
+                <li class="nav-item">
+                    <a asp-controller="Vendors" asp-action="Index" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.Vendor.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@MainMenu.VendorType.Path" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.VendorType.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@MainMenu.PurchaseType.Path" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.PurchaseType.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">SALES</li>
+
                 <li class="nav-item">
                     <a href="@MainMenu.Customer.Path" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
@@ -85,6 +118,50 @@
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             @MainMenu.CustomerType.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@MainMenu.SalesType.Path" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.SalesType.PageName
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-header">CONFIG</li>
+          
+                <li class="nav-item">
+                    <a href="@MainMenu.BillType.Path" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.BillType.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Branches" asp-action="Index" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.Branch.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@MainMenu.Currency.Path" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.Currency.PageName
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@MainMenu.CashBank.Path" class="nav-link">
+                        <i class="nav-icon fas fa-tag"></i>
+                        <p>
+                            @MainMenu.CashBank.PageName
                         </p>
                     </a>
                 </li>
@@ -105,50 +182,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@MainMenu.Product.Path" class="nav-link">
+                    <a href="@MainMenu.ShipmentType.Path" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
-                            @MainMenu.Product.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.ProductType.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.ProductType.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.SalesType.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.SalesType.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.UnitOfMeasure.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.UnitOfMeasure.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Vendors" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.Vendor.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.VendorType.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.VendorType.PageName
+                            @MainMenu.ShipmentType.PageName
                         </p>
                     </a>
                 </li>
@@ -160,6 +197,8 @@
                         </p>
                     </a>
                 </li>
+             
+              
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

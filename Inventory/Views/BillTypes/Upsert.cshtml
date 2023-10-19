@@ -1,0 +1,56 @@
+﻿@model Inventory.Models.BillType
+@{
+    var title = "Create Bill Type";
+
+}
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.BillTypeId != 0)
+            {
+                <input type="hidden" asp-for="BillTypeId" />
+                title = "Edit Bill Type";
+            }
+            <div class="col-12">
+                <h2 class="text-primary">@title</h2>
+                <br />
+            </div>
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="BillTypeName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="BillTypeName" class="form-control" />
+                        <span asp-validation-for="BillTypeName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        @if (Model.BillTypeId != 0)
+                        {
+                            <partial name="_EditAndBackToListButton" model="Model.BillTypeId" />
+                        }
+                        else
+                        {
+                            <partial name="_CreateAndBackToListButton" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
