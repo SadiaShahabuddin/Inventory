@@ -1,6 +1,7 @@
 ﻿@model Inventory.Models.Branch
 @{
     var title = "Create Branch";
+    List<Currency> currency = (List<Currency>)ViewBag.CurrencyId;
 }
 <div class="card card-default color-palette-box">
     <div class="card-body">
@@ -27,7 +28,16 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CurrencyId" class="control-label"></label>
-                        <input asp-for="CurrencyId" class="form-control" />
+                        <select name="CurrencyId" class="form-control" id="CurrencyId" required>
+                            <option value="">Select Currency</option>
+                             @if (currency != null)
+                              {
+                                 @foreach (var item in currency)
+                                 {
+                                <option value="@item.CurrencyId">@item.CurrencyName</option>
+                                 }
+                              }       
+                        </select>
                         <span asp-validation-for="CurrencyId" class="text-danger"></span>
                     </div>
                 </div>

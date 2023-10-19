@@ -16,12 +16,13 @@ namespace Inventory.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.CurrencyId = _context.Currency.ToList();
+
             return View();
         }
-
-
         public IActionResult Upsert(int? id)
         {
+            ViewBag.CurrencyId = _context.Currency.ToList();
             Branch branch = new Branch();
             if (id == null)
             {
