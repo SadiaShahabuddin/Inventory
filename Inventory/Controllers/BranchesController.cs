@@ -36,7 +36,6 @@ namespace Inventory.Controllers
             return View(branch);
 
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Branch branch)
@@ -54,6 +53,7 @@ namespace Inventory.Controllers
                 _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.CurrencyId = _context.Currency.ToList();
             return View(branch);
         }
 

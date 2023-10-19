@@ -7,6 +7,7 @@ namespace Inventory.Models
         [Key]
         public int WarehouseId { get; set; }
         [Required]
+        [Display(Name = "Warehouse Name")]
         public string WarehouseName { get; set; }
         public string Description { get; set; }
         [Display(Name = "Branch")]

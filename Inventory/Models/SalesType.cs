@@ -6,6 +6,7 @@ namespace Inventory.Models
     {
         public int SalesTypeId { get; set; }
         [Required]
+        [Display(Name = "Sales Type Name")]
         public string SalesTypeName { get; set; }
         public string Description { get; set; }
     }

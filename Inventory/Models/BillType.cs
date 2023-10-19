@@ -7,6 +7,7 @@ namespace Inventory.Models
     {
         public int BillTypeId { get; set; }
         [Required]
+        [Display(Name = "Bill Type Name")]
         public string BillTypeName { get; set; }
         public string Description { get; set; }
     }

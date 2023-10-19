@@ -9,6 +9,7 @@ namespace Inventory.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Branch Name")]
         public string BranchName { get; set; }
         public string Description { get; set; }
         [Display(Name = "Currency")]

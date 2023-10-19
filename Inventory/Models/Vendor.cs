@@ -7,6 +7,7 @@ namespace Inventory.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Vendor Name")]
         public string VendorName { get; set; }
         [Display(Name = "Vendor Type")]
         public int VendorTypeId { get; set; }

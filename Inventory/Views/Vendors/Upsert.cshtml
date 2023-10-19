@@ -27,7 +27,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VendorTypeId" class="control-label"></label>
-                        <input asp-for="VendorTypeId" class="form-control" />
+                        <select name="VendorTypeId" id="VendorTypeId" class="form-control">
+                            <option value="">Select Vendor Type</option>
+                        </select>
                         <span asp-validation-for="VendorTypeId" class="text-danger"></span>
                     </div>
                 </div>
@@ -109,3 +111,40 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            loadVendorType();
+        });
+
+        function loadVendorType() {
+            $.ajax({
+                url: "/VendorTypes/GetAll",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Log the response data to the console
+                    console.log(data.data);
+
+                    // Get a reference to the select element
+                    var selectElement = $("#VendorTypeId");
+
+                    // Clear existing options
+                    selectElement.empty();
+
+                    // Add a default "Select Customer Type" option
+                    selectElement.append('<option value="">Select Vendor Type</option>');
+
+                    // Loop through the data and append options
+                    $.each(data.data, function (index, item) {
+                        selectElement.append('<option value="' + item.vendorTypeId + '">' + item.vendorTypeName + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors here
+                    console.error("Error: " + error);
+                }
+            });
+        }
+    </script>
+}

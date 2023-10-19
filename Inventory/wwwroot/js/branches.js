@@ -26,15 +26,15 @@ function loadDataTable() {
                 "render": function (data) {
 
                     return `<div class="text-center"> 
-                            <a href="/Branches/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
+                            <a href="/Branches/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100%;' >
                                 <i class='far fa-edit'></i> Edit
                             </a>
                             &nbsp;
-                            <a class='btn btn-danger text-white' style='cursor:pointer; width100px;' onclick=Delete('/Branches/Delete/'+${data})>
+                            <a class='btn btn-danger text-white' style='cursor:pointer; width:100%;' onclick=Delete('/Branches/Delete/'+${data})>
                                <i class='far fa-trash-alt'></i> Delete
                             </a></div>
                         `;
-                }, "width": "30%"
+                }, "width": "100%"
             }
 
 
