@@ -158,13 +158,18 @@ namespace Inventory.Controllers
             }
 
             var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+                .Include(p => p.Brand)
+                .Include(x => x.SubCategory)
+                .Select(p => new
+                {
+                    Product = p,
+                    CategoryName = p.SubCategory.Category.Name
+                })
+                .FirstOrDefaultAsync(m => m.Product.Id == id);
 
-            return View(product);
+            Product obj = product.Product;
+            obj.CategoryName = product.CategoryName;
+            return View(obj);
         }
 
         // POST: Products/Delete/5

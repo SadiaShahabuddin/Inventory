@@ -28,10 +28,12 @@ namespace Inventory.Controllers
         public IActionResult Upsert(int? id)
         {
             InvoiceType invoiceType = new InvoiceType();
+            //create
             if (id == null)
             {
                 return View(invoiceType);
             }
+            //when Update
             invoiceType = _context.InvoiceType.Find(id.GetValueOrDefault());
             if (invoiceType == null)
             {
