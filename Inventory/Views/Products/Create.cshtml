@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label class="control-label" for="category">Category</label>
                 <select name="CategoryId" id="CategoryId" class="form-control">
-                    <option value="0">Please Select Category</option>
+                    <option disabled selected>--Please Select Category--</option>
                     @foreach (var item in category)
                     {
                         <option value="@item.Id">@item.Name</option>
@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label asp-for="SubCategory" class="control-label"></label>
                 <select name="SubCategoryId" id="SubCategoryId" class="form-control">
-                    <option value="0">Please Select SubCategory</option>
+                   <option disabled selected>--Please Select SubCategory--</option>
 
                 </select>
             </div>

@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label asp-for="CurrencyId" class="control-label"></label>
                         <select name="CurrencyId" class="form-control" id="CurrencyId" required>
-                            <option value="">Select Currency</option>
+                            <option value="" disabled selected>Select Currency</option>
                              @if (currency != null)
                               {
                                  @foreach (var item in currency)
