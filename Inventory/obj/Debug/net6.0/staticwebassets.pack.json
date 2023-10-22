@@ -1477,6 +1477,10 @@
       "PackagePath": "staticwebassets\\js\\productTypes.js"
     },
     {
+      "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\products.js",
+      "PackagePath": "staticwebassets\\js\\products.js"
+    },
+    {
       "Id": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\purchaseTypes.js",
       "PackagePath": "staticwebassets\\js\\purchaseTypes.js"
     },

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Nh/r0BiPMPAjWqvScc0tzaXkmtf9OWRqapbTB7lsLMQ=",
+  "Hash": "sgW5f7yilQ4wwKS7g/mgDoDIZNsfgZRvmertKBMZQcM=",
   "Source": "Inventory",
   "BasePath": "_content/Inventory",
   "Mode": "Default",
@@ -7308,6 +7308,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\paymentTypes.js"
+    },
+    {
+      "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\products.js",
+      "SourceId": "Inventory",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\",
+      "BasePath": "_content/Inventory",
+      "RelativePath": "js/products.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\products.js"
     },
     {
       "Identity": "C:\\Users\\Sadia Athoi\\source\\repos\\Inventory\\Inventory\\wwwroot\\js\\productTypes.js",
