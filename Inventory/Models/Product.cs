@@ -17,27 +17,43 @@ namespace Inventory.Models
 
         [Display(Name = "UOM")]
         public int UnitOfMeasureId { get; set; }
-        public double DefaultBuyingDefaultSellingPrice { get; set; } = 0.0;
-        [Display(Name ="Default Selling DefaultSellingPrice")]
-        public double DefaultSellingDefaultSellingPrice { get; set; } = 0.0;
+        public double DefaultBuyingPrice { get; set; } = 0.0;
 
+        [Display(Name ="Default Selling Price")]
+        public double DefaultSellingPrice { get; set; } = 0.0;
+
+        [Required]
         [Display(Name = "Branch")]
         public int BranchId { get; set; }
+
         [Display(Name = "Currency")]
         public int CurrencyId { get; set; }
+        
         [Required]
-
         [Display(Name = "Sub Category")]
         public int SubCategoryId { get; set; }
+        
         [Required]
         [Display(Name = "Brand")]
         public int BrandId { get; set; }
+
+
+        //Navigation Property 
+
         [ForeignKey("SubCategoryId")]
-        [Display(Name = "Sub Category")]
         public virtual SubCategory SubCategory { get; set; }
 
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
+
+        [ForeignKey("BranchId")]
+        public virtual Branch Branch { get; set; }
+
+        [ForeignKey("UnitOfMeasureId")]
+        public virtual UnitOfMeasure UnitOfMeasure { get; set; }
+
+        [ForeignKey("CurrencyId")]
+        public virtual Currency Currency { get; set; }
 
         [NotMapped]
         public string CategoryName { get; set; }
