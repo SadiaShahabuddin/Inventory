@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label asp-for="VendorTypeId" class="control-label"></label>
                         <select name="VendorTypeId" id="VendorTypeId" class="form-control">
-                            <option value="">Select Vendor Type</option>
+                            <option value="">--Select Vendor Type--</option>
                         </select>
                         <span asp-validation-for="VendorTypeId" class="text-danger"></span>
                     </div>
@@ -133,7 +133,7 @@
                     selectElement.empty();
 
                     // Add a default "Select Customer Type" option
-                    selectElement.append('<option value="">Select Vendor Type</option>');
+                    selectElement.append('<option value="" disabled selected>--Select Vendor Type--</option>');
 
                     // Loop through the data and append options
                     $.each(data.data, function (index, item) {

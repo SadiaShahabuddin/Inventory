@@ -12,6 +12,12 @@ function loadDataTable() {
             "type": "GET",
             "datatype": "json"
         },
+
+        //how many row I want to show first when load the page
+        //pageLength: 2,
+
+        //show entries
+        "lengthMenu": [5, 10, 20, 50, 100],
         "columns": [
             { "data": "vendorTypeName", "width": "25%" },
             { "data": "description", "width": "25%" },

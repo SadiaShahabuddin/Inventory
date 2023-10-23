@@ -7,6 +7,7 @@ namespace Inventory.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Product Name")]
         public string ProductName { get; set; }
         public string ProductCode { get; set; }
         public string Barcode { get; set; }
@@ -32,6 +33,7 @@ namespace Inventory.Models
         [Display(Name = "Brand")]
         public int BrandId { get; set; }
         [ForeignKey("SubCategoryId")]
+        [Display(Name = "Sub Category")]
         public virtual SubCategory SubCategory { get; set; }
 
         [ForeignKey("BrandId")]
