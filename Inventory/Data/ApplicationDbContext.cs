@@ -32,6 +32,7 @@ namespace Inventory.Data
         public DbSet<Inventory.Models.BillType>? BillType { get; set; }
         public DbSet<Inventory.Models.PurchaseType>? PurchaseType { get; set; }
         public DbSet<Inventory.Models.ShipmentType>? ShipmentType { get; set; }
-
+        public DbSet<Inventory.Models.PurchaseOrder>? PurchaseOrder { get; set; }
+        public DbSet<Inventory.Models.PurchaseOrderLine>? PurchaseOrderLine { get; set; }
     }
 }

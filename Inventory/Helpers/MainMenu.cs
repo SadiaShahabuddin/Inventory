@@ -38,8 +38,8 @@ namespace Inventory.MainMenu
         {
             public const string PageName = "Purchase Order";
             public const string RoleName = "Purchase Order";
-            public const string Path = "/PurchaseOrder/Index";
-            public const string ControllerName = "PurchaseOrder";
+            public const string Path = "/PurchaseOrders/Index";
+            public const string ControllerName = "PurchaseOrdes";
             public const string ActionName = "Index";
         }
 
