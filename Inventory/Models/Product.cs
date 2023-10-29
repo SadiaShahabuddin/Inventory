@@ -46,8 +46,8 @@ namespace Inventory.Models
         [ForeignKey("BrandId")]
         public virtual Brand Brand { get; set; }
 
-        [ForeignKey("BranchId")]
-        public virtual Branch Branch { get; set; }
+        //[ForeignKey("BranchId")]
+        //public virtual Branch Branch { get; set; }
 
         [ForeignKey("UnitOfMeasureId")]
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }
