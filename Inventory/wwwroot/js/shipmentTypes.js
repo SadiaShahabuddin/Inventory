@@ -16,7 +16,7 @@ function loadDataTable() {
             { "data": "shipmentTypeName", "width": "25%" },
             { "data": "description", "width": "25%" },
             {
-                "data": "invoiceTypeId",
+                "data": "shipmentTypeId",
                 "render": function (data) {
 
                     return `<div class="text-center"> 

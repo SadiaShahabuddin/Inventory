@@ -23,7 +23,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="PurchaseOrderName" class="control-label"></label>
-                        <input asp-for="PurchaseOrderName" class="form-control" />
+                        <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control" disabled/>
                         <span asp-validation-for="PurchaseOrderName" class="text-danger"></span>
                     </div>
                 </div>
@@ -62,20 +62,22 @@
                 </div>
                 </div>
                 <div class="col-6">
-                <div class="form-group">
+                    <div class="form-group">
                     <label asp-for="CurrencyId" class="control-label"></label>
-                    <input asp-for="CurrencyId" class="form-control" />
-                    <span asp-validation-for="CurrencyId" class="text-danger"></span>
+                    <select name="CurrencyId" id="CurrencyId" class="form-control">
+                        <option disabled selected>--Please Select Currency--</option>
+                    </select>
                 </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label asp-for="PurchaseTypeId" class="control-label"></label>
-                        <input asp-for="PurchaseTypeId" class="form-control" />
-                        <span asp-validation-for="PurchaseTypeId" class="text-danger"></span>
-                    </div>
+                    <label asp-for="PurchaseTypeId" class="control-label"></label>
+                    <select name="PurchaseTypeId" id="PurchaseTypeId" class="form-control">
+                        <option disabled selected>--Please Select Purchase Type--</option>
+                    </select>
+                </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
@@ -106,6 +108,8 @@
         $(document).ready(function () {
             loadBranch();
             loadVendor();
+            loadCurrency();
+            loadPurchaseType();
 
         });
 
@@ -155,37 +159,55 @@
                 }
             });
         }
+
+         function loadCurrency() {
+            $.ajax({
+                type: "GET",
+                url: "/Currencies/GetAll", // Replace with the correct URL
+                success: function (data) {
+                    console.log(data);
+                    var currencyDropdown = $("#CurrencyId");
+                    currencyDropdown.empty();
+                    currencyDropdown.append(
+                             $('<option disabled selected></option>').val('').text('--Please Select Currency--')
+                        );
+                    for (let index = 0; index < data.data.length; index++) {
+                        const currency = data.data[index];
+                        currencyDropdown.append(
+                            $('<option></option>').val(currency.currencyId).text(currency.currencyName)
+                        );
+                    }
+                },
+                error: function (error) {
+                    console.error("Error loading currencies: " + error);
+                }
+            });
+        }
+          function loadPurchaseType() {
+            $.ajax({
+                type: "GET",
+                url: "/PurchaseTypes/GetAll", // Replace with the correct URL
+                success: function (data) {
+                    console.log(data);
+                    var purchaseTypeDropdown = $("#PurchaseTypeId");
+                    purchaseTypeDropdown.empty();
+                    purchaseTypeDropdown.append(
+                            $('<option disabled selected></option>').val('').text('--Please Select Purchase Type--')
+                        );
+                    for (let index = 0; index < data.data.length; index++) {
+                        const purchaseType = data.data[index];
+                        purchaseTypeDropdown.append(
+                            $('<option></option>').val(purchaseType.purchaseTypeId).text(purchaseType.purchaseTypeName)
+                        );
+                    }
+                },
+                error: function (error) {
+                    console.error("Error loading purchase types: " + error);
+                }
+            });
+        }
     
       </script>
 }
 
    
-@*     <script>
-        $(document).ready(function () {
-            loadDataTable();
-        });
-
-        function loadDataTable() {
-            $.ajax({
-                type: "GET",
-                url: "/Vendors/GetAll", // Replace with the correct URL
-                success: function (data) {
-                    console.log(data);
-                    var vendorDropdown = $("#VendorId");
-                    vendorDropdown.empty();
-                    debugger;
-                    for (let index = 0; index < data.data.length; index++) {
-                        const branch = data.data[index];
-                        vendorDropdown.append(
-                            $('<option></option>').val(vendor.id).text(vendor.vendorhName)
-                        );
-                    }
-                },
-                error: function (error) {
-                    console.error("Error loading vendors: " + error);
-                }
-            });
-        }
-    </script> *@
-
- 
