@@ -43,8 +43,10 @@
                         <label asp-for="BranchId"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="BranchId" class="form-control" />
-                        <span asp-validation-for="BranchId" class="text-danger"></span>
+                     
+                        <select name="BranchId" id="BranchId" class="form-control">
+                            <option disabled selected>--Please Select Branch--</option>
+                        </select>
 
                     </div>
                 </div>
@@ -64,3 +66,41 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            loadBranch();
+            loadVendor();
+            loadCurrency();
+            loadPurchaseType();
+
+        });
+
+        function loadBranch() {
+            $.ajax({
+                type: "GET",
+                url: "/Branches/GetAll", // Replace with the correct URL
+                success: function (data) {
+                    console.log(data);
+                    var branchDropdown = $("#BranchId");
+                    branchDropdown.empty();
+                    branchDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Branch--')
+                    );
+                    for (let index = 0; index < data.data.length; index++) {
+                        const branch = data.data[index];
+                        branchDropdown.append(
+                            $('<option></option>').val(branch.id).text(branch.branchName)
+                        );
+                    }
+                },
+                error: function (error) {
+                    console.error("Error loading branches: " + error);
+                }
+            });
+        }
+
+    </script>
+}
+
+

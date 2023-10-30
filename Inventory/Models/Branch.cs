@@ -25,7 +25,7 @@ namespace Inventory.Models
         [Display(Name = "Contact Person")]
         public string ContactPerson { get; set; }
         [NotMapped]
-        public string CurrencyName { get; set; }
+        public string? CurrencyName { get; set; }
     }
 }
 

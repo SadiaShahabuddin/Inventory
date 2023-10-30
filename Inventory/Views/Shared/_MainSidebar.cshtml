@@ -49,7 +49,7 @@
 
             
 
-                <li class="nav-item has-treeview menu-open">
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <p>
                             INVENTORY
@@ -83,10 +83,16 @@
                         </li>
                     </ul>
                 </li>
-        
-               
-                <li class="nav-header">PURCHASE</li>
 
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <p>
+                            PURCHASE
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+             <ul class="nav nav-treeview">
                 <li class="nav-item">
                     <a asp-controller="Vendors" asp-action="Index" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
@@ -119,8 +125,18 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-header">SALES</li>
+                </ul>
+                </li>
 
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <p>
+                                SALES
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
                 <li class="nav-item">
                     <a href="@MainMenu.Customer.Path" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
@@ -144,6 +160,8 @@
                             @MainMenu.SalesType.PageName
                         </p>
                     </a>
+                </li>
+                </ul>
                 </li>
 
                 <li class="nav-item">
@@ -221,72 +239,6 @@
                     </ul>
                 </li>
 
-              @*   <li class="nav-header">CONFIG</li>
-          
-                <li class="nav-item">
-                    <a href="@MainMenu.BillType.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.BillType.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Branches" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.Branch.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.Currency.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.Currency.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.CashBank.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.CashBank.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.InvoiceType.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.InvoiceType.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="PaymentTypes" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.PaymentType.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.ShipmentType.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.ShipmentType.PageName
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="@MainMenu.Warehouse.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
-                        <p>
-                            @MainMenu.Warehouse.PageName
-                        </p>
-                    </a>
-                </li> *@
              
               
             </ul>
