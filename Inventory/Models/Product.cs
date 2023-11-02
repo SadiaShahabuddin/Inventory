@@ -9,11 +9,11 @@ namespace Inventory.Models
         public int Id { get; set; }
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
-        public string ProductCode { get; set; }
-        public string Barcode { get; set; }
+        public string ProductCode { get; set; } = "";
+        public string Barcode { get; set; } = "";
         public string Description { get; set; }
         public Byte[] Image { get; set; }
-        public string ProductImageUrl { get; set; }
+        public string ProductImageUrl { get; set; } = "";
 
         [Display(Name = "UOM")]
         public int UnitOfMeasureId { get; set; }
@@ -24,7 +24,7 @@ namespace Inventory.Models
 
         [Required]
         [Display(Name = "Branch")]
-        public int BranchId { get; set; }
+        public int BranchId { get; set; } = 0;
 
         [Display(Name = "Currency")]
         public int CurrencyId { get; set; }

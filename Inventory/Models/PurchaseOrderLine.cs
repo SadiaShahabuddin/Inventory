@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Inventory.Models
 {
@@ -8,6 +9,8 @@ namespace Inventory.Models
         [Display(Name = "Purchase Order")]
         public int PurchaseOrderId { get; set; }
         [Display(Name = "Purchase Order")]
+
+        [ForeignKey("PurchaseOrderId")]
         public PurchaseOrder PurchaseOrder { get; set; }
         [Display(Name = "Product Item")]
         public int ProductId { get; set; }
@@ -17,6 +20,7 @@ namespace Inventory.Models
         public double Amount { get; set; }
         [Display(Name = "Disc %")]
         public double DiscountPercentage { get; set; }
+        [Display(Name = "Discount Amount")]
         public double DiscountAmount { get; set; }
         public double SubTotal { get; set; }
         [Display(Name = "Tax %")]
