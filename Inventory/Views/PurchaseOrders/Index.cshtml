@@ -108,6 +108,9 @@
                                 <thead>
                                     <tr>
                                         <th>
+                                            <label class="control-label">SL</label>
+                                        </th>
+                                        <th>
                                             <label asp-for="PurchaseOrderLines[0].PurchaseOrderId" class="control-label"></label>
                                         </th>
                                         <th> 
@@ -144,13 +147,25 @@
                                         <th> 
                                             <label asp-for="PurchaseOrderLines[0].Total" class="control-label"></label>
                                         </th>
-                                        <th>
-
-                                        </th>
+                               
+                                <th>
+                                    <button class="btn btn-md btn-primary" id="addBtn" type="button">
+                                        Add 
+                                    </button>
+                                </th>
                                     </tr>
+
+
                                 </thead>
+                                <tbody id="tbody"></tbody>
+                           
                                 <tbody>
+
                                     <tr>
+                                        <td>
+                                            1
+                                        </td>
+                                        
                                         <td>
                                                 <select name="PurchaseOrderLines[0].PurchaseOrderId" id="PurchaseOrderId" class="form-control">
                                                     <option disabled selected>--Please Select Purchase Order Id--</option>
@@ -225,15 +240,18 @@
                                                 <span asp-validation-for="PurchaseOrderLines[0].Total" class="text-danger"></span>
                                            
                                         </td>
-                                        <td>
-                                            add
+                                        
+                                        <td class="text-center">
+                                            <button class="btn btn-danger remove" type="button">Remove</button>
                                         </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
-         
-
-                            <div class="form-group col-md-12 text-right">
+                            
+                            <br />
+                            <br />
+                            <div class="form-group col-md-12 text-left">
                                 <input type="submit" value="Create" class="btn btn-primary" />
                             </div>
                         </form>
@@ -377,30 +395,72 @@
                 }
             });
         }
-        function loadProduct() {
-            $.ajax({
-                type: "GET",
-                url: "/Products/GetAll", // Replace with the correct URL
-                success: function (data) {
-                    console.log(data);
-                    var productDropdown = $("#ProductId");
-                    productDropdown.empty();
-                    productDropdown.append(
-                        $('<option disabled selected></option>').val('').text('--Please Select Product--')
-                    );
-                    for (let index = 0; index < data.data.length; index++) {
-                        const product = data.data[index];
-                        productDropdown.append(
-                            $('<option></option>').val(product.id).text(product.productName)
-                        );
-                    }
-                },
-                error: function (error) {
-                    console.error("Error loading products: " + error);
-                }
-            });
-        }
+       
+            $(document).ready(function () {
+                // Denotes total number of rows
+                var rowIdx = 1;
 
+                // jQuery button click event to add a row
+                $('#addBtn').on('click', function () {
+                    // Adding a row inside the tbody with form fields.
+                    $('#tbody').append(`
+                            <tr id="R${++rowIdx}">
+                                <td class="row-index text-center">
+                                    <p>${rowIdx}</p>
+                                </td>
+                                <td>
+                                    <select name="PurchaseOrderLines[${rowIdx}].PurchaseOrderId" class="form-control">
+                                        <option disabled selected>--Please Select Purchase Order Id--</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="PurchaseOrderLines[${rowIdx}].ProductId" class="form-control">
+                                        <option disabled selected>--Please Select Product Id--</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].Description" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].Quantity" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].Price" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].Amount" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].DiscountPercentage" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].DiscountAmount" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].SubTotal" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].TaxPercentage" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].TaxAmount" class="form-control" />
+                                </td>
+                                <td>
+                                    <input name="PurchaseOrderLines[${rowIdx}].Total" class="form-control" />
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger remove" type="button">Remove</button>
+                                </td>
+                            </tr>
+                        `);
+                });
+
+                // jQuery button click event to remove a row.
+                $('#tbody').on('click', '.remove', function () {
+                    // Removing the current row.
+                    $(this).closest('tr').remove();
+                });
+            });
     </script>
 }
 
