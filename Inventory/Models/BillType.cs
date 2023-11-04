@@ -3,8 +3,8 @@
 namespace Inventory.Models
 {
     public class BillType
-
     {
+        [Key]
         public int BillTypeId { get; set; }
         [Required]
         [Display(Name = "Bill Type Name")]

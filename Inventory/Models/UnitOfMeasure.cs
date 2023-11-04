@@ -4,6 +4,7 @@ namespace Inventory.Models
 {
     public class UnitOfMeasure
     {
+        [Key]
         public int UnitOfMeasureId { get; set; }
         [Required]
         [Display(Name = "Unit of Measure Name")]

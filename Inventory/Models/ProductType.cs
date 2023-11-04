@@ -4,6 +4,7 @@ namespace Inventory.Models
 {
     public class ProductType
     {
+        [Key]
         public int Id { get; set; }
         [Display(Name = "Product Type Name")]
         public string TypeName { get; set; }

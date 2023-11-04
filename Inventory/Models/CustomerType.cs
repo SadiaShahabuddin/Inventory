@@ -4,6 +4,7 @@ namespace Inventory.Models
 {
     public class CustomerType
     {
+        [Key]
         public int CustomerTypeId { get; set; }
         [Required]
         public string CustomerTypeName { get; set; }

@@ -5,6 +5,8 @@ namespace Inventory.Models
     public class PurchaseType
 
     {
+
+        [Key]
         public int PurchaseTypeId { get; set; }
         [Required]
 

@@ -4,6 +4,7 @@ namespace Inventory.Models
 {
     public class PaymentType
     {
+        [Key]
         public int PaymentTypeId { get; set; }
         [Required]
         [Display(Name = "Payment Type Name")]

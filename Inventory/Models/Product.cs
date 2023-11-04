@@ -54,7 +54,6 @@ namespace Inventory.Models
 
         [ForeignKey("CurrencyId")]
         public virtual Currency Currency { get; set; }
-
         [NotMapped]
         public string CategoryName { get; set; }
     }

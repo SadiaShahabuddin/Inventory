@@ -4,6 +4,7 @@ namespace Inventory.Models
 {
     public class SalesType
     {
+        [Key]
         public int SalesTypeId { get; set; }
         [Required]
         [Display(Name = "Sales Type Name")]

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static Inventory.MainMenu.MainMenu;
 
 namespace Inventory.Models
 {
@@ -26,6 +27,9 @@ namespace Inventory.Models
         public string ContactPerson { get; set; }
         [NotMapped]
         public string? CurrencyName { get; set; }
+
+        [ForeignKey("CurrencyId")]
+        public Currency Currency { get; set; }
     }
 }
 
