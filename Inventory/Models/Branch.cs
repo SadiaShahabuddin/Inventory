@@ -29,7 +29,7 @@ namespace Inventory.Models
         public string? CurrencyName { get; set; }
 
         [ForeignKey("CurrencyId")]
-        public Currency Currency { get; set; }
+        public virtual Currency? Currency { get; set; }
     }
 }
 

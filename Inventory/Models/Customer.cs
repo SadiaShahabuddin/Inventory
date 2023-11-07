@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static Inventory.MainMenu.MainMenu;
-
 namespace Inventory.Models
 {
     public class Customer
@@ -11,6 +9,7 @@ namespace Inventory.Models
         [Required]
         public string CustomerName { get; set; }
         [Display(Name = "Customer Type")]
+        
         public int CustomerTypeId { get; set; }
         [Display(Name = "Street Address")]
         public string Address { get; set; }
@@ -23,6 +22,6 @@ namespace Inventory.Models
         [Display(Name = "Contact Person")]
         public string ContactPerson { get; set; }
         [ForeignKey("CustomerTypeId")]
-        public CustomerType CustomerType { get; set; }
+        public virtual CustomerType? CustomerType { get; set; }
     }
 }

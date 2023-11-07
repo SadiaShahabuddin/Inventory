@@ -5,6 +5,7 @@ namespace Inventory.Models
 {
     public class PurchaseOrderLine
     {
+        [Key]
         public int PurchaseOrderLineId { get; set; }
         [Display(Name = "Purchase Order")]
         public int PurchaseOrderId { get; set; }

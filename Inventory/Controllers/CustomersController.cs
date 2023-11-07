@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Inventory.Data;
 using Inventory.Models;
 
+
+
 namespace Inventory.Controllers
 {
     public class CustomersController : Controller
@@ -56,6 +58,7 @@ namespace Inventory.Controllers
                 }
                 _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
             return View(customer);
         }

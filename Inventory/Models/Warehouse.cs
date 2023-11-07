@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Inventory.Models
 {
@@ -12,5 +13,7 @@ namespace Inventory.Models
         public string Description { get; set; }
         [Display(Name = "Branch")]
         public int BranchId { get; set; }
+        [ForeignKey("BranchId")]
+        public virtual Branch? Branch { get; set; }
     }
 }
