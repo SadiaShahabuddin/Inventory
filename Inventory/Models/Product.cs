@@ -9,22 +9,22 @@ namespace Inventory.Models
         public int Id { get; set; }
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
-        public string ProductCode { get; set; } = "";
-        public string Barcode { get; set; } = "";
+        public string ProductCode { get; set; }
+        public string Barcode { get; set; }
         public string Description { get; set; }
         public Byte[] Image { get; set; }
         public string ProductImageUrl { get; set; } = "";
 
         [Display(Name = "UOM")]
         public int UnitOfMeasureId { get; set; }
-        public double DefaultBuyingPrice { get; set; } = 0.0;
+        public double DefaultBuyingPrice { get; set; }
 
         [Display(Name ="Default Selling Price")]
-        public double DefaultSellingPrice { get; set; } = 0.0;
+        public double DefaultSellingPrice { get; set; }
 
         [Required]
         [Display(Name = "Branch")]
-        public int BranchId { get; set; } = 0;
+        public int BranchId { get; set; }
 
         [Display(Name = "Currency")]
         public int CurrencyId { get; set; }

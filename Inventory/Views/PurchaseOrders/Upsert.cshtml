@@ -188,8 +188,8 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="ProductId" id="ProductId" class="form-control">
-                                                <option disabled selected>--Please Select Product Id--</option>
+                                            <select name="PurchaseOrderLines[0].ProductId" id="ProductId" class="form-control">
+                                                <option disabled selected>--Please Select Product--</option>
                                             </select>
 
                                         </td>
@@ -298,6 +298,29 @@
             loadProduct();
 
         });
+        function loadProduct() {
+            $.ajax({
+                type: "GET",
+                url: "/Products/GetAll", // Replace with the correct URL
+                success: function (data) {
+                    console.log(data);
+                    var productDropdown = $("#ProductId");
+                    productDropdown.empty();
+                    productDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Product--')
+                    );
+                    for (let index = 0; index < data.data.length; index++) {
+                        const product = data.data[index];
+                        productDropdown.append(
+                            $('<option></option>').val(product.id).text(product.productName)
+                        );
+                    }
+                },
+                error: function (error) {
+                    console.error("Error loading products: " + error);
+                }
+            });
+        }
 
         function loadBranch() {
             $.ajax({

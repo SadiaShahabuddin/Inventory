@@ -27,7 +27,7 @@ namespace Inventory.Models
         public double Tax { get; set; }
         public double Freight { get; set; }
         public double Total { get; set; }
-        public List<PurchaseOrderLine> PurchaseOrderLines { get; set; } = new List<PurchaseOrderLine>();
+        public List<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
 
     }

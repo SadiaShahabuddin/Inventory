@@ -23,7 +23,7 @@ namespace Inventory.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.CategoryId = _context.Category.ToList();
-            var applicationDbContext = _context.Product.Include(s => s.SubCategory).Include(s => s.Brand);
+            var applicationDbContext = _context.Product.Include(s => s.SubCategory).Include(s => s.Brand).Include(s => s.Branch).Include(s => s.Currency).Include(s => s.UnitOfMeasure);
             return View(await applicationDbContext.ToListAsync());
 
         }
@@ -52,6 +52,9 @@ namespace Inventory.Controllers
             ViewBag.CategoryId = _context.Category.ToList();
             ViewBag.SubCategoryId = _context.SubCategory.ToList();
             ViewBag.BrandId = _context.Brand.ToList();
+            ViewBag.CurrencyId = _context.Currency.ToList();
+            ViewBag.BranchId = _context.Branch.ToList();
+            ViewBag.UnitOfMeasureId = _context.UnitOfMeasure.ToList();
             return View();
         }
 
@@ -89,6 +92,9 @@ namespace Inventory.Controllers
             ViewBag.CategoryId = _context.Category.ToList();
             ViewBag.SubCategoryId = _context.SubCategory.ToList();
             ViewBag.BrandId = _context.Brand.ToList();
+            ViewBag.CurrencyId = _context.Currency.ToList();
+            ViewBag.BranchId = _context.Branch.ToList();
+            ViewBag.UnitOfMeasureId = _context.UnitOfMeasure.ToList();
             var product = await _context.Product.FindAsync(id);
             if (product == null)
             {
@@ -201,6 +207,13 @@ namespace Inventory.Controllers
             var subCategory = await _context.SubCategory.Where(x => x.CategoryId == categoryId).ToListAsync();
             var json= Json(subCategory);
             return json;
+        }
+
+        [HttpGet]
+
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _context.Product });
         }
 
     }
