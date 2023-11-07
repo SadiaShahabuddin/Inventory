@@ -12,7 +12,7 @@ namespace Inventory.Models
         [Display(Name = "Purchase Order")]
 
         [ForeignKey("PurchaseOrderId")]
-        public PurchaseOrder PurchaseOrder { get; set; }
+        public PurchaseOrder? PurchaseOrder { get; set; }
         [Display(Name = "Product Item")]
         public int ProductId { get; set; }
         public string Description { get; set; }
