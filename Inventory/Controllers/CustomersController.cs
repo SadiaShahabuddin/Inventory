@@ -68,7 +68,7 @@ namespace Inventory.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Customer });
+            return Json(new { data = _context.Customer.Include(c => c.CustomerType) });
         }
 
         [HttpDelete]

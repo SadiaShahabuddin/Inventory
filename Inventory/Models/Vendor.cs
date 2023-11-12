@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Inventory.Models
 {
@@ -11,6 +12,8 @@ namespace Inventory.Models
         public string VendorName { get; set; }
         [Display(Name = "Vendor Type")]
         public int VendorTypeId { get; set; }
+        [ForeignKey("VendorTypeId")]
+        public virtual VendorType? VendorType { get; set; }
         [Display(Name = "Street Address")]
         public string Address { get; set; }
         public string City { get; set; }

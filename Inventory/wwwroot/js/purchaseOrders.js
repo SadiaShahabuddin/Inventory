@@ -12,12 +12,12 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "branchId", "width": "5%" },
-            { "data": "vendorId", "width": "5%" },
+            { "data": "branch.branchName", "width": "5%" },
+            { "data": "vendor.vendorName", "width": "5%" },
             { "data": "orderDate", "width": "5%" },
             { "data": "deliveryDate", "width": "5%" },
-            { "data": "currencyId", "width": "5%" },
-            { "data": "purchaseTypeId", "width": "5%" },
+            { "data": "currency.currencyName", "width": "5%" },
+            { "data": "purchaseType.purchaseTypeName", "width": "5%" },
             { "data": "freight", "width": "5%" },
        
             {

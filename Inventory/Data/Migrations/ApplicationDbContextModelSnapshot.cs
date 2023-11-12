@@ -416,7 +416,6 @@ namespace Inventory.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("SubTotal")
@@ -432,6 +431,14 @@ namespace Inventory.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PurchaseOrderId");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("PurchaseTypeId");
+
+                    b.HasIndex("VendorId");
 
                     b.ToTable("PurchaseOrder");
                 });
@@ -638,6 +645,8 @@ namespace Inventory.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VendorTypeId");
 
                     b.ToTable("Vendor");
                 });
@@ -956,6 +965,41 @@ namespace Inventory.Data.Migrations
                     b.Navigation("UnitOfMeasure");
                 });
 
+            modelBuilder.Entity("Inventory.Models.PurchaseOrder", b =>
+                {
+                    b.HasOne("Inventory.Models.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Models.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Models.PurchaseType", "PurchaseType")
+                        .WithMany()
+                        .HasForeignKey("PurchaseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Models.Vendor", "Vendor")
+                        .WithMany()
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("PurchaseType");
+
+                    b.Navigation("Vendor");
+                });
+
             modelBuilder.Entity("Inventory.Models.PurchaseOrderLine", b =>
                 {
                     b.HasOne("Inventory.Models.PurchaseOrder", "PurchaseOrder")
@@ -976,6 +1020,17 @@ namespace Inventory.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Inventory.Models.Vendor", b =>
+                {
+                    b.HasOne("Inventory.Models.VendorType", "VendorType")
+                        .WithMany()
+                        .HasForeignKey("VendorTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("VendorType");
                 });
 
             modelBuilder.Entity("Inventory.Models.Warehouse", b =>

@@ -4,7 +4,7 @@
 
 }
 
-<h1>Upsert</h1>
+@* <h1>Upsert</h1> *@
 
 <div class="card card-default color-palette-box">
 
@@ -20,6 +20,7 @@
 
         </ul>
         <div class="tab-content" id="custom-content-below-tabContent">
+
             <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
                 <br />
                 <form method="post" asp-action="Upsert">
@@ -38,25 +39,29 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="PurchaseOrderName" class="control-label"></label>
-                                <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control" disabled />
-                                <span asp-validation-for="PurchaseOrderName" class="text-danger"></span>
+                                <input asp-for="PurchaseOrderName" class="form-control" />
+                            @*  <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control"/> 
+                                <span asp-validation-for="PurchaseOrderName" class="text-danger"></span> *@
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="BranchId" class="control-label"></label>
-                                <select name="BranchId" id="BranchId" class="form-control">
-                                    <option disabled selected>--Please Select Branch--</option>
+                                <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
+                                <select asp-for="BranchId" class="form-control">
+                                    <option value="">--Please Select Branch--</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+           
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="VendorId" class="control-label"></label>
-                                <select name="VendorId" id="VendorId" class="form-control">
-                                    <option disabled selected>--Please Select Vendor--</option>
+                                <input name="SelectedVendorId" id="SelectedVendorId" value="@Model.VendorId" class="d-none" />
+                                <select asp-for="VendorId" class="form-control">
+                                    <option value="">--Please Select Vendor--</option>
                                 </select>
                             </div>
                         </div>
@@ -79,9 +84,11 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="CurrencyId" class="control-label"></label>
-                                <select name="CurrencyId" id="CurrencyId" class="form-control">
-                                    <option disabled selected>--Please Select Currency--</option>
-                                </select>
+                                <input name="SelectedCurrencyId" id="SelectedCurrencyId" value="@Model.CurrencyId" class="d-none" />
+                                <select asp-for="CurrencyId" class="form-control">
+                                    <option value="">--Please Select Currency--</option>
+          
+                             </select>
                             </div>
                         </div>
                     </div>
@@ -89,9 +96,11 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="PurchaseTypeId" class="control-label"></label>
-                                <select name="PurchaseTypeId" id="PurchaseTypeId" class="form-control">
-                                    <option disabled selected>--Please Select Purchase Type--</option>
+                                <input name="SelectedPurchaseTypeId" id="SelectedPurchaseTypeId" value="@Model.PurchaseTypeId" class="d-none" />
+                                <select asp-for="PurchaseTypeId" class="form-control">
+                                    <option value="">--Please Select Purchase Type--</option>
                                 </select>
+                               
                             </div>
                         </div>
                         <div class="col-6">
@@ -102,17 +111,36 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="Remarks" class="control-label"></label>
+                                <input asp-for="Remarks" class="form-control" />
+                                <span asp-validation-for="Remarks" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                          
+                        </div>
+                    </div>
                     <br />
-                    <div align="center" class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                    <div class="form-group row">
+                        <div class="col-12">
+                            @if (Model.PurchaseOrderId != 0)
+                            {
+                                <partial name="_EditAndBackToListButton" model="Model.PurchaseOrderId" />
+                            }
+                            else
+                            {
+                                <partial name="_CreateAndBackToListButton" />
+                            }
+                        </div>
                     </div>
                 </form>
             </div>
+
             <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
                 <br />
-
-
-
 
                 <div class="row">
                     <div class="col-12">
@@ -165,7 +193,7 @@
                                         </th>
 
                                         <th>
-                                            <button class="btn btn-md btn-primary" id="addBtn" type="button">
+                                            <button class="btn btn-md btn-primary w-100" id="addBtn" type="button">
                                                 Add
                                             </button>
                                         </th>
@@ -267,18 +295,14 @@
 
                             <br />
                             <br />
-                            <div class="row">
-                                <div class="col-5">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
-                                </div>
-                                <div class="col-7">
-                                </div>
-                            </div>
+                          
+                           
                         </form>
-
+                     
                     </div>
-                </div>
 
+                </div>
+          
             </div>
         </div>
     </div>
@@ -303,7 +327,7 @@
                 type: "GET",
                 url: "/Products/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var productDropdown = $("#ProductId");
                     productDropdown.empty();
                     productDropdown.append(
@@ -327,18 +351,23 @@
                 type: "GET",
                 url: "/Branches/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var branchDropdown = $("#BranchId");
+                    var selectedValue = $("#SelectedBranchId").val();
                     branchDropdown.empty();
                     branchDropdown.append(
                         $('<option disabled selected></option>').val('').text('--Please Select Branch--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
                         const branch = data.data[index];
-                        branchDropdown.append(
-                            $('<option></option>').val(branch.id).text(branch.branchName)
-                        );
+                        var option = $('<option></option>').val(branch.id).text(branch.branchName);
+                        if (branch.id == selectedValue) {
+                            option.attr('selected', 'selected');
+                        }
+                        branchDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
                     console.error("Error loading branches: " + error);
@@ -350,65 +379,80 @@
                 type: "GET",
                 url: "/Vendors/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var vendorDropdown = $("#VendorId");
+                    var selectedValue = $("#SelectedVendorId").val();
                     vendorDropdown.empty();
                     vendorDropdown.append(
                         $('<option disabled selected></option>').val('').text('--Please Select Vendor--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
                         const vendor = data.data[index];
-                        vendorDropdown.append(
-                            $('<option></option>').val(vendor.id).text(vendor.vendorName)
-                        );
+                        var option = $('<option></option>').val(vendor.id).text(vendor.vendorName);
+                        if (vendor.id == selectedValue) {
+                            option.attr('selected', 'selected');
+                        }
+                        vendorDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
                     console.error("Error loading vendors: " + error);
                 }
             });
         }
-
         function loadCurrency() {
             $.ajax({
                 type: "GET",
                 url: "/Currencies/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var currencyDropdown = $("#CurrencyId");
+                    var selectedValue = $("#SelectedCurrencyId").val();
                     currencyDropdown.empty();
                     currencyDropdown.append(
-                        $('<option disabled selected></option>').val('').text('--Please Select Currency--')
+                        $('<option disabled selected></option>').val('').text('--Please Select currency--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
                         const currency = data.data[index];
-                        currencyDropdown.append(
-                            $('<option></option>').val(currency.currencyId).text(currency.currencyName)
-                        );
+                        var option = $('<option></option>').val(currency.currencyId).text(currency.currencyName);
+                        if (currency.currencyId == selectedValue) {
+                            option.attr('selected', 'selected');
+                        }
+                        currencyDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
-                    console.error("Error loading currencies: " + error);
+                    console.error("Error loading purchase types: " + error);
                 }
             });
         }
+
         function loadPurchaseType() {
             $.ajax({
                 type: "GET",
                 url: "/PurchaseTypes/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var purchaseTypeDropdown = $("#PurchaseTypeId");
+                    var selectedValue = $("#SelectedPurchaseTypeId").val();
                     purchaseTypeDropdown.empty();
                     purchaseTypeDropdown.append(
                         $('<option disabled selected></option>').val('').text('--Please Select Purchase Type--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
                         const purchaseType = data.data[index];
-                        purchaseTypeDropdown.append(
-                            $('<option></option>').val(purchaseType.purchaseTypeId).text(purchaseType.purchaseTypeName)
-                        );
+                        var option = $('<option></option>').val(purchaseType.purchaseTypeId).text(purchaseType.purchaseTypeName);
+                        if (purchaseType.purchaseTypeId == selectedValue) {
+                            option.attr('selected', 'selected');
+                        }
+                        purchaseTypeDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
                     console.error("Error loading purchase types: " + error);
@@ -420,7 +464,7 @@
                 type: "GET",
                 url: "/PurchaseOrders/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     var purchaseOrderDropdown = $("#PurchaseOrderId");
                     purchaseOrderDropdown.empty();
                     purchaseOrderDropdown.append(
@@ -447,55 +491,55 @@
             $('#addBtn').on('click', function () {
                 // Adding a row inside the tbody with form fields.
                 $('#tbody').append(`
-                                            <tr id="R${++rowIdx}">
-                                                <td class="row-index text-center">
-                                                    <p>${rowIdx}</p>
-                                                </td>
-                                                <td>
-                                                    <select name="PurchaseOrderLines[${rowIdx}].PurchaseOrderId" class="form-control">
-                                                        <option disabled selected>--Please Select Purchase Order Id--</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="PurchaseOrderLines[${rowIdx}].ProductId" class="form-control">
-                                                        <option disabled selected>--Please Select Product Id--</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].Description" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].Quantity" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].Price" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].Amount" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].DiscountPercentage" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].DiscountAmount" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].SubTotal" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].TaxPercentage" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].TaxAmount" class="form-control" />
-                                                </td>
-                                                <td>
-                                                    <input name="PurchaseOrderLines[${rowIdx}].Total" class="form-control" />
-                                                </td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-danger remove" type="button">Remove</button>
-                                                </td>
-                                            </tr>
-                                        `);
+                    <tr id="R${++rowIdx}">
+                        <td class="row-index text-center">
+                            <p>${rowIdx}</p>
+                        </td>
+                        <td>
+                            <select name="PurchaseOrderLines[${rowIdx}].PurchaseOrderId" class="form-control">
+                                <option disabled selected>--Please Select Purchase Order Id--</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="PurchaseOrderLines[${rowIdx}].ProductId" class="form-control">
+                                <option disabled selected>--Please Select Product Id--</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].Description" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].Quantity" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].Price" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].Amount" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].DiscountPercentage" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].DiscountAmount" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].SubTotal" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].TaxPercentage" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].TaxAmount" class="form-control" />
+                        </td>
+                        <td>
+                            <input name="PurchaseOrderLines[${rowIdx}].Total" class="form-control" />
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger remove" type="button">Remove</button>
+                        </td>
+                    </tr>
+                `);
             });
 
             // jQuery button click event to remove a row.
@@ -506,5 +550,3 @@
         });
     </script>
 }
-
-

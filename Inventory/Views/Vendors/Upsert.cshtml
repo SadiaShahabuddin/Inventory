@@ -27,10 +27,11 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="VendorTypeId" class="control-label"></label>
-                        <select name="VendorTypeId" id="VendorTypeId" class="form-control">
-                            <option value="">--Select Vendor Type--</option>
+                        <input name="SelectedVendorTypeId" id="SelectedVendorTypeId" value="@Model.VendorTypeId" class="d-none" />
+                        <select asp-for="VendorTypeId" class="form-control">
+                            <option value=""></option>
                         </select>
-                        <span asp-validation-for="VendorTypeId" class="text-danger"></span>
+                     
                     </div>
                 </div>
             </div>
@@ -128,6 +129,7 @@
 
                     // Get a reference to the select element
                     var selectElement = $("#VendorTypeId");
+                    var selectedValue = $("#SelectedVendorTypeId").val();
 
                     // Clear existing options
                     selectElement.empty();
@@ -137,7 +139,13 @@
 
                     // Loop through the data and append options
                     $.each(data.data, function (index, item) {
-                        selectElement.append('<option value="' + item.vendorTypeId + '">' + item.vendorTypeName + '</option>');
+                        if (item.vendorTypeId == selectedValue) {
+                            selectElement.append('<option selected value="' + item.vendorTypeId + '">' + item.vendorTypeName + '</option>');
+
+                        } else {
+                            selectElement.append('<option value="' + item.vendorTypeId + '">' + item.vendorTypeName + '</option>');
+
+                        }
                     });
                 },
                 error: function (xhr, status, error) {

@@ -26,8 +26,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CustomerTypeId" class="control-label"></label>
-                        <select name="CustomerTypeId" id="CustomerTypeId" class="form-control">
-                            <option value="">--Select Customer Type--</option>
+                        <input name="SelectedCustomerTypeId" id="SelectedCustomerTypeId" value="@Model.CustomerTypeId" class="d-none" />
+                        <select asp-for="CustomerTypeId" class="form-control">
+                            <option value=""></option>
                         </select>
                         <span asp-validation-for="CustomerTypeId" class="text-danger"></span>
                     </div>
@@ -125,18 +126,26 @@
 
                     // Get a reference to the select element
                     var selectElement = $("#CustomerTypeId");
+                    var selectedValue = $("#SelectedCustomerTypeId").val();
 
                     // Clear existing options
                     selectElement.empty();
 
                     // Add a default "Select Customer Type" option
-                    selectElement.append('<option value="">Select Customer Type</option>');
+                    selectElement.append('<option value="" disabled selected>Select Customer Type</option>');
 
                     // Loop through the data and append options
-                    $.each(data.data, function (index, item) {
+ 
+                $.each(data.data, function (index, item) {
+                    if (item.customerTypeId == selectedValue) {
+                        selectElement.append('<option selected value="' + item.customerTypeId + '">' + item.customerTypeName + '</option>');
+
+                    } else {
                         selectElement.append('<option value="' + item.customerTypeId + '">' + item.customerTypeName + '</option>');
-                    });
-                },
+
+                    }
+                });
+            },
                 error: function (xhr, status, error) {
                     // Handle any errors here
                     console.error("Error: " + error);

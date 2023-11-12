@@ -74,7 +74,7 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "vendorName", "width": "5%" },
-            { "data": "vendorTypeId", "width": "5%" },
+            { "data": "vendorType.vendorTypeName", "width": "5%" },
             { "data": "address", "width": "5%" },
             { "data": "city", "width": "5%" },
             { "data": "state", "width": "5%" },

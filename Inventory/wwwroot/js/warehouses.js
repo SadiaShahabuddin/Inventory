@@ -15,12 +15,12 @@ function loadDataTable() {
         "columns": [
             { "data": "warehouseName", "width": "25%" },
             { "data": "description", "width": "25%" },
-            { "data": "branchId", "width": "25%" },
+            { "data": "branch.branchName", "width": "25%" },
             {
                 "data": "warehouseId",
                 "render": function (data) {
 
-                    return `<div class="text-center"> 
+                    return `<div class="text-center">
                             <a href="/Warehouses/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
                                 <i class='far fa-edit'></i> Edit
                             </a>
@@ -39,6 +39,19 @@ function loadDataTable() {
         },
         "width": "100%"
     });
+    // Make an Ajax call
+    //$.ajax({
+    //    url: "/Warehouses/GetAll",
+    //    type: "GET",
+    //    dataType: "json",
+    //    success: function (data) {
+    //        // Log the response in the console
+    //        console.log(data);
+    //    },
+    //    error: function (error) {
+    //        console.error("Error loading data: " + error);
+    //    }
+    //});
 }
 
 function Delete(url) {

@@ -66,7 +66,7 @@ namespace Inventory.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Warehouse });
+            return Json(new { data = _context.Warehouse.Include(w => w.Branch) });
         }
 
         [HttpDelete]

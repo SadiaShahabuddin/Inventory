@@ -60,7 +60,7 @@ namespace Inventory.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Vendor });
+            return Json(new { data = _context.Vendor.Include(t =>t.VendorType) });
         }
 
         [HttpDelete]

@@ -12,7 +12,7 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "branchName", "width": "5%" },
-            { "data": "currencyId", "width": "5%" },
+            { "data": "currency.currencyName", "width": "5%" },
             { "data": "address", "width": "5%" },
             { "data": "city", "width": "5%" },
             { "data": "state", "width": "5%" },

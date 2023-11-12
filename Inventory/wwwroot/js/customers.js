@@ -13,7 +13,7 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "customerName", "width": "5%" },
-            { "data": "customerTypeId", "width": "5%" },
+            { "data": "customerType.customerTypeName", "width": "5%" },
             { "data": "address", "width": "5%" },
             { "data": "city", "width": "5%" },
             { "data": "state", "width": "5%" },
