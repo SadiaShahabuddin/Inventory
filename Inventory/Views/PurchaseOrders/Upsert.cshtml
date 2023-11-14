@@ -3,151 +3,134 @@
     var title = "Create Purchase Order";
 
 }
-
-@* <h1>Upsert</h1> *@
-
-<div class="card card-default color-palette-box">
-
-    <div class="card-body">
-       
-        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Purchase</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Details</a>
-            </li>
-
-        </ul>
-        <div class="tab-content" id="custom-content-below-tabContent">
-
-            <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
-                <br />
-                <form method="post" asp-action="Upsert">
-
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    @if (Model.PurchaseOrderId != 0)
-                    {
-                        <input type="hidden" asp-for="PurchaseOrderId" />
-                        title = "Edit Purchase Order";
-                    }
-                    <div class="col-12">
-                        <h2 class="text-primary">@title</h2>
-                        <br />
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="PurchaseOrderName" class="control-label"></label>
-                                <input asp-for="PurchaseOrderName" class="form-control" />
-                            @*  <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control"/> 
-                                <span asp-validation-for="PurchaseOrderName" class="text-danger"></span> *@
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="BranchId" class="control-label"></label>
-                                <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
-                                <select asp-for="BranchId" class="form-control">
-                                    <option value="">--Please Select Branch--</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-           
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="VendorId" class="control-label"></label>
-                                <input name="SelectedVendorId" id="SelectedVendorId" value="@Model.VendorId" class="d-none" />
-                                <select asp-for="VendorId" class="form-control">
-                                    <option value="">--Please Select Vendor--</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="OrderDate" class="control-label"></label>
-                                <input asp-for="OrderDate" class="form-control" type="date" pattern="\d{4}-\d{2}-\d{2}" title="Please enter a valid date in the format YYYY-MM-DD" />
-                                <span asp-validation-for="OrderDate" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="DeliveryDate" class="control-label"></label>
-                                <input asp-for="DeliveryDate" class="form-control" type="date" pattern="\d{4}-\d{2}-\d{2}" title="Please enter a valid date in the format YYYY-MM-DD" />
-                                <span asp-validation-for="DeliveryDate" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="CurrencyId" class="control-label"></label>
-                                <input name="SelectedCurrencyId" id="SelectedCurrencyId" value="@Model.CurrencyId" class="d-none" />
-                                <select asp-for="CurrencyId" class="form-control">
-                                    <option value="">--Please Select Currency--</option>
-          
-                             </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="PurchaseTypeId" class="control-label"></label>
-                                <input name="SelectedPurchaseTypeId" id="SelectedPurchaseTypeId" value="@Model.PurchaseTypeId" class="d-none" />
-                                <select asp-for="PurchaseTypeId" class="form-control">
-                                    <option value="">--Please Select Purchase Type--</option>
-                                </select>
-                               
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="Freight" class="control-label"></label>
-                                <input asp-for="Freight" class="form-control" />
-                                <span asp-validation-for="Freight" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="Remarks" class="control-label"></label>
-                                <input asp-for="Remarks" class="form-control" />
-                                <span asp-validation-for="Remarks" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                          
-                        </div>
-                    </div>
-                    <br />
-                    <div class="form-group row">
-                        <div class="col-12">
-                            @if (Model.PurchaseOrderId != 0)
-                            {
-                                <partial name="_EditAndBackToListButton" model="Model.PurchaseOrderId" />
-                            }
-                            else
-                            {
-                                <partial name="_CreateAndBackToListButton" />
-                            }
-                        </div>
-                    </div>
-                </form>
+<div class="row">
+    <div class="col-12">
+        <h4>@title</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-tabs">
+            <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-five-overlay-tab" data-toggle="pill" href="#custom-tabs-five-overlay" role="tab" aria-controls="custom-tabs-five-overlay" aria-selected="true">Overlay</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-five-normal-tab" data-toggle="pill" href="#custom-tabs-five-normal" role="tab" aria-controls="custom-tabs-five-normal" aria-selected="false">Normal Tab</a>
+                    </li>
+                </ul>
             </div>
+            <form method="post" asp-action="Upsert">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @if (Model.PurchaseOrderId != 0)
+                {
+                    <input type="hidden" asp-for="PurchaseOrderId" />
+                    title = "Edit Purchase Order";
+                }
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-five-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-five-overlay" role="tabpanel" aria-labelledby="custom-tabs-five-overlay-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="PurchaseOrderName" class="control-label"></label>
+                                        <input asp-for="PurchaseOrderName" class="form-control" />
+                                        @*  <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control"/>
+                                        <span asp-validation-for="PurchaseOrderName" class="text-danger"></span> *@
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="BranchId" class="control-label"></label>
+                                        <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
+                                        <select asp-for="BranchId" class="form-control">
+                                            <option value="">--Please Select Branch--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="VendorId" class="control-label"></label>
+                                        <input name="SelectedVendorId" id="SelectedVendorId" value="@Model.VendorId" class="d-none" />
+                                        <select asp-for="VendorId" class="form-control">
+                                            <option value="">--Please Select Vendor--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="OrderDate" class="control-label"></label>
+                                        <input asp-for="OrderDate" class="form-control" type="date" pattern="\d{4}-\d{2}-\d{2}" title="Please enter a valid date in the format YYYY-MM-DD" />
+                                        <span asp-validation-for="OrderDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="DeliveryDate" class="control-label"></label>
+                                        <input asp-for="DeliveryDate" class="form-control" type="date" pattern="\d{4}-\d{2}-\d{2}" title="Please enter a valid date in the format YYYY-MM-DD" />
+                                        <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="CurrencyId" class="control-label"></label>
+                                        <input name="SelectedCurrencyId" id="SelectedCurrencyId" value="@Model.CurrencyId" class="d-none" />
+                                        <select asp-for="CurrencyId" class="form-control">
+                                            <option value="">--Please Select Currency--</option>
 
-            <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-                <br />
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="PurchaseTypeId" class="control-label"></label>
+                                        <input name="SelectedPurchaseTypeId" id="SelectedPurchaseTypeId" value="@Model.PurchaseTypeId" class="d-none" />
+                                        <select asp-for="PurchaseTypeId" class="form-control">
+                                            <option value="">--Please Select Purchase Type--</option>
+                                        </select>
 
-                <div class="row">
-                    <div class="col-12">
-                        <br />
-
-                        <form asp-action="Index">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Freight" class="control-label"></label>
+                                        <input asp-for="Freight" class="form-control" />
+                                        <span asp-validation-for="Freight" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Remarks" class="control-label"></label>
+                                        <input asp-for="Remarks" class="form-control" />
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    @if (Model.PurchaseOrderId != 0)
+                                    {
+                                        <partial name="_EditAndBackToListButton" model="Model.PurchaseOrderId" />
+                                    }
+                                    else
+                                    {
+                                        <partial name="_CreateAndBackToListButton" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-five-normal" role="tabpanel" aria-labelledby="custom-tabs-five-normal-tab">
                             <table border="1">
                                 <thead>
                                     <tr>
@@ -292,25 +275,15 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <br />
-                            <br />
-                          
-                           
-                        </form>
-                     
+                        </div>
                     </div>
-
                 </div>
-          
-            </div>
+            </form>
+            <!-- /.card -->
         </div>
     </div>
 </div>
-
-
-
-
+<!-- /.row -->
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -345,7 +318,6 @@
                 }
             });
         }
-
         function loadBranch() {
             $.ajax({
                 type: "GET",
@@ -430,7 +402,6 @@
                 }
             });
         }
-
         function loadPurchaseType() {
             $.ajax({
                 type: "GET",
@@ -482,71 +453,66 @@
                 }
             });
         }
-
-        $(document).ready(function () {
-            // Denotes total number of rows
-            var rowIdx = 1;
-
-            // jQuery button click event to add a row
-            $('#addBtn').on('click', function () {
-                // Adding a row inside the tbody with form fields.
-                $('#tbody').append(`
-                    <tr id="R${++rowIdx}">
-                        <td class="row-index text-center">
-                            <p>${rowIdx}</p>
-                        </td>
-                        <td>
-                            <select name="PurchaseOrderLines[${rowIdx}].PurchaseOrderId" class="form-control">
-                                <option disabled selected>--Please Select Purchase Order Id--</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="PurchaseOrderLines[${rowIdx}].ProductId" class="form-control">
-                                <option disabled selected>--Please Select Product Id--</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].Description" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].Quantity" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].Price" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].Amount" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].DiscountPercentage" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].DiscountAmount" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].SubTotal" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].TaxPercentage" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].TaxAmount" class="form-control" />
-                        </td>
-                        <td>
-                            <input name="PurchaseOrderLines[${rowIdx}].Total" class="form-control" />
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger remove" type="button">Remove</button>
-                        </td>
-                    </tr>
+        // Denotes total number of rows
+        var rowIdx = 1;
+        // jQuery button click event to add a row
+        $('#addBtn').on('click', function () {
+            // Adding a row inside the tbody with form fields.
+            $('#tbody').append(`
+                <tr id="R${++rowIdx}">
+                <td class="row-index text-center">
+                <p>${rowIdx}</p>
+                </td>
+                <td>
+                <select name="PurchaseOrderLines[${rowIdx}].PurchaseOrderId" class="form-control">
+                <option disabled selected>--Please Select Purchase Order Id--</option>
+                </select>
+                </td>
+                <td>
+                <select name="PurchaseOrderLines[${rowIdx}].ProductId" class="form-control">
+                <option disabled selected>--Please Select Product Id--</option>
+                </select>
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].Description" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].Quantity" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].Price" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].Amount" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].DiscountPercentage" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].DiscountAmount" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].SubTotal" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].TaxPercentage" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].TaxAmount" class="form-control" />
+                </td>
+                <td>
+                <input name="PurchaseOrderLines[${rowIdx}].Total" class="form-control" />
+                </td>
+                <td class="text-center">
+                <button class="btn btn-danger remove" type="button">Remove</button>
+                </td>
+                </tr>
                 `);
-            });
-
-            // jQuery button click event to remove a row.
-            $('#tbody').on('click', '.remove', function () {
-                // Removing the current row.
-                $(this).closest('tr').remove();
-            });
+        });
+        // jQuery button click event to remove a row.
+        $('#tbody').on('click', '.remove', function () {
+            // Removing the current row.
+            $(this).closest('tr').remove();
         });
     </script>
 }
