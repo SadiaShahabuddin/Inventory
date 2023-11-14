@@ -18,8 +18,10 @@ namespace Inventory.Models
         public int VendorId { get; set; }
         [ForeignKey("VendorId")]
         public virtual Vendor? Vendor { get; set; }
-        public DateTimeOffset OrderDate { get; set; }
-        public DateTimeOffset DeliveryDate { get; set; }
+        [Display(Name = "Order Date ")]
+        public DateTimeOffset OrderDate { get; set; } = DateTime.Now.Date;
+        [Display(Name = "Delivery Date ")]
+        public DateTimeOffset DeliveryDate { get; set; } = DateTime.Now.Date;
 
         [Display(Name = "Currency")]
         public int CurrencyId { get; set; }

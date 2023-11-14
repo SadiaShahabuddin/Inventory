@@ -49,10 +49,12 @@ namespace Inventory.Controllers
                 if (purchaseOrder.PurchaseOrderId == 0)
                 {
                     _context.PurchaseOrder.Add(purchaseOrder);
+                    _context.PurchaseOrderLine.AddRange(purchaseOrder.PurchaseOrderLines);
                 }
                 else
                 {
                     _context.PurchaseOrder.Update(purchaseOrder);
+                    _context.PurchaseOrderLine.UpdateRange(purchaseOrder.PurchaseOrderLines);
                 }
                 _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
