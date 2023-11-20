@@ -190,7 +190,7 @@
 
                                     <tr>
                                         <td>
-                                            1
+                                            0
                                         </td>
 
                                         <td>
@@ -453,14 +453,15 @@
                 }
             });
         }
-        // Denotes total number of rows
-        var rowIdx = 1;
-        // jQuery button click event to add a row
+    
+        var rowIdx = 1; // Ensure this is initialized appropriately
+
         $('#addBtn').on('click', function () {
             // Adding a row inside the tbody with form fields.
             $('#tbody').append(`
-                <tr id="R${++rowIdx}">
-                <td class="row-index text-center">
+            <tr id="R${rowIdx}">
+                <!-- ... Your row content ... -->
+            <td class="row-index text-center">
                 <p>${rowIdx}</p>
                 </td>
                 <td>
@@ -507,12 +508,23 @@
                 <button class="btn btn-danger remove" type="button">Remove</button>
                 </td>
                 </tr>
-                `);
+                            `);
+            rowIdx++;
         });
-        // jQuery button click event to remove a row.
+
+        // Event handler for removing a row
         $('#tbody').on('click', '.remove', function () {
             // Removing the current row.
             $(this).closest('tr').remove();
+            // Update the serial numbers after removal
+            updateSerialNumbers();
         });
+
+        // Function to update serial numbers
+        function updateSerialNumbers() {
+            $('#tbody tr').each(function (index, row) {
+                $(row).find('.row-index p').text(index + 1);
+            });
+        }
     </script>
 }

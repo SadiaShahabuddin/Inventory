@@ -7,9 +7,9 @@ namespace Inventory.Models
         [Key]
         public int SalesOrderLineId { get; set; }
         [Display(Name = "Sales Order")]
-        public int SalesOrderId { get; set; }
+        public int SalesOrderId { get; set; }= 0;
         [Display(Name = "Sales Order")]
-        public SalesOrder SalesOrder { get; set; }
+        public virtual SalesOrder? SalesOrder { get; set; }
         [Display(Name = "Product Item")]
         public int ProductId { get; set; }
         public string? Description { get; set; }

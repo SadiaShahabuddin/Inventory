@@ -1,0 +1,90 @@
+﻿@model Inventory.Models.PaymentReceive
+
+
+@{
+    var title = "Create Payment Receive";
+
+}
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <form method="post" asp-action="Upsert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.PaymentReceiveId != 0)
+            {
+                <input type="hidden" asp-for="PaymentReceiveId" />
+                title = "Edit Payment Receive";
+            }
+            <div class="col-12">
+                <h2 class="text-primary">@title</h2>
+                <br />
+            </div>
+   
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PaymentReceiveName" class="control-label"></label>
+                        <input asp-for="PaymentReceiveName" class="form-control" />
+                        <span asp-validation-for="PaymentReceiveName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="InvoiceId" class="control-label"></label>
+                        <input asp-for="InvoiceId" class="form-control" />
+                        <span asp-validation-for="InvoiceId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PaymentDate" class="control-label"></label>
+                        <input asp-for="PaymentDate" class="form-control" />
+                        <span asp-validation-for="PaymentDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PaymentTypeId" class="control-label"></label>
+                        <input name="PaymentTypeId" id="SelectedPaymentTypeId" value="@Model.PaymentTypeId" class="d-none" />
+                        <select asp-for="PaymentTypeId" class="form-control">
+                            <option value=""></option>
+                        </select>
+                        <span asp-validation-for="PaymentTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PaymentAmount" class="control-label"></label>
+                        <input asp-for="PaymentAmount" class="form-control" />
+                        <span asp-validation-for="PaymentAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IsFullPayment" class="control-label"></label>
+                        <input asp-for="IsFullPayment" class="form-control" />
+                        <span asp-validation-for="IsFullPayment" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        @if (Model.PaymentReceiveId != 0)
+                        {
+                            <partial name="_EditAndBackToListButton" model="Model.PaymentReceiveId" />
+                        }
+                        else
+                        {
+                            <partial name="_CreateAndBackToListButton" />
+                        }
+                    </div>
+            </div>
+
+        </form>
+    </div>
+</div>
