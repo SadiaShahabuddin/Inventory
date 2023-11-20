@@ -17,7 +17,7 @@ namespace Inventory.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.21")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -516,6 +516,127 @@ namespace Inventory.Data.Migrations
                     b.ToTable("PurchaseType");
                 });
 
+            modelBuilder.Entity("Inventory.Models.SalesOrder", b =>
+                {
+                    b.Property<int>("SalesOrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesOrderId"), 1L, 1);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerRefNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("DeliveryDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Freight")
+                        .HasColumnType("float");
+
+                    b.Property<DateTimeOffset>("OrderDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SalesOrderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SalesTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SubTotal")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Tax")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("SalesOrderId");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("SalesTypeId");
+
+                    b.ToTable("SalesOrder");
+                });
+
+            modelBuilder.Entity("Inventory.Models.SalesOrderLine", b =>
+                {
+                    b.Property<int>("SalesOrderLineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesOrderLineId"), 1L, 1);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DiscountPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<int>("SalesOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SubTotal")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TaxAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TaxPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("SalesOrderLineId");
+
+                    b.HasIndex("SalesOrderId");
+
+                    b.ToTable("SalesOrderLine");
+                });
+
             modelBuilder.Entity("Inventory.Models.SalesType", b =>
                 {
                     b.Property<int>("SalesTypeId")
@@ -1011,6 +1132,52 @@ namespace Inventory.Data.Migrations
                     b.Navigation("PurchaseOrder");
                 });
 
+            modelBuilder.Entity("Inventory.Models.SalesOrder", b =>
+                {
+                    b.HasOne("Inventory.Models.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Models.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Models.SalesType", "SalesType")
+                        .WithMany()
+                        .HasForeignKey("SalesTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("SalesType");
+                });
+
+            modelBuilder.Entity("Inventory.Models.SalesOrderLine", b =>
+                {
+                    b.HasOne("Inventory.Models.SalesOrder", "SalesOrder")
+                        .WithMany("SalesOrderLines")
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SalesOrder");
+                });
+
             modelBuilder.Entity("Inventory.Models.SubCategory", b =>
                 {
                     b.HasOne("Inventory.Models.Category", "Category")
@@ -1098,6 +1265,11 @@ namespace Inventory.Data.Migrations
             modelBuilder.Entity("Inventory.Models.PurchaseOrder", b =>
                 {
                     b.Navigation("PurchaseOrderLines");
+                });
+
+            modelBuilder.Entity("Inventory.Models.SalesOrder", b =>
+                {
+                    b.Navigation("SalesOrderLines");
                 });
 #pragma warning restore 612, 618
         }
