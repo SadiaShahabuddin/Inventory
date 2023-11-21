@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card card-default color-palette-box">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-primary">Stock List</h2>
+            </div>
+            
+        </div>
+        <br />
+        <br />
+        <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sl</th>
+                    <th>Product Name</th>
+                    <th>Total Purchase</th>
+                    <th>Total Sales</th>
+                    <th>Current Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/stocks.js"></script>
+}
+
+
+
+        

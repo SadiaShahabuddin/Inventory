@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Inventory.Data;
 using Inventory.Models;
+using Microsoft.Data.SqlClient;
+using Inventory.Models.ViewModel;
 
 namespace Inventory.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: Products
@@ -27,7 +31,7 @@ namespace Inventory.Controllers
             return View(await applicationDbContext.ToListAsync());
 
         }
-
+       
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -216,5 +220,58 @@ namespace Inventory.Controllers
             return Json(new { data = _context.Product });
         }
 
+        public IActionResult Stock()
+        {
+            return View();
+        }
+
+        public JsonResult GetStock()
+        {
+            List<Stock> stocks = new List<Stock>();
+
+            string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = @"
+                 SELECT P.ProductName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, ISNULL(X.TOTALPURCHASE - Y.TOTALSALES, 0) AS CURRENTSTOCK
+                 FROM PRODUCT P
+                 LEFT OUTER JOIN (
+                     SELECT COUNT(QUANTITY) AS TOTALPURCHASE, PRODUCTID
+                     FROM PURCHASEORDERLINE L
+                     GROUP BY PRODUCTID
+                 ) X ON X.PRODUCTID = P.ID
+                 LEFT OUTER JOIN (
+                     SELECT COUNT(QUANTITY) AS TOTALSALES, PRODUCTID
+                     FROM SALESORDERLINE L
+                     GROUP BY PRODUCTID
+                 ) Y ON Y.PRODUCTID = P.ID
+                 ORDER BY P.Id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+               {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Stock stock = new Stock
+                            {
+                                ProductName = reader["ProductName"].ToString(),
+                                TotalPurchase = Convert.ToInt32(reader["TOTALPURCHASE"]),
+                                TotalSales = Convert.ToInt32(reader["TOTALSALES"]),
+                                CurrentStock = Convert.ToInt32(reader["CURRENTSTOCK"])
+                            };
+
+                            stocks.Add(stock);
+                        }
+                    }
+                }
+            }
+            return Json(new { data = stocks });
+
+        }
     }
 }
+

@@ -12,7 +12,7 @@ namespace Inventory.Models
         public string ProductCode { get; set; }
         public string Barcode { get; set; }
         public string Description { get; set; }
-        public Byte[] Image { get; set; }
+        public Byte[]? Image { get; set; }
         public string ProductImageUrl { get; set; } = "";
 
         [Display(Name = "UOM")]
