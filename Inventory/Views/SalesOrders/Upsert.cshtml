@@ -92,9 +92,9 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="SalesTypeId" class="control-label"></label>
-                                <input name="SelectedPurchaseTypeId" id="SelectedPurchaseTypeId" value="@Model.SalesTypeId" class="d-none" />
+                                <input name="SelectedSalesTypeId" id="SelectedSalesTypeId" value="@Model.SalesTypeId" class="d-none" />
                                 <select asp-for="SalesTypeId" class="form-control">
-                                    <option value="">--Please Select Purchase Type--</option>
+                                    <option value="">--Please Select Sales Type--</option>
                                 </select>
 
                             </div>
@@ -353,6 +353,7 @@
                 }
             });
         }
+
         function loadCustomer() {
             $.ajax({
                 type: "GET",
@@ -369,7 +370,7 @@
                         const customer = data.data[index];
                         console.log(customer);
                         var option = $('<option></option>').val(customer.customerId).text(customer.customerName);
-                        if (customer.id == selectedValue) {
+                        if (customer.customerId == selectedValue) {
                             option.attr('selected', 'selected');
                         }
                         customerDropdown.append(option);

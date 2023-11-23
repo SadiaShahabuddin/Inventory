@@ -19,7 +19,7 @@ namespace Inventory.Models
         public int UnitOfMeasureId { get; set; }
         public double DefaultBuyingPrice { get; set; }
 
-        [Display(Name ="Default Selling Price")]
+        [Display(Name = "Default Selling Price")]
         public double DefaultSellingPrice { get; set; }
 
         [Required]
@@ -28,11 +28,11 @@ namespace Inventory.Models
 
         [Display(Name = "Currency")]
         public int CurrencyId { get; set; }
-        
+
         [Required]
         [Display(Name = "Sub Category")]
         public int SubCategoryId { get; set; }
-        
+
         [Required]
         [Display(Name = "Brand")]
         public int BrandId { get; set; }
@@ -56,5 +56,7 @@ namespace Inventory.Models
         public virtual Currency Currency { get; set; }
         [NotMapped]
         public string CategoryName { get; set; }
+        [NotMapped]
+        public int CategoryId { get; set; }
     }
 }

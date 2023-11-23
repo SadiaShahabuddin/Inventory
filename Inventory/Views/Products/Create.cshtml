@@ -13,41 +13,41 @@
     <div class="card-body">
         <h2 class="text-primary">Create Product</h2>
 
-<div class="row">
-    <div class="col-md-6" >
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductCode" class="control-label"></label>
-                <input asp-for="ProductCode" class="form-control" />
-                <span asp-validation-for="ProductCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Barcode" class="control-label"></label>
-                <input asp-for="Barcode" class="form-control" />
-                <span asp-validation-for="Barcode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label><br />
-                <input name="Image" type="file" id="fileUpload" accept="image/*" onchange="previewImage(this);">
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-                   
-            <div class="form-group">
-                <label asp-for="DefaultBuyingPrice" class="control-label"></label>
-                <input asp-for="DefaultBuyingPrice" class="form-control" />
-                <span asp-validation-for="DefaultBuyingPrice" class="text-danger"></span>
-            </div>
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ProductName" class="control-label"></label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductCode" class="control-label"></label>
+                        <input asp-for="ProductCode" class="form-control" />
+                        <span asp-validation-for="ProductCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Barcode" class="control-label"></label>
+                        <input asp-for="Barcode" class="form-control" />
+                        <span asp-validation-for="Barcode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label"></label><br />
+                        <input name="Image" type="file" id="fileUpload" accept="image/*" onchange="previewImage(this);">
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DefaultBuyingPrice" class="control-label"></label>
+                        <input asp-for="DefaultBuyingPrice" class="form-control" />
+                        <span asp-validation-for="DefaultBuyingPrice" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <label asp-for="DefaultSellingPrice" class="control-label"></label>
                         <input asp-for="DefaultSellingPrice" class="form-control" />
@@ -83,54 +83,55 @@
                             }
                         </select>
                     </div>
-            <div class="form-group">
-                <label class="control-label" for="category">Category</label>
-                <select name="CategoryId" id="CategoryId" class="form-control">
-                    <option disabled selected>--Please Select Category--</option>
-                    @foreach (var item in category)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubCategory" class="control-label"></label>
-                <select name="SubCategoryId" id="SubCategoryId" class="form-control">
-                   <option disabled selected>--Please Select SubCategory--</option>
+                    <div class="form-group">
+                        <label class="control-label" for="category">Category</label>
+                        <select name="CategoryId" id="CategoryId" class="form-control">
+                            <option disabled selected>--Please Select Category--</option>
+                            @foreach (var item in category)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SubCategory" class="control-label"></label>
+                        <select name="SubCategoryId" id="SubCategoryId" class="form-control">
+                            <option disabled selected>--Please Select SubCategory--</option>
 
-                </select>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Brand" class="control-label"></label>
+                        <select name="BrandId" class="form-control">
+                            <option disabled selected>--Please Select Brand--</option>
+                            @foreach (var item in brands)
+                            {
+                                <option value="@item.Id">@item.BrandName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="submit" value="Create" class="btn btn-primary w-100" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success form-control w-100"><i class="fas fa-sign-out-alt"></i>&nbsp; Back to List</a>
+                        </div>
+                    </div>
+                </form>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Brand" class="control-label"></label>
-                <select name="BrandId" class="form-control">
-                    @foreach (var item in brands)
-                    {
-                        <option value="@item.Id">@item.BrandName</option>
-                    }
-                </select>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <input type="submit" value="Create" class="btn btn-primary w-100" />
+            <div class="col-md-6">
+
+                <div id="selectedImageContainer">
+                    <img id="selectedImage" src="#" alt="Selected Image" class="img-fluid" style="max-height: 500px;" />
                 </div>
-                <div class="col">
-                    <a asp-action="Index" class="btn btn-success form-control w-100"><i class="fas fa-sign-out-alt"></i>&nbsp; Back to List</a>
-                </div>
-             </div>
-        </form>
 
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-               
-    <div id="selectedImageContainer">
-        <img id="selectedImage" src="#" alt="Selected Image" class="img-fluid" style="max-height: 500px;" />
-    </div>
-                
-    </div>
-</div>
-</div>
 
-    
+
 </div>
 
 @section Scripts {
@@ -160,9 +161,6 @@
                 selectedImageContainer.style.display = 'none'; // Hide the image container if no file is selected
             }
         }
-    </script>
-}
-@*     <script>
         $("#CategoryId").change(function () {
             var categoryId = $(this).val();
 
@@ -185,8 +183,8 @@
                             $('<option></option>').val(subcategory.id).text(subcategory.name)
                         );
                     }
-                    
-                   
+
+
                 },
                 error: function (error) {
                     console.error("Error loading subcategories: " + error);
@@ -195,4 +193,3 @@
         });
     </script>
 }
- *@
