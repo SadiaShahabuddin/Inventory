@@ -145,7 +145,6 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                   
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -163,12 +162,11 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-five-normal" role="tabpanel" aria-labelledby="custom-tabs-five-normal-tab">
                             <button type="button" id="addProduct" class="btn btn-primary">Add Product</button>
-                            <table class="table">
+                            <table class="table" id="productDetails">
                                 <thead>
                                     <tr>
                                         <th>Serial No</th>
                                         <th>Product</th>
-                                        <th>Description</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>Amount</th>
@@ -209,7 +207,6 @@
                 type: "GET",
                 url: "/Products/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var productDropdown = $("#ProductId");
                     productDropdown.empty();
                     productDropdown.append(
@@ -232,7 +229,6 @@
                 type: "GET",
                 url: "/Branches/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var branchDropdown = $("#BranchId");
                     var selectedValue = $("#SelectedBranchId").val();
                     branchDropdown.empty();
@@ -260,7 +256,6 @@
                 type: "GET",
                 url: "/Vendors/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var vendorDropdown = $("#VendorId");
                     var selectedValue = $("#SelectedVendorId").val();
                     vendorDropdown.empty();
@@ -377,8 +372,16 @@
                 }
             });
         }
-        
-      
+
+        // Add product options to the dropdown
+        function addProductOptionsToDropdown(dropdown, products) {
+            dropdown.empty();
+            dropdown.append($('<option>').val('').text('Select Product'));
+            $.each(products.data, function (index, product) {
+                dropdown.append($('<option>').val(product.id).text(product.productName).data('price', product.defaultSellingPrice));
+            });
+        }
+
         // Update price and calculate total when product or quantity changes
         function updatePriceAndTotal(row) {
 
@@ -400,7 +403,40 @@
             row.find('.discountAmount').text(discountAmount.toFixed(2));
             row.find('.taxAmount').text(taxAmount.toFixed(2));
             row.find('.total').text(total.toFixed(2));
-         
+
+            updateTotalAmount();
+
+        }
+        function updateTotalAmount() {
+            var total = 0;
+            var totalDiscountAmount = 0;
+            var totalTaxAmount = 0;
+            var grandTotal = 0;
+
+
+
+            $("#productDetails tbody tr").each(function () {
+                var amount = parseFloat($(this).find('.amount').text()) || 0;
+                var discountAmount = parseFloat($(this).find('.discountAmount').text()) || 0;
+                var taxAmount = parseFloat($(this).find('.taxAmount').text()) || 0;
+                var totalForRow = parseFloat($(this).find('.total').text()) || 0;
+
+                total += amount;
+                totalDiscountAmount += discountAmount;
+                totalTaxAmount += taxAmount;
+                grandTotal += totalForRow;
+            });
+
+            // Display the total tax amount (you can use this value as needed)
+            console.log('Total Tax Amount:', totalTaxAmount);
+
+
+
+
+            $("#SubTotal").val(total.toFixed(2));
+            $("#Discount").val(totalDiscountAmount.toFixed(2));
+            $("#Tax").val(totalTaxAmount.toFixed(2));
+            $("#Amount").val(grandTotal.toFixed(2));
         }
 
         $("#addProduct").click(function () {
@@ -413,9 +449,8 @@
 
                 // Rest of the columns
                 cols += '<td><select name="PurchaseOrderLines[' + counter + '].ProductId" class="form-control product-dropdown"></select></td>';
-                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Description" class="form-control" /></td>';
-                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
                 cols += '<td><span class="price"></span></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
                 cols += '<td><span class="amount"></span></td>';
                 cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
                 cols += '<td><span class="discountAmount"></span></td>';
@@ -447,10 +482,13 @@
             $(this).closest("tr").remove();
             counter -= 1;
             $("#productDetails tbody tr").each(function (index) {
-                alert();
                 $(this).find('td:first').text(index + 1);
             });
         });
-       
+
+
+
+
     </script>
 }
+
