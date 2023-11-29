@@ -100,6 +100,7 @@ namespace Inventory.Controllers
             ViewBag.BranchId = _context.Branch.ToList();
             ViewBag.UnitOfMeasureId = _context.UnitOfMeasure.ToList();
             var product = await _context.Product.FindAsync(id);
+            product.CategoryId= _context.SubCategory.FirstOrDefault(x => x.Id == product.SubCategoryId).CategoryId;
             if (product == null)
             {
                 return NotFound();

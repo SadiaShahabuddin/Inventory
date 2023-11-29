@@ -16,10 +16,18 @@ namespace Inventory
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddIdentity<IdentityUser,IdentityRole>()/*(options => options.SignIn.RequireConfirmedAccount = true)*/
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = true;
+                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(30);
+                //options.Lockout.MaxFailedAccessAttempts = 5;
+
+            });
             builder.Services.AddRazorPages();
-            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 

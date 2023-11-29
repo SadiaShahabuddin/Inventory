@@ -87,7 +87,14 @@ namespace Inventory.MainMenu
             public const string ControllerName = "Shipments";
             public const string ActionName = "Index";
         }
-
+        public static class Stock
+        {
+            public const string PageName = "Stock";
+            public const string RoleName = "Stock";
+            public const string Path = "/Products/Stock";
+            public const string ControllerName = "Products";
+            public const string ActionName = "Stock";
+        }
         public static class Invoice
         {
             public const string PageName = "Invoice";
@@ -130,6 +137,14 @@ namespace Inventory.MainMenu
             public const string RoleName = "Cash Bank";
             public const string Path = "/CashBanks/Index";
             public const string ControllerName = "CashBanks";
+            public const string ActionName = "Index";
+        }
+        public static class Category
+        {
+            public const string PageName = "Category";
+            public const string RoleName = "Category";
+            public const string Path = "/Categories/Index";
+            public const string ControllerName = "Categories";
             public const string ActionName = "Index";
         }
 
@@ -177,7 +192,14 @@ namespace Inventory.MainMenu
             public const string ControllerName = "ProductTypes";
             public const string ActionName = "Index";
         }
-
+        public static class SubCategory
+        {
+            public const string PageName = "Sub Category ";
+            public const string RoleName = "Sub Category";
+            public const string Path = "/SubCategories/Index";
+            public const string ControllerName = "SubCategories";
+            public const string ActionName = "Index";
+        }
         public static class SalesType
         {
             public const string PageName = "Sales Type";

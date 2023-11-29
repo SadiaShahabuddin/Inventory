@@ -35,5 +35,7 @@ namespace Inventory.Data
         public DbSet<Inventory.Models.PurchaseOrderLine>? PurchaseOrderLine { get; set; }
         public DbSet<Inventory.Models.SalesOrder>? SalesOrder { get; set; }
         public DbSet<Inventory.Models.SalesOrderLine>? SalesOrderLine { get; set; }
+        public DbSet<Inventory.Models.ApplicationUser>? ApplicationUser { get; set; }
+
     }
 }
