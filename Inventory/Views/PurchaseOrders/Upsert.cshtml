@@ -82,6 +82,7 @@
                                         <input name="SelectedCurrencyId" id="SelectedCurrencyId" value="@Model.CurrencyId" class="d-none" />
                                         <select asp-for="CurrencyId" class="form-control">
                                             <option value="">--Please Select Currency--</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -94,6 +95,7 @@
                                         <select asp-for="PurchaseTypeId" class="form-control">
                                             <option value="">--Please Select Purchase Type--</option>
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -127,6 +129,7 @@
                                         <input asp-for="Discount" class="form-control" />
                                         <span asp-validation-for="Discount" class="text-danger"></span>
                                     </div>
+                                    <div id="totalDiscountAmountDisplay"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
@@ -378,10 +381,18 @@
             });
         }
         
-      
+
+        // Add product options to the dropdown
+        function addProductOptionsToDropdown(dropdown, products) {
+            dropdown.empty();
+            dropdown.append($('<option>').val('').text('Select Product'));
+            $.each(products.data, function (index, product) {
+                dropdown.append($('<option>').val(product.id).text(product.productName).data('price', product.defaultSellingPrice));
+            });
+        }
+
         // Update price and calculate total when product or quantity changes
         function updatePriceAndTotal(row) {
-
             var quantity = parseFloat(row.find('.quantity').val()) || 0;
             var price = parseFloat(row.find('.product-dropdown option:selected').data('price')) || 0;
             var amount = parseFloat(row.find('.amount').val()) || 0;
@@ -391,16 +402,14 @@
             var taxAmount = parseFloat(row.find('.tax').val()) || 0;
 
             var amount = (quantity * price);
-            var total = amount * (1 - discount / 100) * (1 + tax / 100);
-            var discountAmount = amount * (discount / 100);
+            var total = quantity * price * (1 - discount / 100) * (1 + tax / 100);
+            var discountAmount = (quantity * price) * (discount / 100);
             var taxAmount = (quantity * price) * (tax / 100);
-
             row.find('.price').text(price.toFixed(2));
             row.find('.amount').text(amount.toFixed(2));
             row.find('.discountAmount').text(discountAmount.toFixed(2));
             row.find('.taxAmount').text(taxAmount.toFixed(2));
             row.find('.total').text(total.toFixed(2));
-         
         }
 
         $("#addProduct").click(function () {
@@ -439,6 +448,7 @@
                 newRow.find('.quantity, .discount, .tax').change(function () {
                     updatePriceAndTotal(newRow);
                 });
+
                 counter++;
             });
         });

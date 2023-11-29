@@ -34,36 +34,56 @@
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ProductCode" class="control-label"></label>
-                <input asp-for="ProductCode" class="form-control" />
-                <span asp-validation-for="ProductCode" class="text-danger"></span>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="ProductCode" class="control-label">Product Code</label>
+                        <input asp-for="ProductCode" class="form-control" />
+                        <span asp-validation-for="ProductCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Barcode" class="control-label"></label>
-                <input asp-for="Barcode" class="form-control" />
-                <span asp-validation-for="Barcode" class="text-danger"></span>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Barcode" class="control-label"></label>
+                        <input asp-for="Barcode" class="form-control" />
+                        <span asp-validation-for="Barcode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label"></label><br />
+                        <input name="Image" type="file" id="fileUpload" accept="image/*" onchange="previewImage(this);">
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label><br />
-                <input name="Image" type="file" id="fileUpload" accept="image/*">
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DefaultBuyingPrice" class="control-label"></label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="DefaultBuyingPrice" class="control-label">Buying Price</label>
                         <input asp-for="DefaultBuyingPrice" class="form-control" />
                         <span asp-validation-for="DefaultBuyingPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="DefaultSellingPrice" class="control-label">Selling Price</label>
+                        <input asp-for="DefaultSellingPrice" class="form-control" />
+                        <span asp-validation-for="DefaultSellingPrice" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DefaultSellingPrice" class="control-label"></label>
-                <input asp-for="DefaultSellingPrice" class="form-control" />
-                <span asp-validation-for="DefaultSellingPrice" class="text-danger"></span>
-            </div>
+    <div class="row">
+        <div class="col-6">
             <div class="form-group">
                 <label class="control-label" for="unitOfMeasure">Unit Of Measure</label>
                 <select name="UnitOfMeasureId" id="UnitOfMeasureId" class="form-control">
@@ -83,6 +103,8 @@
                     }
                 </select>
             </div>
+                        </div>
+           <div class="col-6">
             <div class="form-group">
                 <label class="control-label" for="branch">Branch</label>
                 <select name="BranchId" id="BranchId" class="form-control">
@@ -101,6 +123,10 @@
                     }
                 </select>
             </div>
+                        </div>
+                    </div>
+    <div class="row">
+        <div class="col-6">
             <div class="form-group">
                 <label class="control-label" for="currency">Currency</label>
                 <select name="CurrencyId" id="CurrencyId" class="form-control">
@@ -119,6 +145,8 @@
                     }
                 </select>
             </div>
+                        </div>
+          <div class="col-6">
             <div class="form-group">
                 <label class="control-label" for="category">Category</label>
                 <select name="CategoryId" id="CategoryId" class="form-control">
@@ -138,6 +166,10 @@
                     }
                 </select>
             </div>
+                        </div>
+                    </div>
+    <div class="row">
+        <div class="col-6">
         <div class="form-group">
             <label asp-for="SubCategory" class="control-label"></label>
                   <select name="SubCategoryId" id="SubCategoryId" class="form-control">
@@ -156,6 +188,8 @@
                 }
             </select>
         </div>
+                        </div>
+        <div class="col-6">
         <div class="form-group">
             <label asp-for="Brand" class="control-label"></label>
             <select name="BrandId" class="form-control">
@@ -175,7 +209,8 @@
             </select>
         </div>
 
-        
+                        </div>
+                    </div>
         <div class="row">
             <div class="col">
                 <input type="submit" value="Save" class="btn btn-primary w-100" />

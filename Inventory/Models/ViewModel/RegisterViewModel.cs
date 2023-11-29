@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Differencing;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
@@ -33,5 +34,8 @@ namespace Inventory.Models.ViewModel
         public string ConfirmPassword { get; set; }
         [Required]
         public string Name { get; set; }
-}
+        public IEnumerable<SelectListItem> RoleList { get; set; }
+        public string RoleSelected { get; set; }
+
+    }
 }
