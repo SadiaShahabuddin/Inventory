@@ -25,14 +25,21 @@ function loadDataTable() {
                 "render": function (data) {
 
                     return `<div class="text-center"> 
+                                <!-- Edit Button -->
                             <a href="/SalesOrders/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
                                 <i class='far fa-edit'></i> Edit
                             </a>
                             &nbsp;
+                            <!-- Delete Button -->
                             <a class='btn btn-danger text-white' style='cursor:pointer; width:100px;' onclick=Delete('/SalesOrders/Delete/'+${data})>
                                <i class='far fa-trash-alt'></i> Delete
-                            </a></div>
-                        `;
+                            </a>
+                            &nbsp;
+                            <!-- Print Button -->
+                            <a href="/SalesOrders/Invoice/${data}" class='btn btn-primary text-white' style='cursor:pointer; width:100px;' >
+                               <i class='fas fa-print'></i> Print
+                            </a>
+                            </div>`;
                 }, "width": "30%"
             }
 

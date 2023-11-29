@@ -85,7 +85,14 @@ namespace Inventory.Controllers
             return Json(new { success = true, message = "Delete successful." });
         }
 
-
+        public IActionResult Invoice(int? id)
+        {
+            return View();
+        }
+        public IActionResult Print(int? id)
+        {
+            return View();
+        }
         #endregion
     }
 }
