@@ -16,217 +16,218 @@
         imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
     }
 
-   }                        
- 
+}
+
 
 <div class="card card-default color-palette-box">
     <div class="card-body">
         <h2 class="text-primary">
             Edit Product
         </h2>
-    <div class="row">
-      <div class="col-6">
-        <form asp-action="Edit" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label asp-for="ProductCode" class="control-label">Product Code</label>
-                        <input asp-for="ProductCode" class="form-control" />
-                        <span asp-validation-for="ProductCode" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label asp-for="Barcode" class="control-label"></label>
-                        <input asp-for="Barcode" class="form-control" />
-                        <span asp-validation-for="Barcode" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label asp-for="Image" class="control-label"></label><br />
-                        <input name="Image" type="file" id="fileUpload" accept="image/*" onchange="previewImage(this);">
-                        <span asp-validation-for="Image" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label asp-for="DefaultBuyingPrice" class="control-label">Buying Price</label>
-                        <input asp-for="DefaultBuyingPrice" class="form-control" />
-                        <span asp-validation-for="DefaultBuyingPrice" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label asp-for="DefaultSellingPrice" class="control-label">Selling Price</label>
-                        <input asp-for="DefaultSellingPrice" class="form-control" />
-                        <span asp-validation-for="DefaultSellingPrice" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label class="control-label" for="unitOfMeasure">Unit Of Measure</label>
-                <select name="UnitOfMeasureId" id="UnitOfMeasureId" class="form-control">
-                    <option disabled selected>--Please Select Unit Of Measure--</option>
-                    @foreach (var item in unitOfMeasure)
-                    {
-                        if (Model.UnitOfMeasureId == item.UnitOfMeasureId)
-                        {
-                            <option selected value="@item.UnitOfMeasureId">@item.UnitOfMeasureName</option>
-                        }
-                        else
-                        {
-                            <option value="@item.UnitOfMeasureId">@item.UnitOfMeasureName</option>
-
-                        }
-                               
-                    }
-                </select>
-            </div>
-                        </div>
-           <div class="col-6">
-            <div class="form-group">
-                <label class="control-label" for="branch">Branch</label>
-                <select name="BranchId" id="BranchId" class="form-control">
-                    <option disabled selected>--Please Select Branch--</option>
-                    @foreach (var item in branch)
-                    {
-                        if (Model.BranchId == item.Id)
-                        {
-                            <option selected value="@item.Id">@item.BranchName</option>
-                        }
-                        else
-                        {
-                            <option value="@item.Id">@item.BranchName</option>
-
-                        }
-                    }
-                </select>
-            </div>
-                        </div>
-                    </div>
-    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label class="control-label" for="currency">Currency</label>
-                <select name="CurrencyId" id="CurrencyId" class="form-control">
-                    <option disabled selected>--Please Select Currency--</option>
-                    @foreach (var item in currency)
-                    {
-                        if(Model.CurrencyId==item.CurrencyId)
-                        {
-                            <option selected value="@item.CurrencyId">@item.CurrencyName</option>
-                        }
-                        else
-                        {
-                            <option value="@item.CurrencyId">@item.CurrencyName</option>
-
-                        }
-                    }
-                </select>
-            </div>
-                        </div>
-          <div class="col-6">
-            <div class="form-group">
-                <label class="control-label" for="category">Category</label>
-                <select name="CategoryId" id="CategoryId" class="form-control">
-                    @foreach (var item in category)
-                    {
-
-                        if (Model.CategoryId == item.Id)
-                        {
-                            <option selected value="@item.Id">@item.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@item.Id">@item.Name</option>
-
-                        }
-
-                    }
-                </select>
-            </div>
-                        </div>
-                    </div>
-    <div class="row">
-        <div class="col-6">
-        <div class="form-group">
-            <label asp-for="SubCategory" class="control-label"></label>
-                  <select name="SubCategoryId" id="SubCategoryId" class="form-control">
-                @foreach (var item in subcategory)
-                {
-                    if (Model.SubCategoryId == item.Id)
-                    {
-                        <option selected value="@item.Id">@item.Name</option>
-                    }
-                    else
-                    {
-                        <option value="@item.Id">@item.Name</option>
-
-                    }
-                       
-                }
-            </select>
-        </div>
-                        </div>
-        <div class="col-6">
-        <div class="form-group">
-            <label asp-for="Brand" class="control-label"></label>
-            <select name="BrandId" class="form-control">
-                @foreach (var item in brands)
-                {
-                    if (Model.BrandId == item.Id)
-                    {
-                        <option selected value="@item.Id">@item.BrandName</option>
-                    }
-                    else
-                    {
-                        <option value="@item.Id">@item.BrandName</option>
-
-                    }
-                           
-                }
-            </select>
-        </div>
-
-                        </div>
-                    </div>
         <div class="row">
-            <div class="col">
-                <input type="submit" value="Save" class="btn btn-primary w-100" />
-            </div>
-            <div class="col">
-                <a asp-action="Index" class="btn btn-success form-control w-100">Back to List</a>
-            </div>
-        </div>
-        </form>
-      </div>
+            <div class="col-6">
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="ProductName" class="control-label"></label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="ProductCode" class="control-label">Product Code</label>
+                                <input asp-for="ProductCode" class="form-control" />
+                                <span asp-validation-for="ProductCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="Barcode" class="control-label"></label>
+                                <input asp-for="Barcode" class="form-control" />
+                                <span asp-validation-for="Barcode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="Image" class="control-label"></label><br />
+                                <input name="Image" type="file" id="fileUpload" accept="image/*" onchange="previewImage(this);">
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="DefaultBuyingPrice" class="control-label">Buying Price</label>
+                                <input asp-for="DefaultBuyingPrice" class="form-control" />
+                                <span asp-validation-for="DefaultBuyingPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="DefaultSellingPrice" class="control-label">Selling Price</label>
+                                <input asp-for="DefaultSellingPrice" class="form-control" />
+                                <span asp-validation-for="DefaultSellingPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label" for="category">Category</label>
+                                <select name="CategoryId" id="CategoryId" class="form-control">
+                                    @foreach (var item in category)
+                                    {
 
-        <div class="col-6 ">
-            <img src="@imgsrc" height="70%" width="100%" />
+                                        if (Model.CategoryId == item.Id)
+                                        {
+                                            <option selected value="@item.Id">@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="SubCategory" class="control-label"></label>
+                                <select name="SubCategoryId" id="SubCategoryId" class="form-control">
+                                    @foreach (var item in subcategory)
+                                    {
+                                        if (Model.SubCategoryId == item.Id)
+                                        {
+                                            <option selected value="@item.Id">@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="Brand" class="control-label"></label>
+                                <select name="BrandId" class="form-control">
+                                    @foreach (var item in brands)
+                                    {
+                                        if (Model.BrandId == item.Id)
+                                        {
+                                            <option selected value="@item.Id">@item.BrandName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.BrandName</option>
+
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                      
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label" for="branch">Branch</label>
+                                <select name="BranchId" id="BranchId" class="form-control">
+                                    <option disabled selected>--Please Select Branch--</option>
+                                    @foreach (var item in branch)
+                                    {
+                                        if (Model.BranchId == item.Id)
+                                        {
+                                            <option selected value="@item.Id">@item.BranchName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.BranchName</option>
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label" for="currency">Currency</label>
+                                <select name="CurrencyId" id="CurrencyId" class="form-control">
+                                    <option disabled selected>--Please Select Currency--</option>
+                                    @foreach (var item in currency)
+                                    {
+                                        if (Model.CurrencyId == item.CurrencyId)
+                                        {
+                                            <option selected value="@item.CurrencyId">@item.CurrencyName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.CurrencyId">@item.CurrencyName</option>
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label" for="unitOfMeasure">Unit Of Measure</label>
+                                <select name="UnitOfMeasureId" id="UnitOfMeasureId" class="form-control">
+                                    <option disabled selected>--Please Select Unit Of Measure--</option>
+                                    @foreach (var item in unitOfMeasure)
+                                    {
+                                        if (Model.UnitOfMeasureId == item.UnitOfMeasureId)
+                                        {
+                                            <option selected value="@item.UnitOfMeasureId">@item.UnitOfMeasureName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.UnitOfMeasureId">@item.UnitOfMeasureName</option>
+
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="submit" value="Save" class="btn btn-primary w-100" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success form-control w-100">Back to List</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-5 ">
+                <img src="@imgsrc" height="100%" width="100%" />
+            </div>
         </div>
     </div>
-  </div>
 </div>
 
 
@@ -246,7 +247,7 @@
                 data: { categoryId: categoryId },
                 success: function (data) {
                     var subcategoryDropdown = $("#SubCategoryId");
-                    subcategoryDropdown.empty(); 
+                    subcategoryDropdown.empty();
 
                     for (let index = 0; index < data.length; index++) {
                         const subcategory = data[index];

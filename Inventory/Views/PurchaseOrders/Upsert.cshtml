@@ -167,8 +167,8 @@
                                     <tr>
                                         <th>Serial No</th>
                                         <th>Product</th>
-                                        <th>Quantity</th>
                                         <th>Price</th>
+                                        <th>Quantity</th>
                                         <th>Amount</th>
                                         <th>Discount %</th>
                                         <th>Discount Amount</th>
@@ -394,9 +394,9 @@
             var taxAmount = parseFloat(row.find('.tax').val()) || 0;
 
             var amount = (quantity * price);
-            var total = amount * (1 - discount / 100) * (1 + tax / 100);
             var discountAmount = amount * (discount / 100);
             var taxAmount = (quantity * price) * (tax / 100);
+            var total = amount * (1 - discount / 100) * (1 + tax / 100);
 
             row.find('.price').text(price.toFixed(2));
             row.find('.amount').text(amount.toFixed(2));
