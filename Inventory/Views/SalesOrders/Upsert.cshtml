@@ -536,5 +536,98 @@
                 $(row).find('.row-index p').text(index + 1);
             });
         }
+
+
+
+
+        // // Counter for dynamic row IDs
+        // var counter = 0;
+
+        // // Fetch products via AJAX
+        // function loadProductsIntoDropdown(callback) {
+        //     $.ajax({
+        //         url: '@Url.Action("GetAll", "Products")',
+        //         type: 'GET',
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             callback(data);
+        //         }
+        //     });
+        // }
+
+
+        // // Update price and calculate total when product or quantity changes
+        // function updatePriceAndTotal(row) {
+
+        //     var quantity = parseFloat(row.find('.quantity').val()) || 0;
+        //     var price = parseFloat(row.find('.product-dropdown option:selected').data('price')) || 0;
+        //     var amount = parseFloat(row.find('.amount').val()) || 0;
+        //     var discount = parseFloat(row.find('.discount').val()) || 0;
+        //     var discountAmount = parseFloat(row.find('.discount').val()) || 0;
+        //     var tax = parseFloat(row.find('.tax').val()) || 0;
+        //     var taxAmount = parseFloat(row.find('.tax').val()) || 0;
+
+        //     var amount = (quantity * price);
+        //     var total = amount * (1 - discount / 100) * (1 + tax / 100);
+        //     var discountAmount = amount * (discount / 100);
+        //     var taxAmount = (quantity * price) * (tax / 100);
+
+        //     row.find('.price').text(price.toFixed(2));
+        //     row.find('.amount').text(amount.toFixed(2));
+        //     row.find('.discountAmount').text(discountAmount.toFixed(2));
+        //     row.find('.taxAmount').text(taxAmount.toFixed(2));
+        //     row.find('.total').text(total.toFixed(2));
+
+        // }
+
+        // $("#addProduct").click(function () {
+        //     // Load products into dropdown
+        //     loadProductsIntoDropdown(function (products) {
+        //         var newRow = $("<tr>");
+        //         var cols = "";
+        //         // Serial No column
+        //         cols += '<td>' + (counter + 1) + '</td>';
+
+        //         // Rest of the columns
+        //         cols += '<td><select name="SalesOrderLines[' + counter + '].ProductId" class="form-control product-dropdown"></select></td>';
+        //         cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].Description" class="form-control" /></td>';
+        //         cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
+        //         cols += '<td><span class="price"></span></td>';
+        //         cols += '<td><span class="amount"></span></td>';
+        //         cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
+        //         cols += '<td><span class="discountAmount"></span></td>';
+        //         cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].TaxPercentage" class="form-control tax" /></td>';
+        //         cols += '<td><span class="taxAmount"></span></td>';
+        //         cols += '<td><span class="total"></span></td>';
+        //         cols += '<td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>';
+
+        //         newRow.append(cols);
+        //         $("#productDetails").append(newRow);
+
+        //         // Populate the product dropdown
+        //         var productDropdown = newRow.find('.product-dropdown');
+        //         addProductOptionsToDropdown(productDropdown, products);
+
+        //         // Event handler for changes in product or quantity
+        //         productDropdown.change(function () {
+        //             updatePriceAndTotal(newRow);
+        //         });
+
+        //         newRow.find('.quantity, .discount, .tax').change(function () {
+        //             updatePriceAndTotal(newRow);
+        //         });
+        //         counter++;
+        //     });
+        // });
+
+        // $("#productDetails").on("click", ".ibtnDel", function (event) {
+        //     $(this).closest("tr").remove();
+        //     counter -= 1;
+        //     $("#productDetails tbody tr").each(function (index) {
+        //         alert();
+        //         $(this).find('td:first').text(index + 1);
+        //     });
+        // });
+
     </script>
 }
