@@ -253,8 +253,6 @@
                         }
                         branchDropdown.append(option);
                     }
-
-
                 },
                 error: function (error) {
                     console.error("Error loading branches: " + error);
@@ -283,8 +281,6 @@
                         }
                         customerDropdown.append(option);
                     }
-
-
                 },
                 error: function (error) {
                     console.error("Error loading customer: " + error);
@@ -311,8 +307,6 @@
                         }
                         currencyDropdown.append(option);
                     }
-
-
                 },
                 error: function (error) {
                     console.error("Error loading purchase types: " + error);
@@ -339,8 +333,6 @@
                         }
                         salesTypeDropdown.append(option);
                     }
-
-
                 },
                 error: function (error) {
                     console.error("Error loading sales types: " + error);
@@ -403,8 +395,6 @@
             var totalTaxAmount = 0;
             var grandTotal = 0;
 
-
-
             $("#productDetails tbody tr").each(function () {
                 var amount = parseFloat($(this).find('.amount').text()) || 0;
                 var discountAmount = parseFloat($(this).find('.discountAmount').text()) || 0;
@@ -419,9 +409,6 @@
 
             // Display the total tax amount (you can use this value as needed)
             console.log('Total Tax Amount:', totalTaxAmount);
-
-
-
 
             $("#SubTotal").val(total.toFixed(2));
             $("#Discount").val(totalDiscountAmount.toFixed(2));
@@ -443,7 +430,7 @@
                 cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
                 cols += '<td><span class="amount"></span></td>';
                 cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
-                cols += '<td><span class="discountAmount"></span></td>';
+                cols += '<td><span name="SalesOrderLines[' + counter + '].DiscountAmount" class="form-control discountAmount" ></span></td>';
                 cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].TaxPercentage" class="form-control tax" /></td>';
                 cols += '<td><span class="taxAmount"></span></td>';
                 cols += '<td><span class="total"></span></td>';
@@ -476,8 +463,6 @@
                 $(this).find('td:first').text(index + 1);
             });
         });
-
-
 
     </script>
 }

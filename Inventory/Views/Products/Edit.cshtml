@@ -1,5 +1,4 @@
 ﻿@model Inventory.Models.Product
-
 @{
     ViewData["Title"] = "Edit";
     List<Brand> brands = (List<Brand>)ViewBag.BrandId;
@@ -15,9 +14,7 @@
         var base64 = Convert.ToBase64String(Model.Image);
         imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
     }
-
 }
-
 
 <div class="card card-default color-palette-box">
     <div class="card-body">
@@ -145,7 +142,6 @@
                                     }
                                 </select>
                             </div>
-                      
                         </div>
                         <div class="col-6">
                             <div class="form-group">
@@ -189,7 +185,6 @@
                                 </select>
                             </div>
                         </div>
-                    
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="control-label" for="unitOfMeasure">Unit Of Measure</label>
@@ -214,7 +209,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="submit" value="Save" class="btn btn-primary w-100" />
+                            <input type="submit" value="Update" class="btn btn-primary w-100" />
                         </div>
                         <div class="col">
                             <a asp-action="Index" class="btn btn-success form-control w-100">Back to List</a>
@@ -222,7 +217,6 @@
                     </div>
                 </form>
             </div>
-
             <div class="col-5 ">
                 <img src="@imgsrc" height="100%" width="100%" />
             </div>
@@ -230,14 +224,11 @@
     </div>
 </div>
 
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-
         $("#CategoryId").change(function () {
             var categoryId = $(this).val();
 
@@ -255,8 +246,6 @@
                             $('<option></option>').val(subcategory.id).text(subcategory.name)
                         );
                     }
-
-
                 },
                 error: function (error) {
                     console.error("Error loading subcategories: " + error);
