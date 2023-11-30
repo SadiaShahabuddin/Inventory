@@ -36,7 +36,7 @@ function loadDataTable() {
                             </a>
                             &nbsp;
                             <!-- Print Button -->
-                            <a href="/PurchaseOrders/Print/${data}" class='btn btn-primary text-white' style='cursor:pointer; width:100px;' >
+                             <a href="/PurchaseOrders/Invoice/${data}" class='btn btn-primary text-white' title="Print" style='cursor:pointer; width:60px;' >
                                <i class='fas fa-print'></i> Print
                             </a>
                             </div>`;
