@@ -36,7 +36,7 @@ function loadDataTable() {
                             </a>
                             &nbsp;
                             <!-- Print Button -->
-                             <a href="/PurchaseOrders/Invoice/${data}" class='btn btn-primary text-white' title="Print" style='cursor:pointer; width:60px;' >
+                             <a href="/PurchaseOrders/Invoice/${data}" class='btn btn-primary text-white' title="Print" style='cursor:pointer; width:100px;' >
                                <i class='fas fa-print'></i> Print
                             </a>
                             </div>`;
@@ -52,8 +52,7 @@ function loadDataTable() {
     });
 }
 
-function
-    Delete(url) {
+function Delete(url) {
     swal({
         title: "Are you sure want to Delete?",
         text: "You will not be able to restore the file!",

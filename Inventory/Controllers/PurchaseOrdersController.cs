@@ -72,7 +72,7 @@ namespace Inventory.Controllers
       
         }
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var objFromDb = _context.PurchaseOrder.Find(id);
             if (objFromDb == null)
@@ -81,7 +81,7 @@ namespace Inventory.Controllers
             }
 
             _context.PurchaseOrder.Remove(objFromDb);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return Json(new { success = true, message = "Delete successful." });
         }
         public IActionResult Invoice(int? id)

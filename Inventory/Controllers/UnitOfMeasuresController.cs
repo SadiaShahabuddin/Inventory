@@ -9,7 +9,6 @@ using Inventory.Data;
 using Inventory.Models;
 
 
-
 namespace Inventory.Controllers
 {
     public class UnitOfMeasuresController : Controller
@@ -44,7 +43,7 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(UnitOfMeasure unitOfMeasure)
+        public async Task<IActionResult> Upsert(UnitOfMeasure unitOfMeasure)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +55,7 @@ namespace Inventory.Controllers
                 {
                     _context.UnitOfMeasure.Update(unitOfMeasure);
                 }
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(unitOfMeasure);
@@ -71,7 +70,7 @@ namespace Inventory.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var objFromDb = _context.UnitOfMeasure.Find(id);
             if (objFromDb == null)
@@ -80,11 +79,9 @@ namespace Inventory.Controllers
             }
 
             _context.UnitOfMeasure.Remove(objFromDb);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return Json(new { success = true, message = "Delete successful." });
         }
-
-
         #endregion
     }
 }

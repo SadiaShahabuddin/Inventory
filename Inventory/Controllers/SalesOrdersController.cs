@@ -7,17 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Inventory.Data;
 using Inventory.Models;
-
+using Inventory.Models.ViewModel;
+using Microsoft.Data.SqlClient;
 
 namespace Inventory.Controllers
 {
     public class SalesOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public SalesOrdersController(ApplicationDbContext context)
+        private readonly IConfiguration _configuration;
+        public SalesOrdersController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -72,7 +74,7 @@ namespace Inventory.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var objFromDb = _context.SalesOrder.Find(id);
             if (objFromDb == null)
@@ -81,13 +83,57 @@ namespace Inventory.Controllers
             }
 
             _context.SalesOrder.Remove(objFromDb);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return Json(new { success = true, message = "Delete successful." });
         }
 
         public IActionResult Invoice(int? id)
         {
-            return View();
+       
+                List<Invoice> invoices = new List<Invoice>();
+
+                string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sqlQuery = @"
+                SELECT
+                    y.SalesOrderName AS OrderNumber,
+                    y.Amount,
+                    p.ProductName,
+                    s.Quantity,
+                    y.SubTotal
+                FROM
+                    SalesOrder y
+                LEFT JOIN
+                    SalesOrderLine s ON y.SalesOrderId = s.SalesOrderId
+                LEFT JOIN
+                    Product p ON s.ProductId = p.Id";
+
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Invoice invoice = new Invoice
+                                {
+                                    OrderNumber = reader["OrderNumber"].ToString(),
+                                    Amount = Convert.ToDecimal(reader["Amount"]),
+                                    ProductName = reader["ProductName"].ToString(),
+                                    Quantity = Convert.ToInt32(reader["Quantity"]),
+                                    SubTotal = Convert.ToDecimal(reader["SubTotal"])
+                                };
+
+                                invoices.Add(invoice);
+                            }
+                        }
+                    }
+                }
+
+            return View(invoices);
         }
         public IActionResult Print(int? id)
         {
