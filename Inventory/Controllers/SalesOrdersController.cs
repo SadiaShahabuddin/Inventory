@@ -43,7 +43,7 @@ namespace Inventory.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(SalesOrder salesOrder)
+        public async Task<IActionResult> Upsert(SalesOrder salesOrder)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace Inventory.Controllers
                     _context.SalesOrder.Update(salesOrder);
                     _context.SalesOrderLine.UpdateRange(salesOrder.SalesOrderLines);
                 }
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(salesOrder);
@@ -85,7 +85,14 @@ namespace Inventory.Controllers
             return Json(new { success = true, message = "Delete successful." });
         }
 
-
+        public IActionResult Invoice(int? id)
+        {
+            return View();
+        }
+        public IActionResult Print(int? id)
+        {
+            return View();
+        }
         #endregion
     }
 }
