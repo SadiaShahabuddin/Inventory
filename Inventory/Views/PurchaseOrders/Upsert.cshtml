@@ -1,8 +1,17 @@
 ﻿@model Inventory.Models.PurchaseOrder
 @{
     var title = "Create Purchase Order";
+    List<Product> productList = ViewData["product"] as List<Product>;
 
 }
+
+<style>
+    .table td, .table th {
+        padding: 0;
+    }
+</style>
+
+
 <div class="row">
     <div class="col-12">
         <h4>@title</h4>
@@ -25,7 +34,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @if (Model.PurchaseOrderId != 0)
                 {
-                    <input type="hidden" asp-for="PurchaseOrderId" />
+                    <input type="hidden" asp-for="PurchaseOrderId" value="@Model.PurchaseOrderId" />
                     title = "Edit Purchase Order";
                 }
                 <div class="card-body">
@@ -82,7 +91,6 @@
                                         <input name="SelectedCurrencyId" id="SelectedCurrencyId" value="@Model.CurrencyId" class="d-none" />
                                         <select asp-for="CurrencyId" class="form-control">
                                             <option value="">--Please Select Currency--</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -95,18 +103,8 @@
                                         <select asp-for="PurchaseTypeId" class="form-control">
                                             <option value="">--Please Select Purchase Type--</option>
                                         </select>
-
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label asp-for="Freight" class="control-label"></label>
-                                        <input asp-for="Freight" class="form-control" />
-                                        <span asp-validation-for="Freight" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label asp-for="Remarks" class="control-label"></label>
@@ -114,7 +112,54 @@
                                         <span asp-validation-for="Remarks" class="text-danger"></span>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
                                 <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="SubTotal" class="control-label"></label>
+                                        <input asp-for="SubTotal" class="form-control" readonly />
+                                        <span asp-validation-for="SubTotal" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Tax" class="control-label"></label>
+                                        <input asp-for="Tax" class="form-control" readonly />
+                                        <span asp-validation-for="Tax" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Amount" class="control-label"></label>
+                                        <input asp-for="Amount" class="form-control" readonly />
+                                        <span asp-validation-for="Amount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Discount" class="control-label"></label>
+                                        <input asp-for="Discount" class="form-control" readonly />
+                                        <span asp-validation-for="Discount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Freight" class="control-label"></label>
+                                        <input asp-for="Freight" class="form-control" readonly />
+                                        <span asp-validation-for="Freight" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Total" class="control-label"></label>
+                                        <input asp-for="Total" class="form-control" readonly />
+                                        <span asp-validation-for="Total" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -131,148 +176,72 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-five-normal" role="tabpanel" aria-labelledby="custom-tabs-five-normal-tab">
-                            <table border="1">
+                            <button type="button" id="addProduct" class="btn btn-primary">Add Product</button>
+                            <table class="table table-bordered table-responsive" id="productDetails">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <label class="control-label">SL</label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].PurchaseOrderId" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].ProductId" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].Description" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].Quantity" class="control-label"></label>
-
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].Price" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].Amount" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].DiscountPercentage" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].DiscountAmount" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].SubTotal" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].TaxPercentage" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].TaxAmount" class="control-label"></label>
-                                        </th>
-                                        <th>
-                                            <label asp-for="PurchaseOrderLines[0].Total" class="control-label"></label>
-                                        </th>
-
-                                        <th>
-                                            <button class="btn btn-md btn-primary w-100" id="addBtn" type="button">
-                                                Add
-                                            </button>
-                                        </th>
+                                        <th style="width: 10px;">Serial No</th>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>SubTotal</th>
+                                        <th>Tax    %</th>
+                                        <th>Tax Amount</th>
+                                        <th>Amount</th>
+                                        <th>Discount %</th>
+                                        <th>Discount Amount</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
                                     </tr>
-
-
                                 </thead>
-                                <tbody id="tbody"></tbody>
-
                                 <tbody>
+                                    @if (Model.PurchaseOrderLines != null)
+                                    {
+                                        for (int i = 0; i < Model.PurchaseOrderLines.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @(
+                                                        i + 1
+                                                        )
+                                                    <input type="text" readonly name="PurchaseOrderLines[@i].PurchaseOrderLineId" value="@Model.PurchaseOrderLines[@i].PurchaseOrderLineId" class="form-control d-none purchaseOrderLineId">
+                                                    <input type="text" readonly name="PurchaseOrderLines[@i].PurchaseOrderId" value="@Model.PurchaseOrderLines[@i].PurchaseOrderId" class="form-control d-none purchaseOrderId">
 
-                                    <tr>
-                                        <td>
-                                            0
-                                        </td>
+                                                </td>
+                                                <td>
+                                                    <select name="PurchaseOrderLines[@i].ProductId" class="form-control product-dropdown">
+                                                        <option value="">Select Product</option>
 
-                                        <td>
-                                            <select name="PurchaseOrderLines[0].PurchaseOrderId" id="PurchaseOrderId" class="form-control">
-                                                <option disabled selected>--Please Select Purchase Order Id--</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="PurchaseOrderLines[0].ProductId" id="ProductId" class="form-control">
-                                                <option disabled selected>--Please Select Product--</option>
-                                            </select>
+                                                        @foreach (var item in productList)
+                                                        {
+                                                            if (item.Id == Model.PurchaseOrderLines[i].ProductId)
+                                                            {
+                                                                <option value="@item.Id" selected>@item.ProductName</option>
 
-                                        </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.ProductName</option>
 
-                                        <td>
+                                                            }
 
-                                            <input asp-for="PurchaseOrderLines[0].Description" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].Description" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-
-                                            <input asp-for="PurchaseOrderLines[0].Quantity" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].Quantity" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-
-                                            <input asp-for="PurchaseOrderLines[0].Price" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].Price" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-                                            <input asp-for="PurchaseOrderLines[0].Amount" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].Amount" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-                                            <input asp-for="PurchaseOrderLines[0].DiscountPercentage" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].DiscountPercentage" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-
-                                            <input asp-for="PurchaseOrderLines[0].DiscountAmount" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].DiscountAmount" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-                                            <input asp-for="PurchaseOrderLines[0].SubTotal" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].SubTotal" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-                                            <input asp-for="PurchaseOrderLines[0].TaxPercentage" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].TaxPercentage" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-                                            <input asp-for="PurchaseOrderLines[0].TaxAmount" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].TaxAmount" class="text-danger"></span>
-
-                                        </td>
-                                        <td>
-
-                                            <input asp-for="PurchaseOrderLines[0].Total" class="form-control" />
-                                            <span asp-validation-for="PurchaseOrderLines[0].Total" class="text-danger"></span>
-
-                                        </td>
-
-                                        <td class="text-center">
-                                            <button class="btn btn-danger remove" type="button">Remove</button>
-                                        </td>
-
-                                    </tr>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].Price" value="@Model.PurchaseOrderLines[@i].Price" class="form-control price"></td>
+                                                <td><input type="text" name="PurchaseOrderLines[@i].Quantity" value="@Model.PurchaseOrderLines[@i].Quantity" class="form-control quantity"></td>
+                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].SubTotal" value="@Model.PurchaseOrderLines[@i].SubTotal" class="form-control subTotal"></td>
+                                                <td><input type="text" name="PurchaseOrderLines[@i].TaxPercentage" value="@Model.PurchaseOrderLines[@i].TaxPercentage" class="form-control tax"></td>
+                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].TaxAmount" value="@Model.PurchaseOrderLines[@i].TaxAmount" class="form-control taxAmount"></td>
+                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].Amount" value="@Model.PurchaseOrderLines[@i].Amount" class="form-control amount"></td>
+                                                <td><input type="text" name="PurchaseOrderLines[@i].DiscountPercentage" value="@Model.PurchaseOrderLines[@i].DiscountPercentage" class="form-control discount"></td>
+                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].DiscountAmount" value="@Model.PurchaseOrderLines[@i].DiscountAmount" class="form-control discountAmount"></td>
+                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].Total" value="@Model.PurchaseOrderLines[@i].Total" class="form-control total"></td>
+                                                <td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        }
+                                    }
+                                    <!-- This is where the dynamic rows will be added -->
                                 </tbody>
                             </table>
                         </div>
@@ -286,6 +255,8 @@
 <!-- /.row -->
 @section Scripts {
     <script>
+        // Counter for dynamic row IDs
+        var counter = 0;
         $(document).ready(function () {
             loadBranch();
             loadVendor();
@@ -293,14 +264,41 @@
             loadPurchaseType();
             loadPurchaseOrder();
             loadProduct();
+           
 
+            loadProductsIntoDropdown(function (products) {
+
+                // Iterate over each row in the tbody
+                $('#productDetails tbody tr').each(function (index, element) {
+                    // 'index' is the current iteration index
+                    // 'element' is the current TR element
+
+                    // Your existing code for populating the product dropdown and attaching event handlers
+                    var newRow = $(element);
+
+                    // Populate the product dropdown
+                    var productDropdown = newRow.find('.product-dropdown');
+                    addProductOptionsToDropdownInEditMode(productDropdown, products, newRow.find('.product-dropdown').val());
+
+                    // Event handler for changes in product or quantity
+                    productDropdown.change(function () {
+                        updatePriceAndTotal(newRow);
+                    });
+
+                    newRow.find('.quantity, .discount, .tax').change(function () {
+                        updatePriceAndTotal(newRow);
+                    });
+
+                    // You can add more code here specific to each row if needed
+                });
+            });
+            updateTotalAmount();
         });
         function loadProduct() {
             $.ajax({
                 type: "GET",
                 url: "/Products/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var productDropdown = $("#ProductId");
                     productDropdown.empty();
                     productDropdown.append(
@@ -323,7 +321,6 @@
                 type: "GET",
                 url: "/Branches/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var branchDropdown = $("#BranchId");
                     var selectedValue = $("#SelectedBranchId").val();
                     branchDropdown.empty();
@@ -351,7 +348,6 @@
                 type: "GET",
                 url: "/Vendors/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var vendorDropdown = $("#VendorId");
                     var selectedValue = $("#SelectedVendorId").val();
                     vendorDropdown.empty();
@@ -453,78 +449,152 @@
                 }
             });
         }
-    
-        var rowIdx = 1; // Ensure this is initialized appropriately
 
-        $('#addBtn').on('click', function () {
-            // Adding a row inside the tbody with form fields.
-            $('#tbody').append(`
-            <tr id="R${rowIdx}">
-                <!-- ... Your row content ... -->
-            <td class="row-index text-center">
-                <p>${rowIdx}</p>
-                </td>
-                <td>
-                <select name="PurchaseOrderLines[${rowIdx}].PurchaseOrderId" class="form-control">
-                <option disabled selected>--Please Select Purchase Order Id--</option>
-                </select>
-                </td>
-                <td>
-                <select name="PurchaseOrderLines[${rowIdx}].ProductId" class="form-control">
-                <option disabled selected>--Please Select Product Id--</option>
-                </select>
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].Description" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].Quantity" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].Price" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].Amount" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].DiscountPercentage" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].DiscountAmount" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].SubTotal" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].TaxPercentage" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].TaxAmount" class="form-control" />
-                </td>
-                <td>
-                <input name="PurchaseOrderLines[${rowIdx}].Total" class="form-control" />
-                </td>
-                <td class="text-center">
-                <button class="btn btn-danger remove" type="button">Remove</button>
-                </td>
-                </tr>
-                            `);
-            rowIdx++;
-        });
 
-        // Event handler for removing a row
-        $('#tbody').on('click', '.remove', function () {
-            // Removing the current row.
-            $(this).closest('tr').remove();
-            // Update the serial numbers after removal
-            updateSerialNumbers();
-        });
 
-        // Function to update serial numbers
-        function updateSerialNumbers() {
-            $('#tbody tr').each(function (index, row) {
-                $(row).find('.row-index p').text(index + 1);
+        // Fetch products via AJAX
+        function loadProductsIntoDropdown(callback) {
+            $.ajax({
+                url: '@Url.Action("GetAll", "Products")',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    callback(data);
+                }
             });
         }
+
+        // Add product options to the dropdown
+        function addProductOptionsToDropdown(dropdown, products) {
+            dropdown.empty();
+            dropdown.append($('<option>').val('').text('Select Product'));
+            $.each(products.data, function (index, product) {
+                dropdown.append($('<option>').val(product.id).text(product.productName).data('price', product.defaultSellingPrice));
+            });
+        }
+        // Add product options to the dropdown
+        function addProductOptionsToDropdownInEditMode(dropdown, products, value) {
+            dropdown.empty();
+            dropdown.append($('<option>').val('').text('Select Product'));
+            $.each(products.data, function (index, product) {
+                var option = $('<option>').val(product.id).text(product.productName).data('price', product.defaultSellingPrice);
+
+                // Check if the current product id matches the specified value
+                if (product.id == value) {
+                    option.prop('selected', true);
+                }
+
+                dropdown.append(option);
+            });
+        }
+
+        // Update price and calculate total when product or quantity changes
+        function updatePriceAndTotal(row) {
+            var quantity = parseFloat(row.find('.quantity').val()) || 0;
+            var price = parseFloat(row.find('.product-dropdown option:selected').data('price')) || 0;
+            var subTotal = parseFloat(row.find('.subTotal').val()) || 0;
+            var tax = parseFloat(row.find('.tax').val()) || 0;
+            var taxAmount = parseFloat(row.find('.taxAmount').val()) || 0;
+            var amount = parseFloat(row.find('.amount').val()) || 0;
+            var discount = parseFloat(row.find('.discount').val()) || 0;
+            var discountAmount = parseFloat(row.find('.discountAmount').val()) || 0;
+            var total = parseFloat(row.find('.total').val()) || 0;
+
+            subTotal = (quantity * price);
+            taxAmount = (quantity * price) * (tax / 100);
+            amount = (subTotal + taxAmount);
+            discountAmount = (quantity * price) * (discount / 100);
+            total = subTotal + taxAmount - discountAmount;
+
+            row.find('.price').val(price.toFixed(2));
+            row.find('.subTotal').val(subTotal.toFixed(2));
+            row.find('.taxAmount').val(taxAmount.toFixed(2));
+            row.find('.amount').val(amount.toFixed(2));
+            row.find('.discountAmount').val(discountAmount.toFixed(2));
+            row.find('.total').val(total.toFixed(2));
+            updateTotalAmount();
+
+        }
+        function updateTotalAmount() {
+            var subTotalSum = 0;
+            var amountSum = 0;
+            var discountAmountSum = 0;
+            var taxAmountSum = 0;
+            var totalSum = 0;
+
+
+            $("#productDetails tbody tr").each(function () {
+                var subTotal = parseFloat($(this).find('.subTotal').val()) || 0;
+                var taxAmount = parseFloat($(this).find('.taxAmount').val()) || 0;
+                var amount = parseFloat($(this).find('.amount').val()) || 0;
+                var discountAmount = parseFloat($(this).find('.discountAmount').val()) || 0;
+                var total = parseFloat($(this).find('.total').val()) || 0;
+
+                subTotalSum += subTotal;
+                taxAmountSum += taxAmount;
+                amountSum += amount;
+                discountAmountSum += discountAmount;
+                totalSum += total;
+
+            });
+
+            $("#SubTotal").val(subTotalSum.toFixed(2));
+            $("#Tax").val(taxAmountSum.toFixed(2));
+            $("#Amount").val(amountSum.toFixed(2));
+            $("#Discount").val(discountAmountSum.toFixed(2));
+            $("#Total").val(totalSum.toFixed(2));
+        }
+
+        $("#addProduct").click(function () {
+
+            counter = $('#productDetails tbody tr').length??0;
+            console.log(counter);
+
+           
+            // Load products into dropdown
+            loadProductsIntoDropdown(function (products) {
+                var newRow = $("<tr>");
+                var cols = "";
+                // Serial No column
+                cols += '<td>' + (counter + 1) + '</td>';
+                // Rest of the columns
+                cols += '<td><select name="PurchaseOrderLines[' + counter + '].ProductId" class="form-control product-dropdown"></select></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Price" class="form-control price" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].SubTotal" class="form-control subTotal" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].TaxPercentage" class="form-control tax" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].TaxAmount" class="form-control taxAmount" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Amount" class="form-control amount" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].DiscountAmount" class="form-control discountAmount" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Total" class="form-control total" /></td>';
+                cols += '<td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>';
+                newRow.append(cols);
+                $("#productDetails tbody").append(newRow);
+
+                // Populate the product dropdown
+                var productDropdown = newRow.find('.product-dropdown');
+                addProductOptionsToDropdown(productDropdown, products);
+
+                // Event handler for changes in product or quantity
+                productDropdown.change(function () {
+                    updatePriceAndTotal(newRow);
+                });
+
+                newRow.find('.quantity, .discount, .tax').change(function () {
+                    updatePriceAndTotal(newRow);
+                });
+                counter++;
+            });
+        });
+
+        $("#productDetails").on("click", ".ibtnDel", function (event) {
+            $(this).closest("tr").remove();
+            counter -= 1;
+            $("#productDetails tbody tr").each(function (index) {
+                $(this).find('td:first').text(index + 1);
+            });
+        });
     </script>
 }
+
