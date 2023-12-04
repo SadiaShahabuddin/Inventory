@@ -9,6 +9,7 @@ using Inventory.Data;
 using Inventory.Models;
 
 
+
 namespace Inventory.Controllers
 {
     public class SalesOrdersController : Controller
@@ -30,15 +31,18 @@ namespace Inventory.Controllers
             SalesOrder salesOrder = new SalesOrder();
             if (id == null)
             {
+                salesOrder.DeliveryDate = DateTime.Now;
+                salesOrder.OrderDate = DateTime.Now;
                 return View(salesOrder);
             }
+            ViewData["product"] = _context.Product.ToList();
             salesOrder = _context.SalesOrder.Find(id.GetValueOrDefault());
+            salesOrder.SalesOrderLines = _context.SalesOrderLine.Where(x => x.SalesOrderId == id.GetValueOrDefault()).ToList();
             if (salesOrder == null)
             {
                 return NotFound();
             }
             return View(salesOrder);
-
         }
 
         [HttpPost]
@@ -50,12 +54,29 @@ namespace Inventory.Controllers
                 if (salesOrder.SalesOrderId == 0)
                 {
                     _context.SalesOrder.Add(salesOrder);
-                    _context.SalesOrderLine.AddRange(salesOrder.SalesOrderLines);
                 }
                 else
                 {
                     _context.SalesOrder.Update(salesOrder);
-                    _context.SalesOrderLine.UpdateRange(salesOrder.SalesOrderLines);
+
+                    foreach (var updatedLine in salesOrder.SalesOrderLines)
+                    {
+                        var existingLine = _context.SalesOrderLine
+                            .SingleOrDefault(line => line.SalesOrderLineId == updatedLine.SalesOrderLineId);
+
+                        if (existingLine != null)
+                        {
+                            // Update properties of existing SalesOrderLine
+                            _context.Entry(existingLine).CurrentValues.SetValues(updatedLine);
+                        }
+                        else
+                        {
+                            updatedLine.SalesOrderId = salesOrder.SalesOrderId;
+                            // Add new SalesOrderLine if it doesn't exist
+                            _context.SalesOrderLine.Add(updatedLine);
+                        }
+                    }
+
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

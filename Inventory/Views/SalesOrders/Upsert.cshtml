@@ -1,8 +1,17 @@
 ﻿@model Inventory.Models.SalesOrder
 @{
-    var title = "Create Sales Order";
+    var title = "Create Purchase Order";
+    List<Product> productList = ViewData["product"] as List<Product>;
 
 }
+
+<style>
+    .table td, .table th {
+        padding: 0;
+    }
+</style>
+
+
 <div class="row">
     <div class="col-12">
         <h4>@title</h4>
@@ -14,7 +23,7 @@
             <div class="card-header p-0 pt-1">
                 <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-five-overlay-tab" data-toggle="pill" href="#custom-tabs-five-overlay" role="tab" aria-controls="custom-tabs-five-overlay" aria-selected="true">Sales</a>
+                        <a class="nav-link active" id="custom-tabs-five-overlay-tab" data-toggle="pill" href="#custom-tabs-five-overlay" role="tab" aria-controls="custom-tabs-five-overlay" aria-selected="true">Purchase</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="custom-tabs-five-normal-tab" data-toggle="pill" href="#custom-tabs-five-normal" role="tab" aria-controls="custom-tabs-five-normal" aria-selected="false">Details</a>
@@ -25,8 +34,8 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @if (Model.SalesOrderId != 0)
                 {
-                    <input type="hidden" asp-for="SalesOrderId" />
-                    title = "Edit Sales Order";
+                    <input type="hidden" asp-for="SalesOrderId" value="@Model.SalesOrderId" />
+                    title = "Edit Purchase Order";
                 }
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-five-tabContent">
@@ -36,8 +45,8 @@
                                     <div class="form-group">
                                         <label asp-for="SalesOrderName" class="control-label"></label>
                                         <input asp-for="SalesOrderName" class="form-control" />
-                                        @*  <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control"/>
-                                        <span asp-validation-for="PurchaseOrderName" class="text-danger"></span> *@
+                                        @*  <input asp-for="SalesOrderName" placeholder="Generated automatically" class="form-control"/>
+                                        <span asp-validation-for="SalesOrderName" class="text-danger"></span> *@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -56,9 +65,8 @@
                                         <label asp-for="CustomerId" class="control-label"></label>
                                         <input name="SelectedCustomerId" id="SelectedCustomerId" value="@Model.CustomerId" class="d-none" />
                                         <select asp-for="CustomerId" class="form-control">
-                                            <option value="">--Please Select Customer--</option>
+                                            <option value="">--Please Select Vendor--</option>
                                         </select>
-                                        <span asp-validation-for="CustomerId" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -83,7 +91,6 @@
                                         <input name="SelectedCurrencyId" id="SelectedCurrencyId" value="@Model.CurrencyId" class="d-none" />
                                         <select asp-for="CurrencyId" class="form-control">
                                             <option value="">--Please Select Currency--</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -94,20 +101,10 @@
                                         <label asp-for="SalesTypeId" class="control-label"></label>
                                         <input name="SelectedSalesTypeId" id="SelectedSalesTypeId" value="@Model.SalesTypeId" class="d-none" />
                                         <select asp-for="SalesTypeId" class="form-control">
-                                            <option value="">--Please Select Sales Type--</option>
+                                            <option value="">--Please Select Purchase Type--</option>
                                         </select>
-
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label asp-for="Freight" class="control-label"></label>
-                                        <input asp-for="Freight" class="form-control" />
-                                        <span asp-validation-for="Freight" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label asp-for="Remarks" class="control-label"></label>
@@ -115,26 +112,36 @@
                                         <span asp-validation-for="Remarks" class="text-danger"></span>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="CustomerRefNumber" class="control-label"></label>
-                                        <input asp-for="CustomerRefNumber" class="form-control" />
-                                        <span asp-validation-for="CustomerRefNumber" class="text-danger"></span>
+                                        <label asp-for="SubTotal" class="control-label"></label>
+                                        <input asp-for="SubTotal" class="form-control" readonly />
+                                        <span asp-validation-for="SubTotal" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="Tax" class="control-label"></label>
+                                        <input asp-for="Tax" class="form-control" readonly />
+                                        <span asp-validation-for="Tax" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="SubTotal" class="control-label"></label>
-                                        <input asp-for="SubTotal" class="form-control" />
-                                        <span asp-validation-for="SubTotal" class="text-danger"></span>
+                                        <label asp-for="Amount" class="control-label"></label>
+                                        <input asp-for="Amount" class="form-control" readonly />
+                                        <span asp-validation-for="Amount" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label asp-for="Discount" class="control-label"></label>
-                                        <input asp-for="Discount" class="form-control" />
+                                        <input asp-for="Discount" class="form-control" readonly />
                                         <span asp-validation-for="Discount" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -142,20 +149,19 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="Tax" class="control-label"></label>
-                                        <input asp-for="Tax" class="form-control" />
-                                        <span asp-validation-for="Tax" class="text-danger"></span>
+                                        <label asp-for="Freight" class="control-label"></label>
+                                        <input asp-for="Freight" class="form-control" readonly />
+                                        <span asp-validation-for="Freight" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="Amount" class="control-label"></label>
-                                        <input asp-for="Amount" class="form-control" />
-                                        <span asp-validation-for="Amount" class="text-danger"></span>
+                                        <label asp-for="Total" class="control-label"></label>
+                                        <input asp-for="Total" class="form-control" readonly />
+                                        <span asp-validation-for="Total" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-12">
                                     @if (Model.SalesOrderId != 0)
@@ -171,23 +177,70 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-five-normal" role="tabpanel" aria-labelledby="custom-tabs-five-normal-tab">
                             <button type="button" id="addProduct" class="btn btn-primary">Add Product</button>
-                            <table class="table" id="productDetails">
+                            <table class="table table-bordered table-responsive" id="productDetails">
                                 <thead>
                                     <tr>
-                                        <th>Serial No</th>
+                                        <th style="width: 10px;">Serial No</th>
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>SubTotal</th>
+                                        <th>Tax %</th>
+                                        <th>Tax Amount</th>
                                         <th>Amount</th>
                                         <th>Discount %</th>
                                         <th>Discount Amount</th>
-                                        <th>Tax %</th>
-                                        <th>Tax Amount</th>
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="productDetails">
+                                <tbody>
+                                    @if (Model.SalesOrderLines != null)
+                                    {
+                                        for (int i = 0; i < Model.SalesOrderLines.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @(
+                                                        i + 1
+                                                        )
+                                                    <input type="text" readonly name="SalesOrderLines[@i].SalesOrderLineId" value="@Model.SalesOrderLines[@i].SalesOrderLineId" class="form-control d-none SalesOrderLineId">
+                                                    <input type="text" readonly name="SalesOrderLines[@i].SalesOrderId" value="@Model.SalesOrderLines[@i].SalesOrderId" class="form-control d-none SalesOrderId">
+
+                                                </td>
+                                                <td>
+                                                    <select name="SalesOrderLines[@i].ProductId" class="form-control product-dropdown">
+                                                        <option value="">Select Product</option>
+
+                                                        @foreach (var item in productList)
+                                                        {
+                                                            if (item.Id == Model.SalesOrderLines[i].ProductId)
+                                                            {
+                                                                <option value="@item.Id" selected>@item.ProductName</option>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.ProductName</option>
+
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" readonly name="SalesOrderLines[@i].Price" value="@Model.SalesOrderLines[@i].Price" class="form-control price"></td>
+                                                <td><input type="text" name="SalesOrderLines[@i].Quantity" value="@Model.SalesOrderLines[@i].Quantity" class="form-control quantity"></td>
+                                                <td><input type="text" readonly name="SalesOrderLines[@i].SubTotal" value="@Model.SalesOrderLines[@i].SubTotal" class="form-control subTotal"></td>
+                                                <td><input type="text" name="SalesOrderLines[@i].TaxPercentage" value="@Model.SalesOrderLines[@i].TaxPercentage" class="form-control tax"></td>
+                                                <td><input type="text" readonly name="SalesOrderLines[@i].TaxAmount" value="@Model.SalesOrderLines[@i].TaxAmount" class="form-control taxAmount"></td>
+                                                <td><input type="text" readonly name="SalesOrderLines[@i].Amount" value="@Model.SalesOrderLines[@i].Amount" class="form-control amount"></td>
+                                                <td><input type="text" name="SalesOrderLines[@i].DiscountPercentage" value="@Model.SalesOrderLines[@i].DiscountPercentage" class="form-control discount"></td>
+                                                <td><input type="text" readonly name="SalesOrderLines[@i].DiscountAmount" value="@Model.SalesOrderLines[@i].DiscountAmount" class="form-control discountAmount"></td>
+                                                <td><input type="text" readonly name="SalesOrderLines[@i].Total" value="@Model.SalesOrderLines[@i].Total" class="form-control total"></td>
+                                                <td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>
+                                            </tr>
+                                        }
+                                    }
                                     <!-- This is where the dynamic rows will be added -->
                                 </tbody>
                             </table>
@@ -199,23 +252,53 @@
         </div>
     </div>
 </div>
-
+<!-- /.row -->
 @section Scripts {
     <script>
+        // Counter for dynamic row IDs
+        var counter = 0;
         $(document).ready(function () {
             loadBranch();
-            loadCustomer();
+            loadVendor();
             loadCurrency();
-            loadSalesType();
+            loadPurchaseType();
+            loadSalesOrder();
             loadProduct();
 
+
+            loadProductsIntoDropdown(function (products) {
+
+                // Iterate over each row in the tbody
+                $('#productDetails tbody tr').each(function (index, element) {
+                    // 'index' is the current iteration index
+                    // 'element' is the current TR element
+
+                    // Your existing code for populating the product dropdown and attaching event handlers
+                    var newRow = $(element);
+
+                    // Populate the product dropdown
+                    var productDropdown = newRow.find('.product-dropdown');
+                    addProductOptionsToDropdownInEditMode(productDropdown, products, newRow.find('.product-dropdown').val());
+
+                    // Event handler for changes in product or quantity
+                    productDropdown.change(function () {
+                        updatePriceAndTotal(newRow);
+                    });
+
+                    newRow.find('.quantity, .discount, .tax').change(function () {
+                        updatePriceAndTotal(newRow);
+                    });
+
+                    // You can add more code here specific to each row if needed
+                });
+            });
+            updateTotalAmount();
         });
         function loadProduct() {
             $.ajax({
                 type: "GET",
                 url: "/Products/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var productDropdown = $("#ProductId");
                     productDropdown.empty();
                     productDropdown.append(
@@ -238,7 +321,6 @@
                 type: "GET",
                 url: "/Branches/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
                     var branchDropdown = $("#BranchId");
                     var selectedValue = $("#SelectedBranchId").val();
                     branchDropdown.empty();
@@ -253,37 +335,38 @@
                         }
                         branchDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
                     console.error("Error loading branches: " + error);
                 }
             });
         }
-
-        function loadCustomer() {
+        function loadVendor() {
             $.ajax({
                 type: "GET",
                 url: "/Customers/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    // console.log(data);
-                    var customerDropdown = $("#CustomerId");
+                    var vendorDropdown = $("#CustomerId");
                     var selectedValue = $("#SelectedCustomerId").val();
-                    customerDropdown.empty();
-                    customerDropdown.append(
-                        $('<option disabled selected></option>').val('').text('--Please Select Customer--')
+                    vendorDropdown.empty();
+                    vendorDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Vendor--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
-                        const customer = data.data[index];
-                        console.log(customer);
-                        var option = $('<option></option>').val(customer.customerId).text(customer.customerName);
-                        if (customer.customerId == selectedValue) {
+                        const vendor = data.data[index];
+                        var option = $('<option></option>').val(vendor.id).text(vendor.vendorName);
+                        if (vendor.id == selectedValue) {
                             option.attr('selected', 'selected');
                         }
-                        customerDropdown.append(option);
+                        vendorDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
-                    console.error("Error loading customer: " + error);
+                    console.error("Error loading vendors: " + error);
                 }
             });
         }
@@ -307,41 +390,67 @@
                         }
                         currencyDropdown.append(option);
                     }
+
+
                 },
                 error: function (error) {
                     console.error("Error loading purchase types: " + error);
                 }
             });
         }
-        function loadSalesType() {
+        function loadPurchaseType() {
             $.ajax({
                 type: "GET",
-                url: "/SalesTypes/GetAll", // Replace with the correct URL
+                url: "/PurchaseTypes/GetAll", // Replace with the correct URL
                 success: function (data) {
                     // console.log(data);
-                    var salesTypeDropdown = $("#SalesTypeId");
+                    var purchaseTypeDropdown = $("#SalesTypeId");
                     var selectedValue = $("#SelectedSalesTypeId").val();
-                    salesTypeDropdown.empty();
-                    salesTypeDropdown.append(
-                        $('<option disabled selected></option>').val('').text('--Please Select Sales Type--')
+                    purchaseTypeDropdown.empty();
+                    purchaseTypeDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Purchase Type--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
-                        const salesType = data.data[index];
-                        var option = $('<option></option>').val(salesType.salesTypeId).text(salesType.salesTypeName);
-                        if (salesType.salesTypeId == selectedValue) {
+                        const purchaseType = data.data[index];
+                        var option = $('<option></option>').val(purchaseType.SalesTypeId).text(purchaseType.purchaseTypeName);
+                        if (purchaseType.SalesTypeId == selectedValue) {
                             option.attr('selected', 'selected');
                         }
-                        salesTypeDropdown.append(option);
+                        purchaseTypeDropdown.append(option);
+                    }
+
+
+                },
+                error: function (error) {
+                    console.error("Error loading purchase types: " + error);
+                }
+            });
+        }
+        function loadSalesOrder() {
+            $.ajax({
+                type: "GET",
+                url: "/SalesOrders/GetAll", // Replace with the correct URL
+                success: function (data) {
+                    // console.log(data);
+                    var SalesOrderDropdown = $("#SalesOrderId");
+                    SalesOrderDropdown.empty();
+                    SalesOrderDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Purchase Order--')
+                    );
+                    for (let index = 0; index < data.data.length; index++) {
+                        const SalesOrder = data.data[index];
+                        SalesOrderDropdown.append(
+                            $('<option></option>').val(SalesOrder.id).text(SalesOrder.SalesOrderName)
+                        );
                     }
                 },
                 error: function (error) {
-                    console.error("Error loading sales types: " + error);
+                    console.error("Error loading purchase orders: " + error);
                 }
             });
         }
 
-        // Counter for dynamic row IDs
-        var counter = 0;
+
 
         // Fetch products via AJAX
         function loadProductsIntoDropdown(callback) {
@@ -363,82 +472,105 @@
                 dropdown.append($('<option>').val(product.id).text(product.productName).data('price', product.defaultSellingPrice));
             });
         }
+        // Add product options to the dropdown
+        function addProductOptionsToDropdownInEditMode(dropdown, products, value) {
+            dropdown.empty();
+            dropdown.append($('<option>').val('').text('Select Product'));
+            $.each(products.data, function (index, product) {
+                var option = $('<option>').val(product.id).text(product.productName).data('price', product.defaultSellingPrice);
+
+                // Check if the current product id matches the specified value
+                if (product.id == value) {
+                    option.prop('selected', true);
+                }
+
+                dropdown.append(option);
+            });
+        }
 
         // Update price and calculate total when product or quantity changes
         function updatePriceAndTotal(row) {
-
             var quantity = parseFloat(row.find('.quantity').val()) || 0;
             var price = parseFloat(row.find('.product-dropdown option:selected').data('price')) || 0;
+            var subTotal = parseFloat(row.find('.subTotal').val()) || 0;
+            var tax = parseFloat(row.find('.tax').val()) || 0;
+            var taxAmount = parseFloat(row.find('.taxAmount').val()) || 0;
             var amount = parseFloat(row.find('.amount').val()) || 0;
             var discount = parseFloat(row.find('.discount').val()) || 0;
-            var discountAmount = parseFloat(row.find('.discount').val()) || 0;
-            var tax = parseFloat(row.find('.tax').val()) || 0;
-            var taxAmount = parseFloat(row.find('.tax').val()) || 0;
+            var discountAmount = parseFloat(row.find('.discountAmount').val()) || 0;
+            var total = parseFloat(row.find('.total').val()) || 0;
 
-            var amount = (quantity * price);
-            var discountAmount = amount * (discount / 100);
-            var taxAmount = (quantity * price) * (tax / 100);
-            var total = amount * (1 - discount / 100) * (1 + tax / 100);
+            subTotal = (quantity * price);
+            taxAmount = (quantity * price) * (tax / 100);
+            amount = (subTotal + taxAmount);
+            discountAmount = (quantity * price) * (discount / 100);
+            total = subTotal + taxAmount - discountAmount;
 
-            row.find('.price').text(price.toFixed(2));
-            row.find('.amount').text(amount.toFixed(2));
-            row.find('.discountAmount').text(discountAmount.toFixed(2));
-            row.find('.taxAmount').text(taxAmount.toFixed(2));
-            row.find('.total').text(total.toFixed(2));
-
+            row.find('.price').val(price.toFixed(2));
+            row.find('.subTotal').val(subTotal.toFixed(2));
+            row.find('.taxAmount').val(taxAmount.toFixed(2));
+            row.find('.amount').val(amount.toFixed(2));
+            row.find('.discountAmount').val(discountAmount.toFixed(2));
+            row.find('.total').val(total.toFixed(2));
             updateTotalAmount();
 
         }
         function updateTotalAmount() {
-            var total = 0;
-            var totalDiscountAmount = 0;
-            var totalTaxAmount = 0;
-            var grandTotal = 0;
+            var subTotalSum = 0;
+            var amountSum = 0;
+            var discountAmountSum = 0;
+            var taxAmountSum = 0;
+            var totalSum = 0;
+
 
             $("#productDetails tbody tr").each(function () {
-                var amount = parseFloat($(this).find('.amount').text()) || 0;
-                var discountAmount = parseFloat($(this).find('.discountAmount').text()) || 0;
-                var taxAmount = parseFloat($(this).find('.taxAmount').text()) || 0;
-                var totalForRow = parseFloat($(this).find('.total').text()) || 0;
+                var subTotal = parseFloat($(this).find('.subTotal').val()) || 0;
+                var taxAmount = parseFloat($(this).find('.taxAmount').val()) || 0;
+                var amount = parseFloat($(this).find('.amount').val()) || 0;
+                var discountAmount = parseFloat($(this).find('.discountAmount').val()) || 0;
+                var total = parseFloat($(this).find('.total').val()) || 0;
 
-                total += amount;
-                totalDiscountAmount += discountAmount;
-                totalTaxAmount += taxAmount;
-                grandTotal += totalForRow;
+                subTotalSum += subTotal;
+                taxAmountSum += taxAmount;
+                amountSum += amount;
+                discountAmountSum += discountAmount;
+                totalSum += total;
+
             });
 
-            // Display the total tax amount (you can use this value as needed)
-            console.log('Total Tax Amount:', totalTaxAmount);
-
-            $("#SubTotal").val(total.toFixed(2));
-            $("#Discount").val(totalDiscountAmount.toFixed(2));
-            $("#Tax").val(totalTaxAmount.toFixed(2));
-            $("#Amount").val(grandTotal.toFixed(2));
+            $("#SubTotal").val(subTotalSum.toFixed(2));
+            $("#Tax").val(taxAmountSum.toFixed(2));
+            $("#Amount").val(amountSum.toFixed(2));
+            $("#Discount").val(discountAmountSum.toFixed(2));
+            $("#Total").val(totalSum.toFixed(2));
         }
 
         $("#addProduct").click(function () {
+
+            counter = $('#productDetails tbody tr').length ?? 0;
+            console.log(counter);
+
+
             // Load products into dropdown
             loadProductsIntoDropdown(function (products) {
                 var newRow = $("<tr>");
                 var cols = "";
                 // Serial No column
                 cols += '<td>' + (counter + 1) + '</td>';
-
                 // Rest of the columns
                 cols += '<td><select name="SalesOrderLines[' + counter + '].ProductId" class="form-control product-dropdown"></select></td>';
-                cols += '<td><span class="price"></span></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Price" class="form-control price" /></td>';
                 cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
-                cols += '<td><span class="amount"></span></td>';
-                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
-                cols += '<td><span class="discountAmount"></span></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].SubTotal" class="form-control subTotal" /></td>';
                 cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].TaxPercentage" class="form-control tax" /></td>';
-                cols += '<td><span class="taxAmount"></span></td>';
-                cols += '<td><span class="total"></span></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].TaxAmount" class="form-control taxAmount" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Amount" class="form-control amount" /></td>';
+                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].DiscountAmount" class="form-control discountAmount" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Total" class="form-control total" /></td>';
                 cols += '<td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>';
-
                 newRow.append(cols);
-
-                $("#productDetails").append(newRow);
+                $("#productDetails tbody").append(newRow);
 
                 // Populate the product dropdown
                 var productDropdown = newRow.find('.product-dropdown');
@@ -463,6 +595,6 @@
                 $(this).find('td:first').text(index + 1);
             });
         });
-
     </script>
 }
+
