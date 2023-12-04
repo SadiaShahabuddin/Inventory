@@ -108,8 +108,34 @@ namespace Inventory.Controllers
 
         public IActionResult Invoice(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Retrieve the specific SalesOrder by id
+            var salesOrder = _context.SalesOrder
+                .Include(p => p.Customer)
+                .Include(p => p.Currency)
+                .Include(p => p.SalesType)
+                .Include(p => p.Branch)
+                .SingleOrDefault(s => s.SalesOrderId == id);
+
+            if (salesOrder == null)
+            {
+                return NotFound();
+            }
+
+            //double subTotal = salesOrder.SalesOrderLines?.Sum(line => line.SubTotal) ?? 0;
+            //double taxAmount = salesOrder.SalesOrderLines?.Sum(line => line.TaxAmount) ?? 0;
+            //double discountAmount = salesOrder.SalesOrderLines?.Sum(line => line.DiscountAmount) ?? 0;
+            //double total = salesOrder.SalesOrderLines?.Sum(line => line.Total) ?? 0;
+
+ 
+            return View(salesOrder);
         }
+
+
         public IActionResult Print(int? id)
         {
             return View();
