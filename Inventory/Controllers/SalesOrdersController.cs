@@ -7,18 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Inventory.Data;
 using Inventory.Models;
-
-
+using Inventory.Models.ViewModel;
+using Microsoft.Data.SqlClient;
 
 namespace Inventory.Controllers
 {
     public class SalesOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public SalesOrdersController(ApplicationDbContext context)
+        public SalesOrdersController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -108,31 +110,99 @@ namespace Inventory.Controllers
 
         public IActionResult Invoice(int? id)
         {
-            if (id == null)
+            string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
+            List<InvoicePrint> invoicePrints = new List<InvoicePrint>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                return NotFound();
+                connection.Open();
+                string query = $@"
+                SELECT 
+                  m.SalesOrderName, 
+                  b.BranchName, 
+                  c.CustomerName,
+                  FORMAT(m.OrderDate,'MM/dd/yyyy') DeliveryDate,
+                  FORMAT(m.DeliveryDate,'MM/dd/yyyy') DeliveryDate,
+                  r.CurrencyName, 
+                  c.Address, 
+                  c.Phone, 
+                  c.Email, 
+                  c.ContactPerson, 
+                  st.SalesTypeName, 
+                  m.Remarks, 
+                  m.Amount, 
+                  m.SubTotal, 
+                  m.Discount, 
+                  m.Tax, 
+                  m.Freight, 
+                  m.Total ,
+                  p.ProductName, 
+                  p.Description, 
+                  d.Quantity, 
+                  d.Price, 
+                  d.Amount Amount_Details, 
+                  d.DiscountPercentage, 
+                  d.DiscountAmount, 
+                  d.SubTotal SubTotal_details, 
+                  d.TaxPercentage, 
+                  d.TaxAmount, 
+                  d.Total Total_Details  
+                from 
+                  SalesOrder m 
+                  left outer join SalesOrderLine d on m.SalesOrderId = d.SalesOrderId 
+                  left outer join Customer c on c.CustomerId = m.CustomerId 
+                  left outer join Product p on p.Id = d.ProductId 
+                  left outer join Branch b on b.Id = m.BranchId 
+                  left outer join Currency r on r.CurrencyId = m.CurrencyId 
+                  left outer join SalesType st on st.SalesTypeId = m.SalesTypeId  
+                WHERE 
+                    m.SalesOrderId = {id}";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InvoicePrint invoice = new InvoicePrint
+                            {
+                                SalesOrderName = reader["SalesOrderName"].ToString(),
+                                BranchName = reader["BranchName"].ToString(),
+                                CustomerName = reader["CustomerName"].ToString(),
+                                DeliveryDate = reader["DeliveryDate"].ToString(),
+                                CurrencyName = reader["CurrencyName"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Phone = reader["Phone"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                ContactPerson = reader["ContactPerson"].ToString(),
+                                SalesTypeName = reader["SalesTypeName"].ToString(),
+                                Remarks = reader["Remarks"].ToString(),
+                                Amount = Convert.ToDecimal(reader["Amount"]),
+                                SubTotal = Convert.ToDecimal(reader["SubTotal"]),
+                                Discount = Convert.ToDecimal(reader["Discount"]),
+                                Tax = Convert.ToDecimal(reader["Tax"]),
+                                Freight = Convert.ToDecimal(reader["Freight"]),
+                                Total = Convert.ToDecimal(reader["Total"]),
+                                ProductName = reader["ProductName"].ToString(),
+                                Description = reader["Description"].ToString(),
+                                Quantity = Convert.ToInt32(reader["Quantity"]),
+                                Price = Convert.ToDecimal(reader["Price"]),
+                                Amount_Details = Convert.ToDecimal(reader["Amount_Details"]),
+                                DiscountPercentage = Convert.ToDecimal(reader["DiscountPercentage"]),
+                                DiscountAmount = Convert.ToDecimal(reader["DiscountAmount"]),
+                                SubTotal_details = Convert.ToDecimal(reader["SubTotal_details"]),
+                                TaxPercentage = Convert.ToDecimal(reader["TaxPercentage"]),
+                                TaxAmount = Convert.ToDecimal(reader["TaxAmount"]),
+                                Total_Details = Convert.ToDecimal(reader["Total_Details"])
+                            };
+
+                            invoicePrints.Add(invoice);
+                        }
+                    }
+                }
             }
+            return View("Invoice", invoicePrints);
 
-            // Retrieve the specific SalesOrder by id
-            var salesOrder = _context.SalesOrder
-                .Include(p => p.Customer)
-                .Include(p => p.Currency)
-                .Include(p => p.SalesType)
-                .Include(p => p.Branch)
-                .SingleOrDefault(s => s.SalesOrderId == id);
-
-            if (salesOrder == null)
-            {
-                return NotFound();
-            }
-
-            //double subTotal = salesOrder.SalesOrderLines?.Sum(line => line.SubTotal) ?? 0;
-            //double taxAmount = salesOrder.SalesOrderLines?.Sum(line => line.TaxAmount) ?? 0;
-            //double discountAmount = salesOrder.SalesOrderLines?.Sum(line => line.DiscountAmount) ?? 0;
-            //double total = salesOrder.SalesOrderLines?.Sum(line => line.Total) ?? 0;
-
- 
-            return View(salesOrder);
         }
 
 
