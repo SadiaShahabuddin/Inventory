@@ -536,7 +536,6 @@ namespace Inventory.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CustomerRefNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("DeliveryDate")

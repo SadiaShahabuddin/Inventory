@@ -23,7 +23,7 @@ namespace Inventory.Models
 
 
         [Display(Name = "Customer Ref. Number")]
-        public string CustomerRefNumber { get; set; }
+        public string? CustomerRefNumber { get; set; }
         [Display(Name = "Sales Type")]
         public int SalesTypeId { get; set; }
         public string Remarks { get; set; }

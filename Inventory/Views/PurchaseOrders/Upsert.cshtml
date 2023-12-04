@@ -11,12 +11,6 @@
     }
 </style>
 
-
-<div class="row">
-    <div class="col-12">
-        <h4>@title</h4>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-12">
         <div class="card card-primary card-tabs">
@@ -37,6 +31,9 @@
                     <input type="hidden" asp-for="PurchaseOrderId" value="@Model.PurchaseOrderId" />
                     title = "Edit Purchase Order";
                 }
+                <div class="col-12">
+                    <h2 class="text-primary">@title</h2>
+                </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-five-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-five-overlay" role="tabpanel" aria-labelledby="custom-tabs-five-overlay-tab">

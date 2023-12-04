@@ -1,6 +1,6 @@
 ﻿@model Inventory.Models.SalesOrder
 @{
-    var title = "Create Purchase Order";
+    var title = "Create Sales Order";
     List<Product> productList = ViewData["product"] as List<Product>;
 
 }
@@ -11,12 +11,6 @@
     }
 </style>
 
-
-<div class="row">
-    <div class="col-12">
-        <h4>@title</h4>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-12">
         <div class="card card-primary card-tabs">
@@ -35,8 +29,11 @@
                 @if (Model.SalesOrderId != 0)
                 {
                     <input type="hidden" asp-for="SalesOrderId" value="@Model.SalesOrderId" />
-                    title = "Edit Purchase Order";
+                    title = "Edit Sales Order";
                 }
+                <div class="col-12">
+                    <h2 class="text-primary">@title</h2>
+                </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-five-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-five-overlay" role="tabpanel" aria-labelledby="custom-tabs-five-overlay-tab">
@@ -65,7 +62,7 @@
                                         <label asp-for="CustomerId" class="control-label"></label>
                                         <input name="SelectedCustomerId" id="SelectedCustomerId" value="@Model.CustomerId" class="d-none" />
                                         <select asp-for="CustomerId" class="form-control">
-                                            <option value="">--Please Select Vendor--</option>
+                                            <option value="">--Please Select Customer--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -101,7 +98,7 @@
                                         <label asp-for="SalesTypeId" class="control-label"></label>
                                         <input name="SelectedSalesTypeId" id="SelectedSalesTypeId" value="@Model.SalesTypeId" class="d-none" />
                                         <select asp-for="SalesTypeId" class="form-control">
-                                            <option value="">--Please Select Purchase Type--</option>
+                                            <option value="">--Please Select Sales Type--</option>
                                         </select>
                                     </div>
                                 </div>
@@ -194,7 +191,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="productDetails">
                                     @if (Model.SalesOrderLines != null)
                                     {
                                         for (int i = 0; i < Model.SalesOrderLines.Count; i++)
@@ -259,9 +256,9 @@
         var counter = 0;
         $(document).ready(function () {
             loadBranch();
-            loadVendor();
+            loadCustomer();
             loadCurrency();
-            loadPurchaseType();
+            loadSalesType();
             loadSalesOrder();
             loadProduct();
 
@@ -343,30 +340,30 @@
                 }
             });
         }
-        function loadVendor() {
+        function loadCustomer() {
             $.ajax({
                 type: "GET",
                 url: "/Customers/GetAll", // Replace with the correct URL
                 success: function (data) {
-                    var vendorDropdown = $("#CustomerId");
+                    var customerDropdown = $("#CustomerId");
                     var selectedValue = $("#SelectedCustomerId").val();
-                    vendorDropdown.empty();
-                    vendorDropdown.append(
-                        $('<option disabled selected></option>').val('').text('--Please Select Vendor--')
+                    customerDropdown.empty();
+                    customerDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Customer--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
-                        const vendor = data.data[index];
-                        var option = $('<option></option>').val(vendor.id).text(vendor.vendorName);
-                        if (vendor.id == selectedValue) {
+                        const customer = data.data[index];
+                        var option = $('<option></option>').val(customer.customerId).text(customer.customerName);
+                        if (customer.customerId == selectedValue) {
                             option.attr('selected', 'selected');
                         }
-                        vendorDropdown.append(option);
+                        customerDropdown.append(option);
                     }
 
 
                 },
                 error: function (error) {
-                    console.error("Error loading vendors: " + error);
+                    console.error("Error loading customers: " + error);
                 }
             });
         }
@@ -398,31 +395,31 @@
                 }
             });
         }
-        function loadPurchaseType() {
+        function loadSalesType() {
             $.ajax({
                 type: "GET",
-                url: "/PurchaseTypes/GetAll", // Replace with the correct URL
+                url: "/SalesTypes/GetAll", // Replace with the correct URL
                 success: function (data) {
                     // console.log(data);
-                    var purchaseTypeDropdown = $("#SalesTypeId");
+                    var salesTypeDropdown = $("#SalesTypeId");
                     var selectedValue = $("#SelectedSalesTypeId").val();
-                    purchaseTypeDropdown.empty();
-                    purchaseTypeDropdown.append(
-                        $('<option disabled selected></option>').val('').text('--Please Select Purchase Type--')
+                    salesTypeDropdown.empty();
+                    salesTypeDropdown.append(
+                        $('<option disabled selected></option>').val('').text('--Please Select Sales Type--')
                     );
                     for (let index = 0; index < data.data.length; index++) {
-                        const purchaseType = data.data[index];
-                        var option = $('<option></option>').val(purchaseType.SalesTypeId).text(purchaseType.purchaseTypeName);
-                        if (purchaseType.SalesTypeId == selectedValue) {
+                        const salesType = data.data[index];
+                        var option = $('<option></option>').val(salesType.salesTypeId).text(salesType.salesTypeName);
+                        if (salesType.salesTypeId == selectedValue) {
                             option.attr('selected', 'selected');
                         }
-                        purchaseTypeDropdown.append(option);
+                        salesTypeDropdown.append(option);
                     }
 
 
                 },
                 error: function (error) {
-                    console.error("Error loading purchase types: " + error);
+                    console.error("Error loading sales types: " + error);
                 }
             });
         }
