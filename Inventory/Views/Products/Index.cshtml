@@ -64,12 +64,12 @@
                                 {
                                     var base64 = Convert.ToBase64String(item.Image);
                                     var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                    <img src="@imgsrc" width="200" height="90" />
+                                    <img src="@imgsrc" width="160" height="90" />
                                 }
                                 else
 
                                 {
-                                    <img src="" width="200" height="90" />
+                                    <img src="" width="160" height="90" />
 
                                 }
 
@@ -95,9 +95,9 @@
 
 
                         <td>
-                            <a asp-action="Edit" class="btn btn-success w-30" asp-route-id="@item.Id"><i class='far fa-edit'></i>Edit</a>
+                            <a asp-action="Edit" class="btn btn-success w-30" asp-route-id="@item.Id"><i class='far fa-edit'></i></a>
 
-                            <a asp-action="Delete" class="btn btn-danger w-70" asp-route-id="@item.Id"><i class='far fa-trash-alt'></i>Delete</a>
+                            <a asp-action="Delete" class="btn btn-danger w-70" asp-route-id="@item.Id"><i class='far fa-trash-alt'></i></a>
                         </td>
                     </tr>
                 }

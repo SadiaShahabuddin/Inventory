@@ -45,9 +45,7 @@ function loadDataTable() {
         "width": "100%"
     });
 }
-
-function
-    Delete(url) {
+function Delete(url) {
     swal({
         title: "Are you sure want to Delete?",
         text: "You will not be able to restore the file!",
