@@ -25,19 +25,20 @@ function loadDataTable() {
                 "render": function (data) {
 
                     return `<div class="text-center"> 
-                            <a href="/SalesOrders/Upsert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
-                                <i class='far fa-edit'></i> Edit
+                            <a href="/SalesOrders/Upsert/${data}" title="Edit" class='btn btn-success text-white' style='cursor:pointer; width:60px;' >
+                                <i class='far fa-edit'></i> 
                             </a>
                             &nbsp;
-                            <a class='btn btn-danger text-white' style='cursor:pointer; width:100px;' onclick=Delete('/SalesOrders/Delete/'+${data})>
-                               <i class='far fa-trash-alt'></i> Delete
+                            <a class='btn btn-danger text-white' title="Delete" style='cursor:pointer; width:60px;' onclick=Delete('/SalesOrders/Delete/'+${data})>
+                               <i class='far fa-trash-alt'></i> 
                             </a>
-                            <a href="/SalesOrders/Invoice/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;' >
-                                <i class='fas fa-edit'></i> Invoice
+                            &nbsp;
+                            <a href="/SalesOrders/Invoice/${data}" title="Invoice Print" class='btn btn-primary text-white' style='cursor:pointer; width:60px;' >
+                                <i class='fas fa-print'></i>
                             </a>
                             </div>
                         `;
-                }, "width": "30%"
+                }, "width": "20%"
             }
 
 

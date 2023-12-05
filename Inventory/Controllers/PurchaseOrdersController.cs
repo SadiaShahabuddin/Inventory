@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Inventory.Data;
 using Inventory.Models;
+using Inventory.Models.ViewModel;
+using Microsoft.Data.SqlClient;
+using System.Net;
 
 namespace Inventory.Controllers
 {
     public class PurchaseOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public PurchaseOrdersController(ApplicationDbContext context)
+        public PurchaseOrdersController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -107,14 +112,116 @@ namespace Inventory.Controllers
             _context.SaveChangesAsync();
             return Json(new { success = true, message = "Delete successful." });
         }
+
         public IActionResult Invoice(int? id)
         {
-            return View();
+            return View(GetOrderData(id));
         }
+
+
         public IActionResult Print(int? id)
         {
-            return View();
+            return View(GetOrderData(id));
         }
+        public List<PurchaseInvoice> GetOrderData(int? id)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
+            List<PurchaseInvoice> purchaseInvoices = new List<PurchaseInvoice>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = $@"
+                        SELECT
+                    m.PurchaseOrderId Id,
+                    m.PurchaseOrderName, 
+                    b.BranchName, 
+                    c.VendorName,
+                    FORMAT(m.OrderDate, 'MM/dd/yyyy') DeliveryDate,
+                    FORMAT(m.DeliveryDate, 'MM/dd/yyyy') DeliveryDate,
+                    r.CurrencyName, 
+                    c.Address, 
+                    c.Phone, 
+                    c.Email, 
+                    c.ContactPerson, 
+                    st.PurchaseTypeName, 
+                    m.Remarks, 
+                    m.Amount, 
+                    m.SubTotal, 
+                    m.Discount, 
+                    m.Tax, 
+                    m.Freight, 
+                    m.Total ,
+                    p.ProductName, 
+                    p.Description, 
+                    d.Quantity, 
+                    d.Price, 
+                    d.Amount Amount_Details,
+                    d.DiscountPercentage, 
+                    d.DiscountAmount, 
+                    d.SubTotal SubTotal_details,
+                    d.TaxPercentage, 
+                    d.TaxAmount, 
+                    d.Total Total_Details
+                  from
+                    PurchaseOrder m
+                    left outer join PurchaseOrderLine d on m.PurchaseOrderId = d.PurchaseOrderId
+                    left outer join Vendor c on c.Id = m.VendorId
+                    left outer join Product p on p.Id = d.ProductId
+                    left outer join Branch b on b.Id = m.BranchId
+                    left outer join Currency r on r.CurrencyId = m.CurrencyId
+                    left outer join PurchaseType st on st.PurchaseTypeId = m.PurchaseTypeId
+                   WHERE 
+                    m.PurchaseOrderId = {id}";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PurchaseInvoice invoice = new PurchaseInvoice
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                PurchaseOrderName = reader["PurchaseOrderName"].ToString(),
+                                BranchName = reader["BranchName"].ToString(),
+                                VendorName = reader["VendorName"].ToString(),
+                                DeliveryDate = reader["DeliveryDate"].ToString(),
+                                CurrencyName = reader["CurrencyName"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Phone = reader["Phone"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                ContactPerson = reader["ContactPerson"].ToString(),
+                                PurchaseTypeName = reader["PurchaseTypeName"].ToString(),
+                                Remarks = reader["Remarks"].ToString(),
+                                Amount = Convert.ToDecimal(reader["Amount"]),
+                                SubTotal = Convert.ToDecimal(reader["SubTotal"]),
+                                Discount = Convert.ToDecimal(reader["Discount"]),
+                                Tax = Convert.ToDecimal(reader["Tax"]),
+                                Freight = Convert.ToDecimal(reader["Freight"]),
+                                Total = Convert.ToDecimal(reader["Total"]),
+                                ProductName = reader["ProductName"].ToString(),
+                                Description = reader["Description"].ToString(),
+                                Quantity = Convert.ToInt32(reader["Quantity"]),
+                                Price = Convert.ToDecimal(reader["Price"]),
+                                Amount_Details = Convert.ToDecimal(reader["Amount_Details"]),
+                                DiscountPercentage = Convert.ToDecimal(reader["DiscountPercentage"]),
+                                DiscountAmount = Convert.ToDecimal(reader["DiscountAmount"]),
+                                SubTotal_details = Convert.ToDecimal(reader["SubTotal_details"]),
+                                TaxPercentage = Convert.ToDecimal(reader["TaxPercentage"]),
+                                TaxAmount = Convert.ToDecimal(reader["TaxAmount"]),
+                                Total_Details = Convert.ToDecimal(reader["Total_Details"])
+                            };
+
+                            purchaseInvoices.Add(invoice);
+                        }
+                    }
+                }
+            }
+            return purchaseInvoices;
+
+        }
+       
         #endregion
     }
 }
