@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Data\**" />
+    <Content Remove="Areas\Identity\Data\**" />
+    <EmbeddedResource Remove="Areas\Identity\Data\**" />
+    <None Remove="Areas\Identity\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\js\vendors.js" />
   </ItemGroup>
 
@@ -27,11 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
     <None Include="wwwroot\js\vendors.js" />
   </ItemGroup>
 
