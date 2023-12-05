@@ -2,6 +2,7 @@
 {
     public class PurchaseInvoice
     {
+        public int Id { get; set; }
         public string PurchaseOrderName { get; set; }
         public string BranchName { get; set; }
         public string VendorName { get; set; }

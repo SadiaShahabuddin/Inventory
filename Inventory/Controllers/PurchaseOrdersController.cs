@@ -112,7 +112,18 @@ namespace Inventory.Controllers
             _context.SaveChangesAsync();
             return Json(new { success = true, message = "Delete successful." });
         }
+
         public IActionResult Invoice(int? id)
+        {
+            return View(GetOrderData(id));
+        }
+
+
+        public IActionResult Print(int? id)
+        {
+            return View(GetOrderData(id));
+        }
+        public List<PurchaseInvoice> GetOrderData(int? id)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
             List<PurchaseInvoice> purchaseInvoices = new List<PurchaseInvoice>();
@@ -122,6 +133,7 @@ namespace Inventory.Controllers
                 connection.Open();
                 string query = $@"
                         SELECT
+                    m.PurchaseOrderId Id,
                     m.PurchaseOrderName, 
                     b.BranchName, 
                     c.VendorName,
@@ -170,6 +182,7 @@ namespace Inventory.Controllers
                         {
                             PurchaseInvoice invoice = new PurchaseInvoice
                             {
+                                Id = Convert.ToInt32(reader["Id"]),
                                 PurchaseOrderName = reader["PurchaseOrderName"].ToString(),
                                 BranchName = reader["BranchName"].ToString(),
                                 VendorName = reader["VendorName"].ToString(),
@@ -205,13 +218,10 @@ namespace Inventory.Controllers
                     }
                 }
             }
-            return View("Invoice", purchaseInvoices);
+            return purchaseInvoices;
 
         }
-         public IActionResult Print(int? id)
-        {
-            return View();
-        }
+       
         #endregion
     }
 }

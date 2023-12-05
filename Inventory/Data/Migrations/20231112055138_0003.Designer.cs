@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231112055138_0003")]
+    [Migration("20141112055138_0003")]
     partial class _0003
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
