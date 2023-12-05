@@ -3,6 +3,8 @@ var dataTable;
 $(document).ready(function () {
     loadDataTable();
 });
+
+
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
@@ -45,6 +47,7 @@ function loadDataTable() {
         "width": "100%"
     });
 }
+
 function Delete(url) {
     swal({
         title: "Are you sure want to Delete?",

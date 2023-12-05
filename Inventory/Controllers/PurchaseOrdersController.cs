@@ -63,6 +63,7 @@ namespace Inventory.Controllers
                 {
                     // Update PurchaseOrder
                     _context.PurchaseOrder.Update(purchaseOrder);
+                    var oldObj= _context.PurchaseOrderLine.Where(x=>x.PurchaseOrderId==purchaseOrder.PurchaseOrderId).ToList();
                     // Update PurchaseOrderLines
                     foreach (var updatedLine in purchaseOrder.PurchaseOrderLines)
                     {
@@ -81,7 +82,7 @@ namespace Inventory.Controllers
                             _context.PurchaseOrderLine.Add(updatedLine);
                         }
                     }
-
+                    var result = oldObj.Where(p => !purchaseOrder.PurchaseOrderLines.Any(p2 => p2.PurchaseOrderLineId  == p.PurchaseOrderLineId));
 
                 }
 

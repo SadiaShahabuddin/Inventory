@@ -40,6 +40,7 @@ function loadDataTable() {
         "width": "100%"
     });
 }
+
 function Delete(url) {
     swal({
         title: "Are you sure want to Delete?",
