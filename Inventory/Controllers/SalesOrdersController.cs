@@ -110,6 +110,18 @@ namespace Inventory.Controllers
 
         public IActionResult Invoice(int? id)
         {
+             return View(GetOrderData(id));
+        }
+
+
+        public IActionResult Print(int? id)
+        {
+            return View(GetOrderData(id));
+        }
+
+
+        public List<InvoicePrint> GetOrderData(int? id)
+        {
             string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
             List<InvoicePrint> invoicePrints = new List<InvoicePrint>();
 
@@ -117,7 +129,7 @@ namespace Inventory.Controllers
             {
                 connection.Open();
                 string query = $@"
-                SELECT 
+                SELECT m.SalesOrderId Id,
                   m.SalesOrderName, 
                   b.BranchName, 
                   c.CustomerName,
@@ -166,6 +178,7 @@ namespace Inventory.Controllers
                         {
                             InvoicePrint invoice = new InvoicePrint
                             {
+                                Id = Convert.ToInt32(reader["Id"]),
                                 SalesOrderName = reader["SalesOrderName"].ToString(),
                                 BranchName = reader["BranchName"].ToString(),
                                 CustomerName = reader["CustomerName"].ToString(),
@@ -201,15 +214,11 @@ namespace Inventory.Controllers
                     }
                 }
             }
-            return View("Invoice", invoicePrints);
+            return invoicePrints;
 
         }
 
 
-        public IActionResult Print(int? id)
-        {
-            return View();
-        }
         #endregion
     }
 }

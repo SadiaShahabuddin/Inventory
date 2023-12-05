@@ -587,11 +587,15 @@
 
         $("#productDetails").on("click", ".ibtnDel", function (event) {
             $(this).closest("tr").remove();
-            counter -= 1;
+            updateSerialNumbers(); // Add this line to update serial numbers
+            updateTotalAmount(); // Add this line to recalculate total amount
+        });
+
+        function updateSerialNumbers() {
             $("#productDetails tbody tr").each(function (index) {
                 $(this).find('td:first').text(index + 1);
             });
-        });
+        }
     </script>
 }
 

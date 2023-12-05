@@ -2,6 +2,7 @@
 {
     public class InvoicePrint
     {
+        public int Id { get; set; }
         public string SalesOrderName { get; set; }
         public string BranchName { get; set; }
         public string CustomerName { get; set; }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Inventory.Models.ViewModel.PurchaseInvoice>
+@{
     ViewData["Title"] = "Invoice ";
 
 }
@@ -8,12 +9,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-           @*      <div class="callout callout-info">
-                    <h5><i class="fas fa-info"></i> Note:</h5>
-                    This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-                </div> *@
-
-
                 <!-- Main content -->
                 <div class="invoice p-3 mb-3">
                     <!-- title row -->
@@ -42,11 +37,11 @@
                         <div class="col-sm-4 invoice-col">
                             To
                             <address>
-                                <strong>John Doe</strong><br>
-                                795 Folsom Ave, Suite 600<br>
-                                San Francisco, CA 94107<br>
-                                Phone: (555) 539-1037<br>
-                                Email: john.doe@example.com
+                                <strong>@Model[0].VendorName</strong><br>
+                                @Model[0].Address<br>
+                                Dhaka, Bangladesh<br>
+                                Phone: @Model[0].Phone<br>
+                                Email: @Model[0].Email
                             </address>
                         </div>
                         <!-- /.col -->
@@ -66,42 +61,35 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Qty</th>
+                                        <th>Sl</th>
                                         <th>Product</th>
-                                        <th>Serial #</th>
                                         <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
                                         <th>Subtotal</th>
+                                        <th>Tax</th>
+                                        <th>Amount</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Call of Duty</td>
-                                        <td>455-981-221</td>
-                                        <td>El snort testosterone trophy driving gloves handsome</td>
-                                        <td>$64.50</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Need for Speed IV</td>
-                                        <td>247-925-726</td>
-                                        <td>Wes Anderson umami biodiesel</td>
-                                        <td>$50.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Monsters DVD</td>
-                                        <td>735-845-642</td>
-                                        <td>Terry Richardson helvetica tousled street art master</td>
-                                        <td>$10.70</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Grown Ups Blue Ray</td>
-                                        <td>422-568-642</td>
-                                        <td>Tousled lomo letterpress</td>
-                                        <td>$25.99</td>
-                                    </tr>
+                                    @foreach (var item in Model)
+
+                                    {
+                                        <tr>
+                                            <td>1</td>
+                                            <td>@item.ProductName</td>
+                                            <td>@item.Description</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.SubTotal_details</td>
+                                            <td>@item.TaxAmount</td>
+                                            <td>@item.Amount_Details</td>
+                                            <td>@item.DiscountAmount</td>
+                                            <td>@item.Total_Details</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -118,11 +106,11 @@
                             <img src="../../dist/img/credit/american-express.png" alt="American Express">
                             <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
 
-                            <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                                plugg
-                                dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                            </p>
+                            @*    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
+                            plugg
+                            dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                            </p> *@
                         </div>
                         <!-- /.col -->
                         <div class="col-6">
@@ -132,19 +120,24 @@
                                 <table class="table">
                                     <tr>
                                         <th style="width:50%">Subtotal:</th>
-                                        <td>$250.30</td>
+                                        <td>$@Model[0].SubTotal</td>
                                     </tr>
                                     <tr>
-                                        <th>Tax (9.3%)</th>
-                                        <td>$10.34</td>
+                                        <th>Tax:</th>
+                                        <td>$@Model[0].Tax</td>
                                     </tr>
                                     <tr>
-                                        <th>Shipping:</th>
-                                        <td>$5.80</td>
+                                    <tr>
+                                        <th>Amount:</th>
+                                        <td>$@Model[0].Amount</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Discount:</th>
+                                        <td>$@Model[0].Discount</td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
-                                        <td>$265.24</td>
+                                        <td>$@Model[0].Total</td>
                                     </tr>
                                 </table>
                             </div>
@@ -155,7 +148,7 @@
                     <!-- this row will not appear when printing -->
                     <div class="row no-print">
                         <div class="col-12">
-                            <a href="/SalesOrders/Print" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                            <a href="/PurchaseOrders/Print" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
                             <button type="button" class="btn btn-success float-right">
                                 <i class="far fa-credit-card"></i> Submit
                                 Payment
