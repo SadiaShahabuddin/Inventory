@@ -2,7 +2,7 @@
 <!-- Main Sidebar Container -->
 @* <aside class="main-sidebar sidebar-dark-primary elevation-4"> *@
 
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="height: 100%; overflow-y: auto;">
+<aside class="main-sidebar sidebar-dark-primary layout-fixed">
   
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -41,7 +41,7 @@
                 <li class="nav-header">
                     DASHBOARD
                 </li>
-                <li class="nav-item menu-open">
+                <li class="nav-item">
                     <a href="@MainMenu.Dashboard.Path" class="nav-link">
                         <i class="nav-icon fas fa-pie-chart"></i>
                         <p>
@@ -50,10 +50,10 @@
                     </a>
                 </li>
 
-            
 
-               <li class="nav-item">
-                    <a href="#" class="nav-link">
+
+                <li class="nav-item @Html.IsInventorySelected(controller: MainMenu.ProductType.ControllerName)">
+                    <a href="#" class="nav-link ">
                         <p>
                             INVENTORY
                             <i class="right fas fa-angle-left"></i>
@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.ProductType.Path" class="nav-link">
+                            <a href="@MainMenu.ProductType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.ProductType.ControllerName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.ProductType.PageName
@@ -79,7 +79,7 @@
                         </li>
                        
                         <li class="nav-item">
-                            <a href="@MainMenu.Stock.Path" class="nav-link">
+                            <a href="@MainMenu.Stock.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Stock.ControllerName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Stock.PageName
@@ -98,7 +98,7 @@
 
                 </li>
 
-               <li class="nav-item menu-open">
+               <li class="nav-item">
                     <a href="#" class="nav-link">
                         <p>
                             PURCHASE

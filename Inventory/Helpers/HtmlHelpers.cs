@@ -33,5 +33,30 @@ namespace Inventory
             return currentAction;
         }
 
+        public static string IsInventorySelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
+        {
+            if (String.IsNullOrEmpty(cssClass))
+                cssClass = "menu-is-opening menu-open";
+
+            string currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            string currentController = (string)html.ViewContext.RouteData.Values["controller"];
+
+            if (String.IsNullOrEmpty(controller))
+                controller = currentController;
+
+            if (String.IsNullOrEmpty(action))
+                action = currentAction;
+
+            if (currentController == "ProductTypes")
+            {
+                return cssClass;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+
     }
 }
