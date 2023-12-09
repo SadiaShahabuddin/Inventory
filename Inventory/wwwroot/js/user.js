@@ -12,7 +12,7 @@ function loadList() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "fullName", "width": "25%" },
+            { "data": "name", "width": "25%" },
             { "data": "email", "width": "25%" },
             { "data": "phoneNumber", "width": "25%" },
             {

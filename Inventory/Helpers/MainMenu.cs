@@ -254,14 +254,7 @@ namespace Inventory.MainMenu
             public const string ActionName = "Index";
         }
 
-        public static class User
-        {
-            public const string PageName = "User";
-            public const string RoleName = "User";
-            public const string Path = "/UserRoles/Index";
-            public const string ControllerName = "UserRoles";
-            public const string ActionName = "Index";
-        }
+       
 
         public static class ChangePassword
         {
@@ -298,6 +291,13 @@ namespace Inventory.MainMenu
             public const string ControllerName = "Home";
             public const string ActionName = "Index";
         }
-
+        public static class User
+        {
+            public const string PageName = "User";
+            public const string RoleName = "User";
+            public const string Path = "/User/Index";
+            public const string ControllerName = "User";
+            public const string ActionName = "Index";
+        }
     }
 }

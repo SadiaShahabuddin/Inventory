@@ -1,4 +1,5 @@
 using Inventory.Data;
+using Inventory.Data.DbInitializer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +16,10 @@ namespace Inventory
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
 
@@ -39,6 +41,7 @@ namespace Inventory
             app.UseStaticFiles();
 
             app.UseRouting();
+            SeedDatabase();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -49,6 +52,14 @@ namespace Inventory
             app.MapRazorPages();
 
             app.Run();
+            void SeedDatabase()
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                    dbInitializer.Initialize();
+                }
+            }
         }
     }
 }
