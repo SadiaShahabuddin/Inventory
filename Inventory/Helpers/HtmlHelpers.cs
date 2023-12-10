@@ -47,7 +47,79 @@ namespace Inventory
             if (String.IsNullOrEmpty(action))
                 action = currentAction;
 
-            if (currentController == "ProductTypes")
+            if (currentController == "ProductTypes" || currentController == "Products")
+            {
+                return cssClass;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+        public static string IsPurchaseSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
+        {
+            if (String.IsNullOrEmpty(cssClass))
+                cssClass = "menu-is-opening menu-open";
+
+            string currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            string currentController = (string)html.ViewContext.RouteData.Values["controller"];
+
+            if (String.IsNullOrEmpty(controller))
+                controller = currentController;
+
+            if (String.IsNullOrEmpty(action))
+                action = currentAction;
+
+            if (currentController == "ProductTypes" || currentController == "Stock")
+            {
+                return cssClass;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+        public static string IsSalesSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
+        {
+            if (String.IsNullOrEmpty(cssClass))
+                cssClass = "menu-is-opening menu-open";
+
+            string currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            string currentController = (string)html.ViewContext.RouteData.Values["controller"];
+
+            if (String.IsNullOrEmpty(controller))
+                controller = currentController;
+
+            if (String.IsNullOrEmpty(action))
+                action = currentAction;
+
+            if (currentController == "ProductTypes" || currentController == "Stock")
+            {
+                return cssClass;
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+        public static string IsConfigSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
+        {
+            if (String.IsNullOrEmpty(cssClass))
+                cssClass = "menu-is-opening menu-open";
+
+            string currentAction = (string)html.ViewContext.RouteData.Values["action"];
+            string currentController = (string)html.ViewContext.RouteData.Values["controller"];
+
+            if (String.IsNullOrEmpty(controller))
+                controller = currentController;
+
+            if (String.IsNullOrEmpty(action))
+                action = currentAction;
+
+            if (currentController == "ProductTypes" || currentController == "Stock")
             {
                 return cssClass;
             }

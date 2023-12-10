@@ -52,7 +52,7 @@
 
 
 
-                <li class="nav-item @Html.IsInventorySelected(controller: MainMenu.ProductType.ControllerName)">
+               <li class="nav-item @Html.IsInventorySelected()">
                     <a href="#" class="nav-link ">
                         <p>
                             INVENTORY
@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.ProductType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.ProductType.ControllerName)">
+                            <a href="@MainMenu.ProductType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.ProductType.ControllerName, action: MainMenu.ProductType.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.ProductType.PageName
@@ -79,7 +79,7 @@
                         </li>
                        
                         <li class="nav-item">
-                            <a href="@MainMenu.Stock.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Stock.ControllerName)">
+                            <a href="@MainMenu.Stock.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Stock.ControllerName, action: MainMenu.Stock.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Stock.PageName
