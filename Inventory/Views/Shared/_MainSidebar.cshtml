@@ -38,19 +38,17 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-header">
-                    DASHBOARD
-                </li>
+          
                 <li class="nav-item">
                     <a href="@MainMenu.Dashboard.Path" class="nav-link">
-                        <i class="nav-icon fas fa-pie-chart"></i>
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            @MainMenu.Dashboard.PageName
+                            DASHBOARD
+                            
                         </p>
                     </a>
                 </li>
-
-
+            
 
                <li class="nav-item @Html.IsInventorySelected()">
                     <a href="#" class="nav-link ">
@@ -62,7 +60,7 @@
 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="@MainMenu.Product.Path" class="nav-link">
+                            <a href="@MainMenu.Product.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Product.ControllerName, action: MainMenu.Product.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Product.PageName
@@ -87,7 +85,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.UnitOfMeasure.Path" class="nav-link">
+                            <a href="@MainMenu.UnitOfMeasure.Path" class="nav-link @Html.IsSelected(controller: MainMenu.UnitOfMeasure.ControllerName, action: MainMenu.UnitOfMeasure.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.UnitOfMeasure.PageName
@@ -98,7 +96,7 @@
 
                 </li>
 
-               <li class="nav-item">
+                <li class="nav-item @Html.IsPurchaseSelected()">
                     <a href="#" class="nav-link">
                         <p>
                             PURCHASE
@@ -109,7 +107,7 @@
                  <ul class="nav nav-treeview">
                    
                     <li class="nav-item">
-                        <a href="@MainMenu.PurchaseType.Path" class="nav-link">
+                            <a href="@MainMenu.PurchaseType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.PurchaseType.ControllerName, action: MainMenu.PurchaseType.ActionName)">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>
                                 @MainMenu.PurchaseType.PageName
@@ -117,7 +115,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="@MainMenu.PurchaseOrder.Path" class="nav-link">
+                            <a href="@MainMenu.PurchaseOrder.Path" class="nav-link @Html.IsSelected(controller: MainMenu.PurchaseOrder.ControllerName, action: MainMenu.PurchaseOrder.ActionName)">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>
                                 @MainMenu.PurchaseOrder.PageName
@@ -125,7 +123,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Vendors" asp-action="Index" class="nav-link">
+                            <a asp-controller="Vendors" asp-action="Index" class="nav-link @Html.IsSelected(controller: MainMenu.Vendor.ControllerName, action: MainMenu.Vendor.ActionName)">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>
                                 @MainMenu.Vendor.PageName
@@ -133,7 +131,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="@MainMenu.VendorType.Path" class="nav-link">
+                            <a href="@MainMenu.VendorType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.VendorType.ControllerName, action: MainMenu.VendorType.ActionName)">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>
                                 @MainMenu.VendorType.PageName
@@ -143,7 +141,7 @@
                  </ul>
                </li>
 
-                  <li class="nav-item">
+                <li class="nav-item @Html.IsSalesSelected()">
                     <a href="#" class="nav-link">
                         <p>
                                 SALES
@@ -153,7 +151,7 @@
 
                     <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="@MainMenu.Customer.Path" class="nav-link">
+                            <a href="@MainMenu.Customer.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Customer.ControllerName, action: MainMenu.Customer.ActionName)">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             @MainMenu.Customer.PageName
@@ -161,7 +159,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@MainMenu.CustomerType.Path" class="nav-link">
+                            <a href="@MainMenu.CustomerType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.CustomerType.ControllerName, action: MainMenu.CustomerType.ActionName)">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             @MainMenu.CustomerType.PageName
@@ -169,7 +167,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="@MainMenu.SalesType.Path" class="nav-link">
+                            <a href="@MainMenu.SalesType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.SalesType.ControllerName, action: MainMenu.SalesType.ActionName)">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             @MainMenu.SalesType.PageName
@@ -177,7 +175,7 @@
                     </a>
                 </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.SalesOrder.Path" class="nav-link">
+                            <a href="@MainMenu.SalesOrder.Path" class="nav-link @Html.IsSelected(controller: MainMenu.SalesOrder.ControllerName, action: MainMenu.SalesOrder.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.SalesOrder.PageName
@@ -187,7 +185,7 @@
                 </ul>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item @Html.IsConfigSelected()">
                     <a href="#" class="nav-link">
                         <p>
                             CONFIG
@@ -196,7 +194,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="@MainMenu.BillType.Path" class="nav-link">
+                            <a href="@MainMenu.BillType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.BillType.ControllerName, action: MainMenu.BillType.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.BillType.PageName
@@ -204,7 +202,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="Branches" asp-action="Index" class="nav-link">
+                            <a asp-controller="Branches" asp-action="Index" class="nav-link @Html.IsSelected(controller: MainMenu.Branch.ControllerName, action: MainMenu.Branch.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Branch.PageName
@@ -212,7 +210,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.Currency.Path" class="nav-link">
+                            <a href="@MainMenu.Currency.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Currency.ControllerName, action: MainMenu.Currency.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Currency.PageName
@@ -220,7 +218,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.CashBank.Path" class="nav-link">
+                            <a href="@MainMenu.CashBank.Path" class="nav-link @Html.IsSelected(controller: MainMenu.CashBank.ControllerName, action: MainMenu.CashBank.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.CashBank.PageName
@@ -228,7 +226,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.Category.Path" class="nav-link">
+                            <a href="@MainMenu.Category.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Category.ControllerName, action: MainMenu.Category.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Category.PageName
@@ -236,7 +234,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.InvoiceType.Path" class="nav-link">
+                            <a href="@MainMenu.InvoiceType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.InvoiceType.ControllerName, action: MainMenu.InvoiceType.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.InvoiceType.PageName
@@ -244,7 +242,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-controller="PaymentTypes" asp-action="Index" class="nav-link">
+                            <a asp-controller="PaymentTypes" asp-action="Index" class="nav-link @Html.IsSelected(controller: MainMenu.PaymentType.ControllerName, action: MainMenu.PaymentType.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.PaymentType.PageName
@@ -252,7 +250,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.ShipmentType.Path" class="nav-link">
+                            <a href="@MainMenu.ShipmentType.Path" class="nav-link @Html.IsSelected(controller: MainMenu.ShipmentType.ControllerName, action: MainMenu.ShipmentType.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.ShipmentType.PageName
@@ -260,7 +258,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.SubCategory.Path" class="nav-link">
+                            <a href="@MainMenu.SubCategory.Path" class="nav-link @Html.IsSelected(controller: MainMenu.SubCategory.ControllerName, action: MainMenu.SubCategory.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.SubCategory.PageName
@@ -268,7 +266,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.Warehouse.Path" class="nav-link">
+                            <a href="@MainMenu.Warehouse.Path" class="nav-link @Html.IsSelected(controller: MainMenu.Warehouse.ControllerName, action: MainMenu.Warehouse.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.Warehouse.PageName
@@ -276,7 +274,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@MainMenu.User.Path" class="nav-link">
+                            <a href="@MainMenu.User.Path" class="nav-link @Html.IsSelected(controller: MainMenu.User.ControllerName, action: MainMenu.User.ActionName)">
                                 <i class="nav-icon fas fa-tag"></i>
                                 <p>
                                     @MainMenu.User.PageName
@@ -284,9 +282,17 @@
                             </a>
                         </li>
                     </ul>
+
                 </li>
 
-             
+                <li class="nav-item">
+                    <a href="@MainMenu.User.Path" class="nav-link">
+                        <i class="far fa-user"></i>
+                        <p>
+                            @MainMenu.User.PageName
+                        </p>
+                    </a>
+                </li>
               
             </ul>
         </nav>

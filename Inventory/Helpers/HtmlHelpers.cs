@@ -47,7 +47,7 @@ namespace Inventory
             if (String.IsNullOrEmpty(action))
                 action = currentAction;
 
-            if (currentController == "ProductTypes" || currentController == "Products")
+            if (currentController == "ProductTypes" || currentController == "Products" || currentController == "UnitOfMeasures")
             {
                 return cssClass;
             }
@@ -71,7 +71,7 @@ namespace Inventory
             if (String.IsNullOrEmpty(action))
                 action = currentAction;
 
-            if (currentController == "ProductTypes" || currentController == "Stock")
+            if (currentController == "PurchaseTypes" || currentController == "PurchaseOrders" || currentController == "Vendors" || currentController == "VendorTypes")
             {
                 return cssClass;
             }
@@ -95,7 +95,7 @@ namespace Inventory
             if (String.IsNullOrEmpty(action))
                 action = currentAction;
 
-            if (currentController == "ProductTypes" || currentController == "Stock")
+            if (currentController == "SalesTypes" || currentController == "SalesOrders" || currentController == "Customers" || currentController == "CustomerTypes")
             {
                 return cssClass;
             }
@@ -119,7 +119,9 @@ namespace Inventory
             if (String.IsNullOrEmpty(action))
                 action = currentAction;
 
-            if (currentController == "ProductTypes" || currentController == "Stock")
+            if (currentController == "BillTypes" || currentController == "Branches" || currentController == "Currencies" || currentController == "CashBanks"
+                || currentController == "Categories" || currentController == "InvoiceTypes" || currentController == "PaymentTypes" || currentController == "ShipmentTypes"
+                || currentController == "SubCategories" || currentController == "Warehouses" || currentController == "Users")
             {
                 return cssClass;
             }
