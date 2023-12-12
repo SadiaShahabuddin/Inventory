@@ -13,7 +13,7 @@ function loadList() {
         },
         "columns": [
             { "data": "name", "width": "25%" },
-            { "data": "email", "width": "25%" },
+            { "data": "userName", "width": "25%" },
             { "data": "phoneNumber", "width": "25%" },
             {
                 "data": {id:"id",lockoutEnd:"lockoutEnd"},
@@ -55,6 +55,7 @@ function LockUnlock(id) {
                 success: function (data) {
                     if (data.success) {
                         toastr.success(data.message);
+                        loadList();
                         dataTable.ajax.reload();
                     }
                     else {

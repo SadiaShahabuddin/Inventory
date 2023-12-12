@@ -5,16 +5,6 @@
     ViewData["Title"] = "Register";
 }
 
-@if (User.IsInRole(SD.Role_Admin))
-{
-
-    <h1 class="pt-4">Register - ADMIN PORTAL</h1>
-}
-else
-{
-    <h1 class="pt-4">@ViewData["Title"]</h1>
-}
-
 <div class="card card-default color-palette-box">
     <div class="card-body">
         <div class="row pt-4">
