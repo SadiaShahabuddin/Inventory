@@ -278,12 +278,17 @@
                 </li>
 
                 <li class="nav-item">
+                  @{
+                        if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
                     <a href="@MainMenu.User.Path" class="nav-link">
                         <i class="far fa-user"></i>
                         <p>
                             @MainMenu.User.PageName
                         </p>
                     </a>
+                    }
+                   }
                 </li>
               
             </ul>
