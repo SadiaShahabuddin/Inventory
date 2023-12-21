@@ -241,19 +241,19 @@ namespace Inventory.Controllers
                 connection.Open();
 
                 string query = @"
-                 SELECT P.ProductName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, ISNULL(X.TOTALPURCHASE - Y.TOTALSALES, 0) AS CURRENTSTOCK
-                 FROM PRODUCT P
-                 LEFT OUTER JOIN (
-                     SELECT COUNT(QUANTITY) AS TOTALPURCHASE, PRODUCTID
-                     FROM PURCHASEORDERLINE L
-                     GROUP BY PRODUCTID
-                 ) X ON X.PRODUCTID = P.ID
-                 LEFT OUTER JOIN (
-                     SELECT COUNT(QUANTITY) AS TOTALSALES, PRODUCTID
-                     FROM SALESORDERLINE L
-                     GROUP BY PRODUCTID
-                 ) Y ON Y.PRODUCTID = P.ID
-                 ORDER BY P.Id";
+                   SELECT P.ProductName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, (ISNULL(X.TOTALPURCHASE, 0) - ISNULL(Y.TOTALSALES, 0)) AS CURRENTSTOCK
+                   FROM PRODUCT P
+                   LEFT OUTER JOIN (
+                       SELECT COUNT(QUANTITY) AS TOTALPURCHASE, PRODUCTID
+                       FROM PURCHASEORDERLINE L
+                       GROUP BY PRODUCTID
+                   ) X ON X.PRODUCTID = P.ID
+                   LEFT OUTER JOIN (
+                       SELECT COUNT(QUANTITY) AS TOTALSALES, PRODUCTID
+                       FROM SALESORDERLINE L
+                       GROUP BY PRODUCTID
+                   ) Y ON Y.PRODUCTID = P.ID
+                   ORDER BY P.Id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                {
