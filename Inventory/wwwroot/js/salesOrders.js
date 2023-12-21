@@ -12,6 +12,7 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
+            { "data": "salesOrderName", "width": "5%" },
             { "data": "branch.branchName", "width": "5%" },
             { "data": "customer.customerName", "width": "5%" },
             { "data": "orderDate", "width": "5%" },
@@ -34,7 +35,7 @@ function loadDataTable() {
                             </a>
                             &nbsp;
                             <a href="/SalesOrders/Invoice/${data}" title="Invoice Print" class='btn btn-primary text-white' style='cursor:pointer; width:60px;' >
-                                <i class='fas fa-print'></i>
+                                invoice</i>
                             </a>
                             </div>
                         `;
