@@ -44,5 +44,8 @@ namespace Inventory.Models
         public virtual Branch? Branch { get; set; }
 
         public List<SalesOrderLine>? SalesOrderLines { get; set; }
+        [NotMapped]
+        public string? SalesInvoiceName { get; set; }
+
     }
 }

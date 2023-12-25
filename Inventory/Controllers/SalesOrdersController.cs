@@ -27,7 +27,34 @@ namespace Inventory.Controllers
             return View();
         }
 
+        private string GenerateOrderNumber()
+        {
+            // Use current date and time information
+            DateTime now = DateTime.Now;
 
+            // Format the date and time information to include in the order number
+            string datePart = now.ToString("yyyy-MM-dd");
+            string timePart = now.ToString("HHmmssfff");
+
+            // Combine the formatted date and time information with a prefix
+            string orderNumber = $"#ORDER-{datePart}{timePart}";
+
+            return orderNumber;
+        }
+        private string GenerateInvoiceNumber()
+        {
+            // Use current date and time information
+            DateTime now = DateTime.Now;
+
+            // Format the date and time information to include in the order number
+            string datePart = now.ToString("yyyy-MM-dd");
+            string timePart = now.ToString("HHmmssfff");
+
+            // Combine the formatted date and time information with a prefix
+            string orderNumber = $"#INVOICE-{datePart}{timePart}";
+
+            return orderNumber;
+        }
         public IActionResult Upsert(int? id)
         {
             SalesOrder salesOrder = new SalesOrder();
@@ -35,6 +62,7 @@ namespace Inventory.Controllers
             {
                 salesOrder.DeliveryDate = DateTime.Now;
                 salesOrder.OrderDate = DateTime.Now;
+                salesOrder.SalesOrderName = GenerateOrderNumber();
                 return View(salesOrder);
             }
             ViewData["product"] = _context.Product.ToList();
@@ -51,47 +79,52 @@ namespace Inventory.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(SalesOrder salesOrder)
         {
+            var oldSalesOrderLines = salesOrder.SalesOrderLines;
             if (ModelState.IsValid)
             {
                 if (salesOrder.SalesOrderId == 0)
                 {
+                    // New SalesOrder, add it to the context
                     _context.SalesOrder.Add(salesOrder);
                 }
                 else
                 {
+                    //// Existing SalesOrder, update it
+                    //_context.SalesOrder.Update(salesOrder);
+                    //_context.SaveChanges();
+                    var existingLines = _context.SalesOrderLine
+                                  .Where(existingLine => existingLine.SalesOrderId == salesOrder.SalesOrderId)
+                                  .ToList();
+
+                    _context.SalesOrderLine.RemoveRange(existingLines);
+                    _context.SaveChanges();
+                    foreach (var item in salesOrder.SalesOrderLines)
+                    {
+                        item.SalesOrderId= salesOrder.SalesOrderId;
+                        item.SalesOrderLineId = 0;
+                        _context.SalesOrderLine.Add(item);
+                    }
+                    _context.SaveChanges();
                     _context.SalesOrder.Update(salesOrder);
 
-                    foreach (var updatedLine in salesOrder.SalesOrderLines)
-                    {
-                        var existingLine = _context.SalesOrderLine
-                            .SingleOrDefault(line => line.SalesOrderLineId == updatedLine.SalesOrderLineId);
-
-                        if (existingLine != null)
-                        {
-                            // Update properties of existing SalesOrderLine
-                            _context.Entry(existingLine).CurrentValues.SetValues(updatedLine);
-                        }
-                        else
-                        {
-                            updatedLine.SalesOrderId = salesOrder.SalesOrderId;
-                            // Add new SalesOrderLine if it doesn't exist
-                            _context.SalesOrderLine.Add(updatedLine);
-                        }
-                    }
-
                 }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["product"] = _context.Product.ToList();
             return View(salesOrder);
         }
+
+        
+
 
         #region API CALLS
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.SalesOrder.Include(p => p.Customer).Include(p => p.Currency).Include(p => p.SalesType).Include(p => p.Branch) });
+            return Json(new { data = _context.SalesOrder.Include(p => p.Customer).Include(p => p.Currency).Include(p => p.SalesType).Include(p => p.Branch).OrderBy(x=>x.SalesOrderId) });
         }
 
         [HttpDelete]
@@ -122,6 +155,7 @@ namespace Inventory.Controllers
 
         public List<InvoicePrint> GetOrderData(int? id)
         {
+            var invoiceNo = GenerateInvoiceNumber();
             string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
             List<InvoicePrint> invoicePrints = new List<InvoicePrint>();
 
@@ -206,7 +240,11 @@ namespace Inventory.Controllers
                                 SubTotal_details = Convert.ToDecimal(reader["SubTotal_details"]),
                                 TaxPercentage = Convert.ToDecimal(reader["TaxPercentage"]),
                                 TaxAmount = Convert.ToDecimal(reader["TaxAmount"]),
-                                Total_Details = Convert.ToDecimal(reader["Total_Details"])
+                                Total_Details = Convert.ToDecimal(reader["Total_Details"]),
+                                SalesInvoiceName = invoiceNo
+
+
+
                             };
 
                             invoicePrints.Add(invoice);

@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
         public string SalesOrderName { get; set; }
+        public string SalesInvoiceName { get; set; }
+
         public string BranchName { get; set; }
         public string CustomerName { get; set; }
         public string DeliveryDate { get; set; }

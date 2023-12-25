@@ -41,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="SalesOrderName" class="control-label"></label>
-                                        <input asp-for="SalesOrderName" class="form-control" />
+                                        <input asp-for="SalesOrderName" class="form-control" placeholder="Generated automatically" readonly />
                                         @*  <input asp-for="SalesOrderName" placeholder="Generated automatically" class="form-control"/>
                                         <span asp-validation-for="SalesOrderName" class="text-danger"></span> *@
                                     </div>
@@ -234,7 +234,17 @@
                                                 <td><input type="text" name="SalesOrderLines[@i].DiscountPercentage" value="@Model.SalesOrderLines[@i].DiscountPercentage" class="form-control discount"></td>
                                                 <td><input type="text" readonly name="SalesOrderLines[@i].DiscountAmount" value="@Model.SalesOrderLines[@i].DiscountAmount" class="form-control discountAmount"></td>
                                                 <td><input type="text" readonly name="SalesOrderLines[@i].Total" value="@Model.SalesOrderLines[@i].Total" class="form-control total"></td>
-                                                <td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>
+
+                                                @if (i == Model.SalesOrderLines.Count - 1)
+                                                {
+                                                    <td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+
+                                                }
                                             </tr>
                                         }
                                     }
@@ -585,17 +595,14 @@
             });
         });
 
+        
         $("#productDetails").on("click", ".ibtnDel", function (event) {
             $(this).closest("tr").remove();
-            updateSerialNumbers(); // Add this line to update serial numbers
-            updateTotalAmount(); // Add this line to recalculate total amount
-        });
-
-        function updateSerialNumbers() {
+            counter -= 1;
             $("#productDetails tbody tr").each(function (index) {
                 $(this).find('td:first').text(index + 1);
             });
-        }
+        });
     </script>
 }
 

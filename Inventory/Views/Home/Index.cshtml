@@ -1,89 +1,192 @@
-﻿@{
+﻿@model Inventory.Models.ViewModel.HomeDash
+@{
     ViewData["Title"] = "Home Page";
 }
+<!-- Info boxes -->
+<div class="row">
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
+            <div class="info-box-content">
+                <span class="info-box-text">Total Product</span>
+                <span class="info-box-number">
+                    @Model.TotalProduct
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Total Purchase</span>
+                <span class="info-box-number">
+                    @Model.TotalPurchase
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <!-- fix for small devices only -->
+    <div class="clearfix hidden-md-up"></div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Total Sales</span>
+                <span class="info-box-number">
+                    @Model.TotalSales
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Total Customer</span>
+                <span class="info-box-number">@Model.TotalCustomer</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- TABLE: LATEST ORDERS -->
 <div class="row">
     <div class="col-lg-6">
         <div class="card">
-            <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                    <h3 class="card-title">Online Store Visitors</h3>
-                    <a href="javascript:void(0);">View Report</a>
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Latest Orders</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="d-flex">
-                    <p class="d-flex flex-column">
-                        <span class="text-bold text-lg">820</span>
-                        <span>Visitors Over Time</span>
-                    </p>
-                    <p class="ml-auto d-flex flex-column text-right">
-                        <span class="text-success">
-                            <i class="fas fa-arrow-up"></i> 12.5%
-                        </span>
-                        <span class="text-muted">Since last week</span>
-                    </p>
-                </div>
-                <!-- /.d-flex -->
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Order No</th>
+                                <th>Customer</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.SalesOrders)
+                            {
+                                <tr>
+                                    <td><a href="#">@item.SalesOrderName</a></td>
+                                    <td>iPhone 6 Plus</td>
+                                    <td><span class="badge badge-danger">@item.Customer</span></td>
+                                    @if (string.IsNullOrWhiteSpace(item.SalesInvoiceName))
+                                    {
+                                        <td><span class="badge badge-success">Invoice Pending</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="badge badge-success">Invoice Done</span></td>
 
-                <div class="position-relative mb-4">
-                    <canvas id="visitors-chart" height="200"></canvas>
-                </div>
+                                    }
 
-                <div class="d-flex flex-row justify-content-end">
-                    <span class="mr-2">
-                        <i class="fas fa-square text-primary"></i> This Week
-                    </span>
+                                </tr>
+                            }
 
-                    <span>
-                        <i class="fas fa-square text-gray"></i> Last Week
-                    </span>
+                        </tbody>
+                    </table>
                 </div>
+                <!-- /.table-responsive -->
             </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <a href="~/SalesOrders/Upsert" class="btn btn-sm btn-info float-left">Place New Order</a>
+                <a href="~/SalesOrders/Index" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+            </div>
+            <!-- /.card-footer -->
         </div>
     </div>
-    <!-- /.col-md-6 -->
     <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                    <h3 class="card-title">Sales</h3>
-                    <a href="javascript:void(0);">View Report</a>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="d-flex">
-                    <p class="d-flex flex-column">
-                        <span class="text-bold text-lg">$18,230.00</span>
-                        <span>Sales Over Time</span>
-                    </p>
-                    <p class="ml-auto d-flex flex-column text-right">
-                        <span class="text-success">
-                            <i class="fas fa-arrow-up"></i> 33.1%
-                        </span>
-                        <span class="text-muted">Since last month</span>
-                    </p>
-                </div>
-                <!-- /.d-flex -->
 
-                <div class="position-relative mb-4">
-                    <canvas id="sales-chart" height="200"></canvas>
-                </div>
-
-                <div class="d-flex flex-row justify-content-end">
-                    <span class="mr-2">
-                        <i class="fas fa-square text-primary"></i> This year
-                    </span>
-
-                    <span>
-                        <i class="fas fa-square text-gray"></i> Last year
-                    </span>
-                </div>
-            </div>
-        </div>
         <!-- /.card -->
-    </div>
-    <!-- /.col-md-6 -->
-</div>
-<!-- /.row -->
+        <!-- PRODUCT LIST -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Recently Added Products</h3>
 
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <ul class="products-list product-list-in-card pl-2 pr-2">
+                    @foreach (var item in Model.Products)
+                    {
+                        <li class="item">
+
+                            @if (item.Image != null)
+                            {
+                                var base64 = Convert.ToBase64String(item.Image);
+                                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                <div class="product-img">
+                                    <img src="@imgsrc" alt="Product Image" class="img-size-50">
+                                </div>
+                            }
+                            else
+
+                            {
+                                <div class="product-img">
+                                    <img src="~/image/no_image.jpg" alt="Product Image" class="img-size-50">
+                                </div>
+
+                            }
+
+                            <div class="product-info">
+                                <a href="javascript:void(0)" class="product-title">
+                                    @item.ProductName
+                                    <span class="badge badge-warning float-right">$@item.DefaultSellingPrice</span>
+                                </a>
+                                <span class="product-description">
+                                    @item.Description
+                                </span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer text-center">
+                <a href="~/Products/Index" class="uppercase">View All Products</a>
+            </div>
+            <!-- /.card-footer -->
+        </div>
+    </div>
+</div>
+<!-- /.card -->
