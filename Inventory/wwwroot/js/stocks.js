@@ -25,7 +25,7 @@ function loadDataTable() {
                 "data": "currentStock", "width": "25%",
                 "render": function (data) {
                     if (data < 3) {
-                        return '<span class="text-danger">Low Stock: ' + data + '</span>';
+                        return data + '  <button class="btn btn-danger">Low Stock</button>';
                     } else {
                         return data;
                     }
