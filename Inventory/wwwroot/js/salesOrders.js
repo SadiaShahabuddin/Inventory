@@ -35,7 +35,7 @@ function loadDataTable() {
                             </a>
                             &nbsp;
                             <a href="/SalesOrders/Invoice/${data}" title="Invoice Print" class='btn btn-primary text-white' style='cursor:pointer; width:60px;' >
-                                invoice</i>
+                                <i class='fas fa-print'></i>
                             </a>
                             </div>
                         `;

@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+            <span class="info-box-icon bg-info elevation-1"><i class="fab fa-product-hunt"></i></span>
 
             <div class="info-box-content">
                 <span class="info-box-text">Total Product</span>
@@ -21,12 +21,12 @@
     <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
             <div class="info-box-content">
                 <span class="info-box-text">Total Purchase</span>
                 <span class="info-box-number">
-                    @Model.TotalPurchase
+                    <b>৳</b> @Model.TotalPurchase
                 </span>
             </div>
             <!-- /.info-box-content -->
@@ -44,7 +44,7 @@
             <div class="info-box-content">
                 <span class="info-box-text">Total Sales</span>
                 <span class="info-box-number">
-                    @Model.TotalSales
+                    <b>৳</b> @Model.TotalSales
                 </span>
             </div>
             <!-- /.info-box-content -->
@@ -171,7 +171,7 @@
                             <div class="product-info">
                                 <a href="javascript:void(0)" class="product-title">
                                     @item.ProductName
-                                    <span class="badge badge-warning float-right">$@item.DefaultSellingPrice</span>
+                                    <span class="badge badge-warning float-right"><b>৳</b>@item.DefaultSellingPrice</span>
                                 </a>
                                 <span class="product-description">
                                     @item.Description
