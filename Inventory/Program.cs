@@ -1,5 +1,6 @@
 using Inventory.Data;
 using Inventory.Data.DbInitializer;
+using Inventory.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,6 @@ namespace Inventory
             builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
             .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
             builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
 

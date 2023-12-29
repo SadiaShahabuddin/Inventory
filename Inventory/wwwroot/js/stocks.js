@@ -21,13 +21,15 @@ function loadDataTable() {
             { "data": "productName", "width": "20%" },
             { "data": "totalPurchase", "width": "25%" },
             { "data": "totalSales", "width": "25%" },
+            { "data": "currentStock", "width": "25%" },
+            { "data": "branchName", "width": "25%" },
             {
                 "data": "currentStock", "width": "25%",
                 "render": function (data) {
                     if (data < 3) {
-                        return '<span class="text-danger">Low Stock: ' + data + '</span>';
+                        return '<span class="text-danger">Low Stock:</span>';
                     } else {
-                        return data;
+                        return '';
                     }
                 }
             }

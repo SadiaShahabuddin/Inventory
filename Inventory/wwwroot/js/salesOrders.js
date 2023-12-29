@@ -19,7 +19,7 @@ function loadDataTable() {
             { "data": "deliveryDate", "width": "5%" },
             { "data": "currency.currencyName", "width": "5%" },
             { "data": "salesType.salesTypeName", "width": "5%" },
-            { "data": "freight", "width": "5%" },
+            { "data": "salesInvoiceName", "width": "5%" },
 
             {
                 "data": "salesOrderId",

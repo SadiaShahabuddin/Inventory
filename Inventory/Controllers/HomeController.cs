@@ -4,6 +4,7 @@ using Inventory.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using static Inventory.MainMenu.MainMenu;
 
 namespace Inventory.Controllers
@@ -24,25 +25,56 @@ namespace Inventory.Controllers
 
         public IActionResult Index()
         {
-            var last10Orders = _context.SalesOrder
-                .OrderByDescending(order => order.OrderDate)
-                .Take(10)
-                .ToList();
-            var last10OProduct = _context.Product
-                .OrderByDescending(order => order.Id)
-                .Take(10)
-                .ToList();
-            HomeDash homeDash = new HomeDash()
+            var branchId = _context.ApplicationUser
+   .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+   .Select(user => user.BranchId)
+   .FirstOrDefault();
+            if (branchId != null)
             {
-                Products= last10OProduct,
-                SalesOrders = last10Orders,
-                TotalProduct= _context.Product.Count(),
-                TotalCustomer = _context.Customer.Count(),
-                TotalPurchase= _context.PurchaseOrder.Sum(order => order.Total),
-                TotalSales = _context.SalesOrder.Sum(order => order.Total)
+                var last10Orders = _context.SalesOrder.Where(x => x.BranchId == branchId)
+                    .OrderByDescending(order => order.OrderDate)
+                    .Take(10)
+                    .ToList();
+                var last10OProduct = _context.Product
+                    .OrderByDescending(order => order.Id)
+                    .Take(10)
+                    .ToList();
+                HomeDash homeDash = new HomeDash()
+                {
+                    Products = last10OProduct,
+                    SalesOrders = last10Orders,
+                    TotalProduct = _context.Product.Count(),
+                    TotalCustomer = _context.Customer.Count(),
+                    TotalPurchase = _context.PurchaseOrder.Where(x => x.BranchId == branchId).Sum(order => order.Total),
+                    TotalSales = _context.SalesOrder.Where(x => x.BranchId == branchId).Sum(order => order.Total)
 
-        };
-            return View(homeDash);
+                };
+                return View(homeDash);
+
+            }
+            else
+            {
+                var last10Orders = _context.SalesOrder
+                    .OrderByDescending(order => order.OrderDate)
+                    .Take(10)
+                    .ToList();
+                var last10OProduct = _context.Product
+                    .OrderByDescending(order => order.Id)
+                    .Take(10)
+                    .ToList();
+                HomeDash homeDash = new HomeDash()
+                {
+                    Products = last10OProduct,
+                    SalesOrders = last10Orders,
+                    TotalProduct = _context.Product.Count(),
+                    TotalCustomer = _context.Customer.Count(),
+                    TotalPurchase = _context.PurchaseOrder.Sum(order => order.Total),
+                    TotalSales = _context.SalesOrder.Sum(order => order.Total)
+
+                };
+                return View(homeDash);
+
+            }
         }
 
         public IActionResult Privacy()

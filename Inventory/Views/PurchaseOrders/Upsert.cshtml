@@ -2,7 +2,7 @@
 @{
     var title = "Create Purchase Order";
     List<Product> productList = ViewData["product"] as List<Product>;
-
+    int branchId = Convert.ToInt32(ViewData["branchId"]);
 }
 
 <style>
@@ -41,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="PurchaseOrderName" class="control-label"></label>
-                                        <input asp-for="PurchaseOrderName" class="form-control" />
+                                        <input asp-for="PurchaseOrderName" class="form-control" placeholder="Generated automatically" readonly />
                                         @*  <input asp-for="PurchaseOrderName" placeholder="Generated automatically" class="form-control"/>
                                         <span asp-validation-for="PurchaseOrderName" class="text-danger"></span> *@
                                     </div>
@@ -49,7 +49,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="BranchId" class="control-label"></label>
-                                        <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
+                                        @if(Model.BranchId!=0)
+                                        {
+                                            <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
+
+                                        }
+                                        else
+                                        {
+                                            <input name="SelectedBranchId" id="SelectedBranchId" value="@branchId" class="d-none" />
+
+                                        }
                                         <select asp-for="BranchId" class="form-control">
                                             <option value="">--Please Select Branch--</option>
                                         </select>

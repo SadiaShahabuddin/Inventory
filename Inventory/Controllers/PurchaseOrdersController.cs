@@ -10,6 +10,7 @@ using Inventory.Models;
 using Inventory.Models.ViewModel;
 using Microsoft.Data.SqlClient;
 using System.Net;
+using System.Security.Claims;
 
 namespace Inventory.Controllers
 {
@@ -31,14 +32,19 @@ namespace Inventory.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            PurchaseOrder purchaseOrder = new PurchaseOrder();
+            Models.PurchaseOrder purchaseOrder = new PurchaseOrder();
+            ViewData["product"] = _context.Product.ToList();
+            ViewData["branchId"] = _context.ApplicationUser
+  .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+  .Select(user => user.BranchId)
+  .FirstOrDefault();
             if (id == null)
             {
                 purchaseOrder.DeliveryDate = DateTime.Now;
                 purchaseOrder.OrderDate = DateTime.Now;
+                purchaseOrder.PurchaseOrderName  = GenerateOrderNumber();
                 return View(purchaseOrder);
             }
-            ViewData["product"] = _context.Product.ToList();
             purchaseOrder = _context.PurchaseOrder.Find(id.GetValueOrDefault());
             purchaseOrder.PurchaseOrderLines = _context.PurchaseOrderLine.Where(x => x.PurchaseOrderId == id.GetValueOrDefault()).ToList();
             if (purchaseOrder == null)
@@ -47,6 +53,20 @@ namespace Inventory.Controllers
             }
             return View(purchaseOrder);
 
+        }
+        private string GenerateOrderNumber()
+        {
+            // Use current date and time information
+            DateTime now = DateTime.Now;
+
+            // Format the date and time information to include in the order number
+            string datePart = now.ToString("yyyy-MM-dd");
+            string timePart = now.ToString("HHmmssfff");
+
+            // Combine the formatted date and time information with a prefix
+            string orderNumber = $"#PUR-{datePart}{timePart}";
+
+            return orderNumber;
         }
 
         [HttpPost]
@@ -63,7 +83,7 @@ namespace Inventory.Controllers
                 {
                     // Update PurchaseOrder
                     _context.PurchaseOrder.Update(purchaseOrder);
-                    var oldObj= _context.PurchaseOrderLine.Where(x=>x.PurchaseOrderId==purchaseOrder.PurchaseOrderId).ToList();
+                    var oldObj = _context.PurchaseOrderLine.Where(x => x.PurchaseOrderId == purchaseOrder.PurchaseOrderId).ToList();
                     // Update PurchaseOrderLines
                     foreach (var updatedLine in purchaseOrder.PurchaseOrderLines)
                     {
@@ -77,16 +97,16 @@ namespace Inventory.Controllers
                         }
                         else
                         {
-                            updatedLine.PurchaseOrderId= purchaseOrder.PurchaseOrderId;
+                            updatedLine.PurchaseOrderId = purchaseOrder.PurchaseOrderId;
                             // Add new PurchaseOrderLine if it doesn't exist
                             _context.PurchaseOrderLine.Add(updatedLine);
                         }
                     }
-                    var result = oldObj.Where(p => !purchaseOrder.PurchaseOrderLines.Any(p2 => p2.PurchaseOrderLineId  == p.PurchaseOrderLineId));
+                    var result = oldObj.Where(p => !purchaseOrder.PurchaseOrderLines.Any(p2 => p2.PurchaseOrderLineId == p.PurchaseOrderLineId));
 
                 }
 
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(purchaseOrder);
@@ -97,8 +117,22 @@ namespace Inventory.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.PurchaseOrder.Include(p => p.Vendor).Include(p => p.Currency).Include(p => p.PurchaseType).Include(p => p.Branch) });
-      
+
+            var branchId = _context.ApplicationUser
+   .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+   .Select(user => user.BranchId)
+   .FirstOrDefault();
+            if (branchId == null)
+            {
+                return Json(new { data = _context.PurchaseOrder.Include(p => p.Vendor).Include(p => p.Currency).Include(p => p.PurchaseType).Include(p => p.Branch) });
+
+            }
+            else
+            {
+                return Json(new { data = _context.PurchaseOrder.Where(x => x.BranchId == branchId).Include(p => p.Vendor).Include(p => p.Currency).Include(p => p.PurchaseType).Include(p => p.Branch) });
+
+            }
+
         }
         [HttpDelete]
         public IActionResult Delete(int id)
@@ -222,7 +256,7 @@ namespace Inventory.Controllers
             return purchaseInvoices;
 
         }
-       
+
         #endregion
     }
 }

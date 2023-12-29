@@ -2,6 +2,7 @@
 @{
     var title = "Create Sales Order";
     List<Product> productList = ViewData["product"] as List<Product>;
+    int branchId = Convert.ToInt32(ViewData["branchId"]);
 
 }
 
@@ -49,7 +50,17 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label asp-for="BranchId" class="control-label"></label>
-                                        <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
+                                        @if (Model.BranchId != 0)
+                                        {
+                                            <input name="SelectedBranchId" id="SelectedBranchId" value="@Model.BranchId" class="d-none" />
+
+                                        }
+                                        else
+                                        {
+                                            <input name="SelectedBranchId" id="SelectedBranchId" value="@branchId" class="d-none" />
+
+                                        }
+                                        
                                         <select asp-for="BranchId" class="form-control">
                                             <option value="">--Please Select Branch--</option>
                                         </select>
