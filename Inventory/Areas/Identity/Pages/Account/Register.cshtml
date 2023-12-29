@@ -87,11 +87,12 @@
         $(document).ready(function () {
             $('#Input_Role').change(function () {
                 var selection = $('#Input_Role Option:Selected').text();
-                if (selection != 'Branch') {
-                    $('#Input_BranchId').hide();
+                console.log(selection)
+                if (selection == 'BranchManager' || selection == 'SalesEmployee') {
+                    $('#Input_BranchId').show();
                 }
                 else {
-                    $('#Input_BranchId').show();
+                    $('#Input_BranchId').hide();
                 }
             })
         })

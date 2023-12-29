@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Inventory.Data;
+using Inventory.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Controllers
 {
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public UserController(ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public UserController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
 
 
         public IActionResult Index()
@@ -26,9 +33,30 @@ namespace Inventory.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.ApplicationUser.ToList()});
-        }
+            
+            var usersWithBranchAndRole = _context.ApplicationUser
+    .Include(u => u.Branch)
+    .DefaultIfEmpty()
+    .ToList();
 
+
+            var userData = usersWithBranchAndRole.Select(user => new
+            {
+                Id = user.Id,
+                Name = user.Name,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                BranchName = user.Branch?.BranchName,
+                Role = GetUserRoles(user.Id)
+            });
+
+            return Json(new { data = userData });
+        }
+        private List<string> GetUserRoles(string userId)
+        {
+            var userRoles = _userManager.GetRolesAsync(_userManager.FindByIdAsync(userId).Result).Result;
+            return userRoles.ToList();
+        }
 
         [HttpPost]
         public IActionResult LockUnlock([FromBody] string id)

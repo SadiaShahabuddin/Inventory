@@ -9,6 +9,8 @@ using Inventory.Data;
 using Inventory.Models;
 using Microsoft.Data.SqlClient;
 using Inventory.Models.ViewModel;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Inventory.Controllers
 {
@@ -232,28 +234,59 @@ namespace Inventory.Controllers
 
         public JsonResult GetStock()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usersWithBranch = _context.ApplicationUser.FirstOrDefault(x => x.Id == userId);
+            var BranchId = usersWithBranch.BranchId;
+
             List<Stock> stocks = new List<Stock>();
-
             string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-
-                string query = @"
-                   SELECT P.ProductName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, (ISNULL(X.TOTALPURCHASE, 0) - ISNULL(Y.TOTALSALES, 0)) AS CURRENTSTOCK
+                string query = "";
+                if (usersWithBranch.BranchId ==null)
+                {
+                    query = @"
+                   SELECT P.ProductName,X.BranchName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, (ISNULL(X.TOTALPURCHASE, 0) - ISNULL(Y.TOTALSALES, 0)) AS CURRENTSTOCK
                    FROM PRODUCT P
                    LEFT OUTER JOIN (
-                       SELECT COUNT(QUANTITY) AS TOTALPURCHASE, PRODUCTID
-                       FROM PURCHASEORDERLINE L
+                       SELECT SUM(QUANTITY) AS TOTALPURCHASE, PRODUCTID, MIN(B.BranchName)BranchName
+                       FROM PURCHASEORDERLINE L, PurchaseOrder M, Branch B
+					   WHERE L.PurchaseOrderId= M.PurchaseOrderId AND B.Id= M.BranchId
                        GROUP BY PRODUCTID
                    ) X ON X.PRODUCTID = P.ID
                    LEFT OUTER JOIN (
-                       SELECT COUNT(QUANTITY) AS TOTALSALES, PRODUCTID
-                       FROM SALESORDERLINE L
+                       SELECT SUM(QUANTITY) AS TOTALSALES, PRODUCTID, MIN(B.BranchName)BranchName
+                       FROM SALESORDERLINE L, SalesOrder M, Branch B
+					   WHERE L.SalesOrderId= M.SalesOrderId AND B.Id= M.BranchId
                        GROUP BY PRODUCTID
                    ) Y ON Y.PRODUCTID = P.ID
                    ORDER BY P.Id";
+
+
+                }
+                else
+                {
+                     query = $@"
+    SELECT P.ProductName,X.BranchName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, (ISNULL(X.TOTALPURCHASE, 0) - ISNULL(Y.TOTALSALES, 0)) AS CURRENTSTOCK
+    FROM PRODUCT P
+    LEFT OUTER JOIN (
+        SELECT SUM(QUANTITY) AS TOTALPURCHASE, PRODUCTID, MIN(B.BranchName)BranchName
+        FROM PURCHASEORDERLINE L, PurchaseOrder M, Branch B
+        WHERE L.PurchaseOrderId = M.PurchaseOrderId AND B.Id = M.BranchId
+        AND M.BranchId = {BranchId}
+        GROUP BY PRODUCTID
+    ) X ON X.PRODUCTID = P.ID
+    LEFT OUTER JOIN (
+        SELECT SUM(QUANTITY) AS TOTALSALES, PRODUCTID, MIN(B.BranchName)BranchName
+        FROM SALESORDERLINE L, SalesOrder M, Branch B
+        WHERE L.SalesOrderId = M.SalesOrderId AND B.Id = M.BranchId
+        AND M.BranchId = {BranchId}
+        GROUP BY PRODUCTID
+    ) Y ON Y.PRODUCTID = P.ID
+    ORDER BY P.Id";
+                }
+                
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                {
@@ -263,6 +296,7 @@ namespace Inventory.Controllers
                         {
                             Stock stock = new Stock
                             {
+                                BranchName = reader["BranchName"].ToString(),
                                 ProductName = reader["ProductName"].ToString(),
                                 TotalPurchase = Convert.ToInt32(reader["TOTALPURCHASE"]),
                                 TotalSales = Convert.ToInt32(reader["TOTALSALES"]),

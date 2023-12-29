@@ -119,48 +119,64 @@ namespace Inventory.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             //if (ModelState.IsValid)
             //{
-                var user = CreateUser();
-                user.UserName = Input.Email;
-                user.UserName = Input.Email;
-                user.StreetAddress = Input.StreetAddress;
-                user.City = Input.City;
-                user.State = Input.State;
-                user.PostalCode = Input.PostalCode;
-                user.Name = Input.Name;
-                user.PhoneNumber = Input.PhoneNumber;
-                //var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-                //var result = await _userManager.CreateAsync(user, Input.Password);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+            var user = CreateUser();
+            user.UserName = Input.Email;
+            user.UserName = Input.Email;
+            user.StreetAddress = Input.StreetAddress;
+            user.City = Input.City;
+            user.State = Input.State;
+            user.PostalCode = Input.PostalCode;
+            user.Name = Input.Name;
+            user.PhoneNumber = Input.PhoneNumber;
+            user.BranchId = Input.BranchId;
+            //var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+            //var result = await _userManager.CreateAsync(user, Input.Password);
+            var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
+            if (result.Succeeded)
+            {
+                // Assign the selected role to the user
+                if (!string.IsNullOrEmpty(Input.Role))
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    var roleExists = await _roleManager.RoleExistsAsync(Input.Role);
+                    if (roleExists)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        await _userManager.AddToRoleAsync(user, Input.Role);
                     }
+                    else
+                    {
+                        // Handle the case where the selected role does not exist
+                        ModelState.AddModelError(string.Empty, "Invalid role selected.");
+                        return Page();
+                    }
+                }
+                _logger.LogInformation("User created a new account with password.");
+
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                    protocol: Request.Scheme);
+
+
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                }
                 else
                 {
                     return RedirectToAction("Index", "User");
 
                 }
             }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
             //}
-   
+
             Input.RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
             {
                 Text = i,
@@ -171,7 +187,7 @@ namespace Inventory.Areas.Identity.Pages.Account
                 Text = i.BranchName,
                 Value = i.Id.ToString()
             });
-            
+
             return Page();
         }
         private ApplicationUser CreateUser()

@@ -9,6 +9,7 @@ using Inventory.Data;
 using Inventory.Models;
 using Inventory.Models.ViewModel;
 using Microsoft.Data.SqlClient;
+using System.Security.Claims;
 
 namespace Inventory.Controllers
 {
@@ -58,6 +59,11 @@ namespace Inventory.Controllers
         public IActionResult Upsert(int? id)
         {
             SalesOrder salesOrder = new SalesOrder();
+            ViewData["product"] = _context.Product.ToList();
+            ViewData["branchId"] = _context.ApplicationUser
+  .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+  .Select(user => user.BranchId)
+  .FirstOrDefault();
             if (id == null)
             {
                 salesOrder.DeliveryDate = DateTime.Now;
@@ -65,13 +71,13 @@ namespace Inventory.Controllers
                 salesOrder.SalesOrderName = GenerateOrderNumber();
                 return View(salesOrder);
             }
-            ViewData["product"] = _context.Product.ToList();
             salesOrder = _context.SalesOrder.Find(id.GetValueOrDefault());
             salesOrder.SalesOrderLines = _context.SalesOrderLine.Where(x => x.SalesOrderId == id.GetValueOrDefault()).ToList();
             if (salesOrder == null)
             {
                 return NotFound();
             }
+           
             return View(salesOrder);
         }
 
@@ -100,7 +106,7 @@ namespace Inventory.Controllers
                     _context.SaveChanges();
                     foreach (var item in salesOrder.SalesOrderLines)
                     {
-                        item.SalesOrderId= salesOrder.SalesOrderId;
+                        item.SalesOrderId = salesOrder.SalesOrderId;
                         item.SalesOrderLineId = 0;
                         _context.SalesOrderLine.Add(item);
                     }
@@ -116,7 +122,7 @@ namespace Inventory.Controllers
             return View(salesOrder);
         }
 
-        
+
 
 
         #region API CALLS
@@ -124,9 +130,19 @@ namespace Inventory.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.SalesOrder.Include(p => p.Customer).Include(p => p.Currency).Include(p => p.SalesType).Include(p => p.Branch).OrderBy(x=>x.SalesOrderId) });
+            var branchId = _context.ApplicationUser
+  .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+  .Select(user => user.BranchId)
+  .FirstOrDefault();
+            if (branchId == null)
+            {
+                return Json(new { data = _context.SalesOrder.Include(p => p.Customer).Include(p => p.Currency).Include(p => p.SalesType).Include(p => p.Branch).OrderBy(x => x.SalesOrderId) });
+            }
+            else
+            {
+                return Json(new { data = _context.SalesOrder.Where(x => x.BranchId == branchId).Include(p => p.Customer).Include(p => p.Currency).Include(p => p.SalesType).Include(p => p.Branch).OrderBy(x => x.SalesOrderId) });
+            }
         }
-
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -143,7 +159,7 @@ namespace Inventory.Controllers
 
         public IActionResult Invoice(int? id)
         {
-             return View(GetOrderData(id));
+            return View(GetOrderData(id));
         }
 
 
@@ -156,6 +172,12 @@ namespace Inventory.Controllers
         public List<InvoicePrint> GetOrderData(int? id)
         {
             var invoiceNo = GenerateInvoiceNumber();
+            var obj=  _context.SalesOrder.FirstOrDefault(x => x.SalesOrderId == id);
+            if (string.IsNullOrWhiteSpace(obj.SalesInvoiceName)){
+                obj.SalesInvoiceName = invoiceNo;
+                _context.SaveChanges();
+
+            }
             string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
             List<InvoicePrint> invoicePrints = new List<InvoicePrint>();
 
@@ -182,6 +204,7 @@ namespace Inventory.Controllers
                   m.Tax, 
                   m.Freight, 
                   m.Total ,
+                  m.SalesInvoiceName,
                   p.ProductName, 
                   p.Description, 
                   d.Quantity, 
@@ -241,12 +264,8 @@ namespace Inventory.Controllers
                                 TaxPercentage = Convert.ToDecimal(reader["TaxPercentage"]),
                                 TaxAmount = Convert.ToDecimal(reader["TaxAmount"]),
                                 Total_Details = Convert.ToDecimal(reader["Total_Details"]),
-                                SalesInvoiceName = invoiceNo
-
-
-
+                                SalesInvoiceName = reader["SalesInvoiceName"].ToString(),
                             };
-
                             invoicePrints.Add(invoice);
                         }
                     }
