@@ -250,16 +250,16 @@ namespace Inventory.Controllers
                    SELECT P.ProductName,X.BranchName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, (ISNULL(X.TOTALPURCHASE, 0) - ISNULL(Y.TOTALSALES, 0)) AS CURRENTSTOCK
                    FROM PRODUCT P
                    LEFT OUTER JOIN (
-                       SELECT SUM(QUANTITY) AS TOTALPURCHASE, PRODUCTID, MIN(B.BranchName)BranchName
+                       SELECT SUM(QUANTITY) AS TOTALPURCHASE, PRODUCTID, B.BranchName
                        FROM PURCHASEORDERLINE L, PurchaseOrder M, Branch B
 					   WHERE L.PurchaseOrderId= M.PurchaseOrderId AND B.Id= M.BranchId
-                       GROUP BY PRODUCTID
+                       GROUP BY PRODUCTID,B.BranchName
                    ) X ON X.PRODUCTID = P.ID
                    LEFT OUTER JOIN (
-                       SELECT SUM(QUANTITY) AS TOTALSALES, PRODUCTID, MIN(B.BranchName)BranchName
+                       SELECT SUM(QUANTITY) AS TOTALSALES, PRODUCTID, B.BranchName
                        FROM SALESORDERLINE L, SalesOrder M, Branch B
 					   WHERE L.SalesOrderId= M.SalesOrderId AND B.Id= M.BranchId
-                       GROUP BY PRODUCTID
+                       GROUP BY PRODUCTID,B.BranchName
                    ) Y ON Y.PRODUCTID = P.ID
                    ORDER BY P.Id";
 

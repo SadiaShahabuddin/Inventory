@@ -2,7 +2,7 @@
 {
     public static class SD
     {
-        public const string Role_User_Comp = "BranchManager";
+        public const string Role_Branch_Manager = "BranchManager";
         public const string Role_Admin = "Admin";
         public const string Role_Employee = "SalesEmployee";
 

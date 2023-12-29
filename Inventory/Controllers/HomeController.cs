@@ -10,7 +10,7 @@ using static Inventory.MainMenu.MainMenu;
 
 namespace Inventory.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Branch_Manager)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
