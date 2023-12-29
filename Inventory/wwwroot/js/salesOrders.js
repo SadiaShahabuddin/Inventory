@@ -4,6 +4,19 @@ $(document).ready(function () {
     loadDataTable();
 });
 
+// Make an Ajax call
+    //$.ajax({
+    //    url: "/Warehouses/GetAll",
+    //    type: "GET",
+    //    dataType: "json",
+    //    success: function (data) {
+    //        // Log the response in the console
+    //        console.log(data);
+    //    },
+    //    error: function (error) {
+    //        console.error("Error loading data: " + error);
+    //    }
+    //});
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
@@ -13,11 +26,11 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "salesOrderName", "width": "5%" },
-            { "data": "branch.branchName", "width": "5%" },
-            { "data": "customer.customerName", "width": "5%" },
-            { "data": "orderDate", "width": "5%" },
-            { "data": "deliveryDate", "width": "5%" },
-            { "data": "currency.currencyName", "width": "5%" },
+            { "data": "branch.branchName", "width": "4%" },
+            { "data": "customer.customerName", "width": "4%" },
+            { "data": "orderDate", "width": "4%" },
+            { "data": "deliveryDate", "width": "4%" },
+            { "data": "currency.currencyName", "width": "4%" },
             { "data": "salesType.salesTypeName", "width": "5%" },
             { "data": "salesInvoiceName", "width": "5%" },
 

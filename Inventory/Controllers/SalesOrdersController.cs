@@ -172,6 +172,12 @@ namespace Inventory.Controllers
         public List<InvoicePrint> GetOrderData(int? id)
         {
             var invoiceNo = GenerateInvoiceNumber();
+            var obj=  _context.SalesOrder.FirstOrDefault(x => x.SalesOrderId == id);
+            if (string.IsNullOrWhiteSpace(obj.SalesInvoiceName)){
+                obj.SalesInvoiceName = invoiceNo;
+                _context.SaveChanges();
+
+            }
             string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
             List<InvoicePrint> invoicePrints = new List<InvoicePrint>();
 
@@ -198,6 +204,7 @@ namespace Inventory.Controllers
                   m.Tax, 
                   m.Freight, 
                   m.Total ,
+                  m.SalesInvoiceName,
                   p.ProductName, 
                   p.Description, 
                   d.Quantity, 
@@ -257,7 +264,7 @@ namespace Inventory.Controllers
                                 TaxPercentage = Convert.ToDecimal(reader["TaxPercentage"]),
                                 TaxAmount = Convert.ToDecimal(reader["TaxAmount"]),
                                 Total_Details = Convert.ToDecimal(reader["Total_Details"]),
-                                SalesInvoiceName = invoiceNo
+                                SalesInvoiceName = reader["SalesInvoiceName"].ToString(),
                             };
                             invoicePrints.Add(invoice);
                         }

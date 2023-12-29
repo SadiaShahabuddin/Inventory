@@ -39,17 +39,18 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
+                @if (User.Identity.IsAuthenticated && (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_User_Comp)))
+                {
+                    <li class="nav-item">
+                        <a href="@MainMenu.Dashboard.Path" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                DASHBOARD
 
-                <li class="nav-item">
-                    <a href="@MainMenu.Dashboard.Path" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            DASHBOARD
-
-                        </p>
-                    </a>
-                </li>
-
+                            </p>
+                        </a>
+                    </li>
+                }
 
                 <li class="nav-item @Html.IsInventorySelected()">
                     <a href="#" class="nav-link ">
