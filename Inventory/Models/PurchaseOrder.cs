@@ -39,6 +39,6 @@ namespace Inventory.Models
         public virtual PurchaseType? PurchaseType { get; set; }
         public List<PurchaseOrderLine>? PurchaseOrderLines { get; set; }
 
-
+        public string? PurchaseInvoiceName { get; set; }
     }
 }

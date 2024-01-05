@@ -61,9 +61,9 @@ namespace Inventory.Controllers
             SalesOrder salesOrder = new SalesOrder();
             ViewData["product"] = _context.Product.ToList();
             ViewData["branchId"] = _context.ApplicationUser
-  .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
-  .Select(user => user.BranchId)
-  .FirstOrDefault();
+            .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            .Select(user => user.BranchId)
+            .FirstOrDefault();
             if (id == null)
             {
                 salesOrder.DeliveryDate = DateTime.Now;
@@ -98,9 +98,7 @@ namespace Inventory.Controllers
                     //// Existing SalesOrder, update it
                     //_context.SalesOrder.Update(salesOrder);
                     //_context.SaveChanges();
-                    var existingLines = _context.SalesOrderLine
-                                  .Where(existingLine => existingLine.SalesOrderId == salesOrder.SalesOrderId)
-                                  .ToList();
+                    var existingLines = _context.SalesOrderLine.Where(existingLine => existingLine.SalesOrderId == salesOrder.SalesOrderId).ToList();
 
                     _context.SalesOrderLine.RemoveRange(existingLines);
                     _context.SaveChanges();

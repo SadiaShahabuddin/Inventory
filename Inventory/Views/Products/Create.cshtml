@@ -26,18 +26,19 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="ProductCode" class="control-label">Product Code</label>
-                                <input asp-for="ProductCode" class="form-control" />
+                                <input asp-for="ProductCode" class="form-control" id="productCode" readonly />
                                 <span asp-validation-for="ProductCode" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label asp-for="Barcode" class="control-label"></label>
-                                <input asp-for="Barcode" class="form-control" />
+                                <label asp-for="Barcode" class="control-label">Barcode</label>
+                                <input asp-for="Barcode" class="form-control" id="barcode" readonly />
                                 <span asp-validation-for="Barcode" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
@@ -179,6 +180,42 @@
 
 
     <script>
+        // Function to generate a random alphanumeric string
+        $(document).ready(function () {
+            // Generate a unique product code on page load
+            var productCode = generateProductCode();
+            $("#productCode").val(productCode);
+        });
+
+        function generateProductCode() {
+            // Get the highest existing product code (if any)
+            var highestCode = 0;
+            $(".productCode").each(function () {
+                var code = $(this).val().replace("PR", ""); // Extract the numeric part
+                highestCode = Math.max(highestCode, parseInt(code));
+            });
+
+            // Generate the next code
+            highestCode++;
+            var paddedCode = highestCode.toString().padStart(3, "0"); // Pad with leading zeros
+            return "PR" + paddedCode;
+        }
+        function generateRandomNumericString(length) {
+            const chars = '0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        // Function to set unique values for ProductCode and Barcode
+        function setUniqueValues() {
+
+            document.getElementById('barcode').value = generateRandomNumericString(12);   // Adjust the length as needed
+        }
+
+        // Set unique values when the page loads
+        window.onload = setUniqueValues;
         function previewImage(input) {
             var fileInput = input;
             var selectedImageContainer = document.getElementById('selectedImageContainer');
@@ -193,7 +230,8 @@
                 };
 
                 reader.readAsDataURL(fileInput.files[0]);
-            } else {
+            } 
+            else {
                 selectedImage.src = '#';
                 selectedImageContainer.style.display = 'none'; // Hide the image container if no file is selected
             }
@@ -220,7 +258,6 @@
                             $('<option></option>').val(subcategory.id).text(subcategory.name)
                         );
                     }
-
 
                 },
                 error: function (error) {

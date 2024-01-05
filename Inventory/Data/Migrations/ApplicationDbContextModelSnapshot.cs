@@ -407,6 +407,9 @@ namespace Inventory.Data.Migrations
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("PurchaseInvoiceName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PurchaseOrderName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

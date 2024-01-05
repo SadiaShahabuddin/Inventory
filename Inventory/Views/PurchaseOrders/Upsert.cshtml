@@ -153,13 +153,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                               @*  <div class="col-6">
                                     <div class="form-group">
                                         <label asp-for="Freight" class="control-label"></label>
                                         <input asp-for="Freight" class="form-control" readonly />
                                         <span asp-validation-for="Freight" class="text-danger"></span>
                                     </div>
-                                </div>
+                                </div> *@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label asp-for="Total" class="control-label"></label>
@@ -234,7 +234,11 @@
                                                         }
                                                     </select>
                                                 </td>
-                                                <td><input type="text" readonly name="PurchaseOrderLines[@i].Price" value="@Model.PurchaseOrderLines[@i].Price" class="form-control price"></td>
+                                                <td>
+                                                    <input type="text" readonly name="PurchaseOrderLines[@i].Price" value="@Model.PurchaseOrderLines[@i].Price" class="form-control price" id="priceInput-@i">
+                                                    <button onclick="enableEdit(@i)">Edit</button>
+                                                </td>
+
                                                 <td><input type="text" name="PurchaseOrderLines[@i].Quantity" value="@Model.PurchaseOrderLines[@i].Quantity" class="form-control quantity"></td>
                                                 <td><input type="text" readonly name="PurchaseOrderLines[@i].SubTotal" value="@Model.PurchaseOrderLines[@i].SubTotal" class="form-control subTotal"></td>
                                                 <td><input type="text" name="PurchaseOrderLines[@i].TaxPercentage" value="@Model.PurchaseOrderLines[@i].TaxPercentage" class="form-control tax"></td>
@@ -270,8 +274,9 @@
             loadPurchaseType();
             loadPurchaseOrder();
             loadProduct();
-           
-
+            enableEdit(index);
+            disableEdit(index);
+                
             loadProductsIntoDropdown(function (products) {
 
                 // Iterate over each row in the tbody
@@ -300,6 +305,11 @@
             });
             updateTotalAmount();
         });
+        function enableEdit(index) {
+            var priceInput = document.getElementById('priceInput-' + index);
+            priceInput.removeAttribute('readonly');
+            priceInput.focus(); // Optionally, set focus to the input field after enabling editing.
+        }
         function loadProduct() {
             $.ajax({
                 type: "GET",

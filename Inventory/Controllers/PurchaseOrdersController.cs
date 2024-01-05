@@ -35,9 +35,9 @@ namespace Inventory.Controllers
             Models.PurchaseOrder purchaseOrder = new PurchaseOrder();
             ViewData["product"] = _context.Product.ToList();
             ViewData["branchId"] = _context.ApplicationUser
-  .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
-  .Select(user => user.BranchId)
-  .FirstOrDefault();
+            .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            .Select(user => user.BranchId)
+            .FirstOrDefault();
             if (id == null)
             {
                 purchaseOrder.DeliveryDate = DateTime.Now;
@@ -68,7 +68,20 @@ namespace Inventory.Controllers
 
             return orderNumber;
         }
+        private string GenerateInvoiceNumber()
+        {
+            // Use current date and time information
+            DateTime now = DateTime.Now;
 
+            // Format the date and time information to include in the order number
+            string datePart = now.ToString("yyyy-MM-dd");
+            string timePart = now.ToString("HHmmssfff");
+
+            // Combine the formatted date and time information with a prefix
+            string orderNumber = $"#INVOICE-{datePart}{timePart}";
+
+            return orderNumber;
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(PurchaseOrder purchaseOrder)
@@ -119,9 +132,9 @@ namespace Inventory.Controllers
         {
 
             var branchId = _context.ApplicationUser
-   .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
-   .Select(user => user.BranchId)
-   .FirstOrDefault();
+           .Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))
+           .Select(user => user.BranchId)
+           .FirstOrDefault();
             if (branchId == null)
             {
                 return Json(new { data = _context.PurchaseOrder.Include(p => p.Vendor).Include(p => p.Currency).Include(p => p.PurchaseType).Include(p => p.Branch) });
