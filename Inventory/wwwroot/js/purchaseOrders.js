@@ -33,7 +33,7 @@ function loadDataTable() {
                             <a class='btn btn-danger text-white' style='cursor:pointer; width:60px;' onclick=Delete('/PurchaseOrders/Delete/'+${data})>
                                <i class='far fa-trash-alt'></i> 
                             </a>
-                               <a href="/PurchaseOrders/Invoice/${data}" title="invoice" class='btn btn-primary text-white' style='cursor:pointer; width:60px;' >
+                               <a href="/PurchaseOrders/Invoice/${data}" title="Purchase Order Print" class='btn btn-primary text-white' style='cursor:pointer; width:60px;' >
                                 <i class='fas fa-print'></i> 
                             </a>
                             </div>
