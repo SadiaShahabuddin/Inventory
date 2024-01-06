@@ -12,6 +12,15 @@
     }
 </style>
 
+@if(ViewData["stock"] != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @ViewData["stock"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 <div class="row">
     <div class="col-md-12">
         <div class="card card-primary card-tabs">
@@ -203,7 +212,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="productDetails">
-                                    @if (Model.SalesOrderLines != null)
+                                    @if (Model.SalesOrderLines != null )
                                     {
                                         for (int i = 0; i < Model.SalesOrderLines.Count; i++)
                                         {
@@ -578,14 +587,14 @@
                 // Rest of the columns
                 cols += '<td><select name="SalesOrderLines[' + counter + '].ProductId" class="form-control product-dropdown"></select></td>';
                 cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Price" class="form-control price" /></td>';
-                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
-                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].SubTotal" class="form-control subTotal" /></td>';
-                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].TaxPercentage" class="form-control tax" /></td>';
-                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].TaxAmount" class="form-control taxAmount" /></td>';
-                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Amount" class="form-control amount" /></td>';
-                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
-                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].DiscountAmount" class="form-control discountAmount" /></td>';
-                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Total" class="form-control total" /></td>';
+                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].Quantity"  value="0" class="form-control quantity" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].SubTotal"  value="0" class="form-control subTotal" /></td>';
+                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].TaxPercentage"  value="0" class="form-control tax" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].TaxAmount"  value="0" class="form-control taxAmount" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Amount"  value="0" class="form-control amount" /></td>';
+                cols += '<td><input type="text" name="SalesOrderLines[' + counter + '].DiscountPercentage"  value="0" class="form-control discount" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].DiscountAmount"  value="0" class="form-control discountAmount" /></td>';
+                cols += '<td><input readonly type="text" name="SalesOrderLines[' + counter + '].Total"  value="0" class="form-control total" /></td>';
                 cols += '<td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>';
                 newRow.append(cols);
                 $("#productDetails tbody").append(newRow);

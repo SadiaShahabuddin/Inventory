@@ -27,6 +27,63 @@ namespace Inventory.Controllers
         {
             return View();
         }
+        private List<Stock> GetStock(int BranchId)
+        {
+
+
+            List<Stock> stocks = new List<Stock>();
+            string connectionString = _configuration.GetConnectionString("DefaultConnection"); // Update with your connection string name
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "";
+
+                query = $@"
+    SELECT P.Id, P.ProductName,X.BranchName, ISNULL(X.TOTALPURCHASE, 0) AS TOTALPURCHASE, ISNULL(Y.TOTALSALES, 0) AS TOTALSALES, (ISNULL(X.TOTALPURCHASE, 0) - ISNULL(Y.TOTALSALES, 0)) AS CURRENTSTOCK
+    FROM PRODUCT P
+    LEFT OUTER JOIN (
+        SELECT SUM(QUANTITY) AS TOTALPURCHASE, PRODUCTID, MIN(B.BranchName)BranchName
+        FROM PURCHASEORDERLINE L, PurchaseOrder M, Branch B
+        WHERE L.PurchaseOrderId = M.PurchaseOrderId AND B.Id = M.BranchId
+        AND M.BranchId = {BranchId}
+        GROUP BY PRODUCTID
+    ) X ON X.PRODUCTID = P.ID
+    LEFT OUTER JOIN (
+        SELECT SUM(QUANTITY) AS TOTALSALES, PRODUCTID, MIN(B.BranchName)BranchName
+        FROM SALESORDERLINE L, SalesOrder M, Branch B
+        WHERE L.SalesOrderId = M.SalesOrderId AND B.Id = M.BranchId
+        AND M.BranchId = {BranchId}
+        GROUP BY PRODUCTID
+    ) Y ON Y.PRODUCTID = P.ID
+    ORDER BY P.Id";
+
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Stock stock = new Stock
+                            {
+                                BranchName = reader["BranchName"].ToString(),
+                                ProductName = reader["ProductName"].ToString(),
+                                TotalPurchase = Convert.ToInt32(reader["TOTALPURCHASE"]),
+                                TotalSales = Convert.ToInt32(reader["TOTALSALES"]),
+                                CurrentStock = Convert.ToInt32(reader["CURRENTSTOCK"]),
+                                                                Id = Convert.ToInt32(reader["ID"])
+
+                            };
+
+                            stocks.Add(stock);
+                        }
+                    }
+                }
+            }
+            return stocks;
+        }
+
 
         private string GenerateOrderNumber()
         {
@@ -90,6 +147,21 @@ namespace Inventory.Controllers
             {
                 if (salesOrder.SalesOrderId == 0)
                 {
+                    var stocks = GetStock(salesOrder.BranchId);
+                    foreach (var item in stocks)
+                    {
+                        foreach (var orderItem in salesOrder.SalesOrderLines)
+                        {
+                            if(orderItem.ProductId == item.Id && item.CurrentStock < orderItem.Quantity)
+                            {
+                                ViewData["stock"] = "stock not avaiable for "+ item.ProductName;
+                                ViewData["product"] = _context.Product.ToList();
+                                return View(salesOrder);
+                            }
+                        }
+
+                    }
+
                     // New SalesOrder, add it to the context
                     _context.SalesOrder.Add(salesOrder);
                 }
