@@ -235,11 +235,12 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" readonly name="PurchaseOrderLines[@i].Price" value="@Model.PurchaseOrderLines[@i].Price" class="form-control price" id="priceInput-@i">
-                                                    <button onclick="enableEdit(@i)">Edit</button>
-                                                </td>
-
-                                                <td><input type="text" name="PurchaseOrderLines[@i].Quantity" value="@Model.PurchaseOrderLines[@i].Quantity" class="form-control quantity"></td>
+                                                <td>
+                                                    <input type="text" readonly 
+                                                        name="PurchaseOrderLines[@i].Price" value="@Model.PurchaseOrderLines[@i].Price" class="form-control price">
+                                                                                                   </td>
+                                                <td>
+                                                    <input type="text" name="PurchaseOrderLines[@i].Quantity" value="@Model.PurchaseOrderLines[@i].Quantity" class="form-control quantity"></td>
                                                 <td><input type="text" readonly name="PurchaseOrderLines[@i].SubTotal" value="@Model.PurchaseOrderLines[@i].SubTotal" class="form-control subTotal"></td>
                                                 <td><input type="text" name="PurchaseOrderLines[@i].TaxPercentage" value="@Model.PurchaseOrderLines[@i].TaxPercentage" class="form-control tax"></td>
                                                 <td><input type="text" readonly name="PurchaseOrderLines[@i].TaxAmount" value="@Model.PurchaseOrderLines[@i].TaxAmount" class="form-control taxAmount"></td>
@@ -274,8 +275,7 @@
             loadPurchaseType();
             loadPurchaseOrder();
             loadProduct();
-            enableEdit(index);
-            disableEdit(index);
+            
                 
             loadProductsIntoDropdown(function (products) {
 
@@ -296,7 +296,7 @@
                         updatePriceAndTotal(newRow);
                     });
 
-                    newRow.find('.quantity, .discount, .tax').change(function () {
+                    newRow.find('.price,.quantity, .discount, .tax').change(function () {
                         updatePriceAndTotal(newRow);
                     });
 
@@ -305,11 +305,7 @@
             });
             updateTotalAmount();
         });
-        function enableEdit(index) {
-            var priceInput = document.getElementById('priceInput-' + index);
-            priceInput.removeAttribute('readonly');
-            priceInput.focus(); // Optionally, set focus to the input field after enabling editing.
-        }
+       
         function loadProduct() {
             $.ajax({
                 type: "GET",
@@ -507,7 +503,11 @@
         // Update price and calculate total when product or quantity changes
         function updatePriceAndTotal(row) {
             var quantity = parseFloat(row.find('.quantity').val()) || 0;
-            var price = parseFloat(row.find('.product-dropdown option:selected').data('price')) || 0;
+            var price = parseFloat(row.find('.price').val()) || 0;
+            if (price==0){
+                price =  parseFloat(row.find('.product-dropdown option:selected').data('price')) || 0;
+
+            }
             var subTotal = parseFloat(row.find('.subTotal').val()) || 0;
             var tax = parseFloat(row.find('.tax').val()) || 0;
             var taxAmount = parseFloat(row.find('.taxAmount').val()) || 0;
@@ -575,14 +575,14 @@
                 cols += '<td>' + (counter + 1) + '</td>';
                 // Rest of the columns
                 cols += '<td><select name="PurchaseOrderLines[' + counter + '].ProductId" class="form-control product-dropdown"></select></td>';
-                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Price" class="form-control price" /></td>';
-                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Quantity" class="form-control quantity" /></td>';
-                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].SubTotal" class="form-control subTotal" /></td>';
-                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].TaxPercentage" class="form-control tax" /></td>';
-                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].TaxAmount" class="form-control taxAmount" /></td>';
-                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Amount" class="form-control amount" /></td>';
-                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].DiscountPercentage" class="form-control discount" /></td>';
-                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].DiscountAmount" class="form-control discountAmount" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Price" value="0" class="form-control price" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].Quantity" value="0" class="form-control quantity" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].SubTotal" value="0" class="form-control subTotal" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].TaxPercentage" value="15" class="form-control tax" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].TaxAmount" value="0" class="form-control taxAmount" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Amount" value="0" class="form-control amount" /></td>';
+                cols += '<td><input type="text" name="PurchaseOrderLines[' + counter + '].DiscountPercentage" value="0" class="form-control discount" /></td>';
+                cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].DiscountAmount" value="0" class="form-control discountAmount" /></td>';
                 cols += '<td><input readonly type="text" name="PurchaseOrderLines[' + counter + '].Total" class="form-control total" /></td>';
                 cols += '<td><button type="button" class="ibtnDel btn btn-danger">Delete</button></td>';
                 newRow.append(cols);
@@ -597,7 +597,7 @@
                     updatePriceAndTotal(newRow);
                 });
 
-                newRow.find('.quantity, .discount, .tax').change(function () {
+                newRow.find('.price, .quantity, .discount, .tax').change(function () {
                     updatePriceAndTotal(newRow);
                 });
                 counter++;
